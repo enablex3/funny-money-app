@@ -6,6 +6,7 @@ import * as Font from 'expo-font';
 import { useFonts, Staatliches_400Regular } from '@expo-google-fonts/staatliches'
 import LoadScreen from './components/LoadScreen';
 import GetStarted from './components/GetStarted';
+import Login from './components/Login';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +33,10 @@ export default function App() {
         <Stack.Screen 
           name="Get Started" 
           component={GetStarted}
+          options={{ headerShown: false }} />
+        <Stack.Screen 
+          name="Login" 
+          component={Login}
           options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>

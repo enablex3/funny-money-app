@@ -3,64 +3,49 @@ import { StyleSheet, Text, Image, View, TextInput, Button} from 'react-native';
 
 const icon = require('../assets/fmIcon.jpg');
 
-export default function GetStarted( { navigation } ) {
+export default function Login( { navigation } ) {
 
-    const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     return(
-        <View style={ gsStyles.container }>
-            <View style={ gsStyles.header }>
+        <View style={ lStyles.container }>
+            <View style={ lStyles.header }>
                 <Image 
                     source={ icon }
-                    style={ gsStyles.logo }
+                    style={ lStyles.logo }
                 />
             </View>
-            <Text style={ gsStyles.gsText }>
-                Create a free account to get started.
+            <Text style={ lStyles.lText }>
+                Login to your account.
             </Text>
-            <Text style={ gsStyles.gsText2 }>
-                FunnyMoney does not share your private information with anyone.
-            </Text>
-            <View style={ gsStyles.gsForm }>
-                <TextInput 
-                    placeholder='Full Name:'
-                    placeholderTextColor='#555'
-                    style={ gsStyles.textInput }
-                />
+            <View style={ lStyles.lForm }>
                 <TextInput
                     placeholder='Email Address:'
                     placeholderTextColor='#555'
-                    style={ gsStyles.textInput }
+                    style={ lStyles.textInput }
                 />
                 <TextInput
                     placeholder='Password:'
                     placeholderTextColor='#555'
                     secureTextEntry={true}
-                    style={ gsStyles.textInput }
+                    style={ lStyles.textInput }
                 />
-                <TextInput
-                  placeholder='Confirm Password:'
-                  placeholderTextColor='#555'
-                  secureTextEntry={true}
-                  style={ gsStyles.textInput }
-                />
-                <Text style={ gsStyles.gsButton }>
-                    Get Started
+                <Text style={ lStyles.lButton }>
+                    Login
                 </Text>
             </View>
-            <Text style={ gsStyles.gsText }>
-                Already have an account?
+            <Text style={ lStyles.lText }>
+                Don't have an account?
             </Text>
-            <Text style={ gsStyles.gsLoginLink } onPress={() => navigation.navigate('Login')}>
-                Login
+            <Text style={ lStyles.lGSLink } onPress={() => navigation.navigate('Get Started')}>
+                Get Started
             </Text>
         </View>
     );
 }
 
-const gsStyles = StyleSheet.create({
+const lStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'black',
@@ -70,21 +55,21 @@ const gsStyles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 50
     },
-    gsText: {
+    lText: {
         color: 'azure', 
         textAlign: 'center',
         marginTop: 30,
         fontSize: 20,
         fontFamily: 'Staatliches_400Regular'
     },
-    gsText2: {
+    lText2: {
         color: 'azure', 
         textAlign: 'center',
         marginTop: 10,
         fontSize: 10,
         fontWeight: '200',
     },
-    gsLoginLink: {
+    lGSLink: {
         color: '#9c2c98', 
         textAlign: 'center',
         marginTop: 10,
@@ -92,7 +77,7 @@ const gsStyles = StyleSheet.create({
         fontWeight: 'bold',
         fontFamily: 'Staatliches_400Regular'
     },
-    gsButton: {
+    lButton: {
         color: 'black',
         backgroundColor: '#9c2c98',
         textAlign: 'center',
@@ -114,7 +99,7 @@ const gsStyles = StyleSheet.create({
         paddingBottom: 10,
         fontFamily: 'Staatliches_400Regular'
     },
-    gsForm: {
+    lForm: {
         marginTop: 30,
         marginLeft: 5,
         borderWidth: 1,

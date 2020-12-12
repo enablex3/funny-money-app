@@ -14,6 +14,12 @@ export default function LoadScreen( { navigation } ) {
       <Text style={ loadStyles.gs } onPress={() => navigation.navigate('Get Started')}>
         GET STARTED
       </Text>
+      <Text style={ { color: 'azure', fontFamily: 'Staatliches_400Regular', marginTop: 10 } }>
+        Or
+      </Text>
+      <Text style={ loadStyles.login } onPress={() => navigation.navigate('Login')}>
+        Login
+      </Text>
     </View> 
   );
 }
@@ -33,5 +39,13 @@ const loadStyles = StyleSheet.create({
     fontFamily: 'Staatliches_400Regular',
     fontSize: 20,
     color: 'azure'
-  }
+  },
+  login: {
+    color: '#9c2c98', 
+    textAlign: 'center',
+    marginTop: 10,
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: 'Staatliches_400Regular'
+},
 });
