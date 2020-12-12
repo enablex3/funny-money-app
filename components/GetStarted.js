@@ -3,7 +3,7 @@ import { StyleSheet, Text, Image, View, TextInput, Button} from 'react-native';
 
 const icon = require('../assets/fmIcon.jpg');
 
-export default function GetStarted( { navigation } ) {
+export default function GetStarted(  props  ) {
 
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
@@ -53,7 +53,7 @@ export default function GetStarted( { navigation } ) {
             <Text style={ gsStyles.gsText }>
                 Already have an account?
             </Text>
-            <Text style={ gsStyles.gsLoginLink } onPress={() => navigation.navigate('Login')}>
+            <Text style={ gsStyles.gsLoginLink } onPress={() => props.navigation.navigate('Login')}>
                 Login
             </Text>
         </View>

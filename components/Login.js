@@ -3,9 +3,9 @@ import { StyleSheet, Text, Image, View, TextInput, Button} from 'react-native';
 
 const icon = require('../assets/fmIcon.jpg');
 
-export default function Login( { navigation } ) {
+export default function Login( props ) {
 
-    const [email, setEmail] = useState('');
+    const [email, setEmail] = useState('boogs');
     const [password, setPassword] = useState('');
 
     return(
@@ -24,21 +24,25 @@ export default function Login( { navigation } ) {
                     placeholder='Email Address:'
                     placeholderTextColor='#555'
                     style={ lStyles.textInput }
+                    onChangeText={ text => setEmail(text) }
                 />
                 <TextInput
                     placeholder='Password:'
                     placeholderTextColor='#555'
                     secureTextEntry={true}
                     style={ lStyles.textInput }
+                    onChangeText={ text => setPassword(text) }
                 />
-                <Text style={ lStyles.lButton }>
+                <Text 
+                    style={ lStyles.lButton } 
+                    onPress={() => props.navigation.navigate('Home', { email: email })}>
                     Login
                 </Text>
             </View>
             <Text style={ lStyles.lText }>
                 Don't have an account?
             </Text>
-            <Text style={ lStyles.lGSLink } onPress={() => navigation.navigate('Get Started')}>
+            <Text style={ lStyles.lGSLink } onPress={() => props.navigation.navigate('Get Started')}>
                 Get Started
             </Text>
         </View>

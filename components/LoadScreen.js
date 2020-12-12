@@ -3,7 +3,7 @@ import { StyleSheet, Image, View, Text } from 'react-native';
 
 const logo = require('../assets/fmFull.png');
 
-export default function LoadScreen( { navigation } ) {
+export default function LoadScreen( props ) {
 
   return (
     <View style={ loadStyles.container }>
@@ -11,13 +11,13 @@ export default function LoadScreen( { navigation } ) {
         source={ logo }
         style={ loadStyles.logo }
       />
-      <Text style={ loadStyles.gs } onPress={() => navigation.navigate('Get Started')}>
+      <Text style={ loadStyles.gs } onPress={() => props.navigation.navigate('Get Started')}>
         GET STARTED
       </Text>
       <Text style={ { color: 'azure', fontFamily: 'Staatliches_400Regular', marginTop: 10 } }>
         Or
       </Text>
-      <Text style={ loadStyles.login } onPress={() => navigation.navigate('Login')}>
+      <Text style={ loadStyles.login } onPress={() => props.navigation.navigate('Login')}>
         Login
       </Text>
     </View> 
