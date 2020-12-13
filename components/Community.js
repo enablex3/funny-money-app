@@ -3,28 +3,28 @@ import { StyleSheet, Text, Image, View, SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 const icon = require('../assets/fmIcon.jpg');
 
-export default function Home( props ) {
+export default function Community( props ) {
 
     const name = props.displayName;
 
     return(
-        <View style={ homeStyles.container }>
+        <View style={ communityStyles.container }>
             <SafeAreaView>
-            <View style={ homeStyles.header }>
+            <View style={ communityStyles.header }>
                 <View style={{ flex: 1 }}>
-                <Text style={ homeStyles.name }>
+                <Text style={ communityStyles.name }>
                         {name}
                     </Text>
-                <Text style={ homeStyles.rank }>
+                <Text style={ communityStyles.rank }>
                     Rank: 100
                 </Text>
                 </View>
             </View>
             <LinearGradient 
-                style={ homeStyles.headerShadow }
+                style={ communityStyles.headerShadow }
                 colors={['black', '#9c2c98']}>
                     <Text style={{ color: 'azure'}}>
-                        Home Screen
+                        Community Screen
                     </Text>
                 </LinearGradient>
             </SafeAreaView>
@@ -32,7 +32,7 @@ export default function Home( props ) {
     );
 }
 
-const homeStyles = StyleSheet.create({
+const communityStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'black',
