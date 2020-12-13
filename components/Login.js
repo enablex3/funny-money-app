@@ -1,43 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Text, Image, View, TextInput } from "react-native";
+import { connect } from "react-redux";
+import { setEmail, setPassword } from "../store/actions/currentUser";
 
 const icon = require("../assets/fmIcon.jpg");
-
-export default function Login(props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  return (
-    <View style={lStyles.container}>
-      <View style={lStyles.header}>
-        <Image source={icon} style={lStyles.logo} />
-      </View>
-      <Text style={lStyles.lText}>Login to your account.</Text>
-      <View style={lStyles.lForm}>
-        <TextInput
-          placeholder="Email Address:"
-          placeholderTextColor="#555"
-          style={lStyles.textInput}
-          onChangeText={text => setEmail(text)}
-        />
-        <TextInput
-          placeholder="Password:"
-          placeholderTextColor="#555"
-          secureTextEntry
-          style={lStyles.textInput}
-          onChangeText={text => setPassword(text)}
-        />
-        <Text style={lStyles.lButton} onPress={() => props.navigation.navigate("Home", { email })}>
-          Login
-        </Text>
-      </View>
-      <Text style={lStyles.lText}>Don't have an account?</Text>
-      <Text style={lStyles.lGSLink} onPress={() => props.navigation.navigate("Get Started")}>
-        Get Started
-      </Text>
-    </View>
-  );
-}
 
 const lStyles = StyleSheet.create({
   container: {
@@ -105,3 +71,44 @@ const lStyles = StyleSheet.create({
     width: 100
   }
 });
+
+function Login(props) {
+  return (
+    <View style={lStyles.container}>
+      <View style={lStyles.header}>
+        <Image source={icon} style={lStyles.logo} />
+      </View>
+      <Text style={lStyles.lText}>Login to your account.</Text>
+      <View style={lStyles.lForm}>
+        <TextInput
+          placeholder="Email Address:"
+          placeholderTextColor="#555"
+          style={lStyles.textInput}
+          onChangeText={text => props.setEmail(text)}
+        />
+        <TextInput
+          placeholder="Password:"
+          placeholderTextColor="#555"
+          secureTextEntry
+          style={lStyles.textInput}
+          onChangeText={text => props.setPassword(text)}
+        />
+        <Text style={lStyles.lButton} onPress={() => props.navigation.navigate("Home", { email: props.email })}>
+          Login
+        </Text>
+      </View>
+      <Text style={lStyles.lText}>Don't have an account?</Text>
+      <Text style={lStyles.lGSLink} onPress={() => props.navigation.navigate("Get Started")}>
+        Get Started
+      </Text>
+    </View>
+  );
+}
+
+const mapStateToProps = state => ({ email: state.currentUser.email });
+const mapDispatchToProps = dispatch => ({
+  setEmail: email => dispatch(setEmail(email)),
+  setPassword: password => dispatch(setPassword(password))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
