@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import appReducer from "./reducers";
+import currentUserReducer from "./reducers/currentUser";
 
 const bindMiddleware = middleware => {
   if (process.env.NODE_ENV !== "production") {
@@ -11,6 +12,9 @@ const bindMiddleware = middleware => {
   return applyMiddleware(...middleware);
 };
 
-const store = createStore(combineReducers({ app: appReducer }), bindMiddleware([thunkMiddleware]));
+const store = createStore(
+  combineReducers({ app: appReducer, currentUser: currentUserReducer }),
+  bindMiddleware([thunkMiddleware])
+);
 
 export default store;
