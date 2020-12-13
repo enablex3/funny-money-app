@@ -60,7 +60,7 @@ export default function GetStarted(  props  ) {
                 />
                 <Text 
                     style={ gsStyles.gsButton }
-                    onPress={() => props.navigation.navigate('Home', { displayName: displayName })} >
+                    onPress={() => props.navigation.navigate('AppNavigation', { displayName: displayName })} >
                     Get Started
                 </Text>
             </View>

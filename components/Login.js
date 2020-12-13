@@ -35,7 +35,7 @@ export default function Login( props ) {
                 />
                 <Text 
                     style={ lStyles.lButton } 
-                    onPress={() => props.navigation.navigate('Home', { email: email })}>
+                    onPress={() => props.navigation.navigate('AppNavigation', { email: email })}>
                     Login
                 </Text>
             </View>
