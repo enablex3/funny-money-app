@@ -6,8 +6,10 @@ const icon = require('../assets/fmIcon.jpg');
 export default function GetStarted(  props  ) {
 
     const [fullName, setFullName] = useState('');
+    const [displayName, setDisplayName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     return(
         <View style={ gsStyles.container }>
@@ -28,25 +30,37 @@ export default function GetStarted(  props  ) {
                     placeholder='Full Name:'
                     placeholderTextColor='#555'
                     style={ gsStyles.textInput }
+                    onChangeText={ text => setFullName(text) }
+                />
+                <TextInput 
+                    placeholder='Display Name:'
+                    placeholderTextColor='#555'
+                    style={ gsStyles.textInput }
+                    onChangeText={ text => setDisplayName(text) }
                 />
                 <TextInput
                     placeholder='Email Address:'
                     placeholderTextColor='#555'
                     style={ gsStyles.textInput }
+                    onChangeText={ text => setEmail(text) }
                 />
                 <TextInput
                     placeholder='Password:'
                     placeholderTextColor='#555'
                     secureTextEntry={true}
                     style={ gsStyles.textInput }
+                    onChangeText={ text => setPassword(text) }
                 />
                 <TextInput
                   placeholder='Confirm Password:'
                   placeholderTextColor='#555'
                   secureTextEntry={true}
                   style={ gsStyles.textInput }
+                  onChangeText={ text => setConfirmPassword(text) }
                 />
-                <Text style={ gsStyles.gsButton }>
+                <Text 
+                    style={ gsStyles.gsButton }
+                    onPress={() => props.navigation.navigate('Home', { displayName: displayName })} >
                     Get Started
                 </Text>
             </View>

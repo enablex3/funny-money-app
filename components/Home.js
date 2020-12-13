@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, Image, View, TextInput, Button} from 'react-native';
-
+import { StyleSheet, Text, Image, View, SafeAreaView } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 const icon = require('../assets/fmIcon.jpg');
 
 export default function Home( props ) {
 
-    const email = props.route.params.email;
+    const email = props.route.params.email; // temporary 
+    const displayName = props.route.params.displayName; // permanent
+    const name = ( email === undefined )? displayName : email; // temporary
 
     return(
         <View style={ homeStyles.container }>
+            <SafeAreaView>
             <View style={ homeStyles.header }>
                 <View style={{ flex: 1 }}>
                 <Image 
@@ -18,10 +21,15 @@ export default function Home( props ) {
                 </View>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={ homeStyles.name }>
-                        {email}
+                        {name}
                     </Text>
                 </View>
             </View>
+            <LinearGradient 
+                style={ homeStyles.headerShadow }
+                colors={['black', '#9c2c98']}>
+                </LinearGradient>
+            </SafeAreaView>
         </View>
     );
 }
@@ -29,12 +37,15 @@ export default function Home( props ) {
 const homeStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#9c2c98',
+        backgroundColor: 'black',
     },
     header: {
         height: 50,
         flexDirection: 'row',
         backgroundColor: 'black'
+    },
+    headerShadow: {
+        
     },
     hText: {
         color: 'azure', 
@@ -57,12 +68,13 @@ const homeStyles = StyleSheet.create({
     logo: {
         height: 50,
         width: 50,
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        marginLeft: 10
     },
     name: {
         fontFamily: 'Staatliches_400Regular',
         color: 'azure',
         fontSize: 30,
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
     }
 });
