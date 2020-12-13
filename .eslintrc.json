@@ -4,6 +4,9 @@
     "rules": {
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "camelcase":"off",
+      "react/prop-types": 0,
+      "react/no-unescaped-entities": ["error", {"forbid": [">", "}"]}],
+      "react/jsx-closing-bracket-location": 0,
       "prettier/prettier": ["error"]
     }
 }
