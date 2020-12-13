@@ -5,7 +5,7 @@ const icon = require('../assets/fmIcon.jpg');
 
 export default function Login( props ) {
 
-    const [email, setEmail] = useState('boogs');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     return(
