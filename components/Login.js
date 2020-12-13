@@ -95,7 +95,7 @@ function Login(props) {
         />
         <Text
           style={lStyles.lButton}
-          onPress={() => props.navigation.navigate("AppNavigation", { email: props.email })}>
+          onPress={() => props.navigation.navigate("AppNavigation", { displayName: props.email })}>
           Login
         </Text>
       </View>
