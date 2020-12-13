@@ -28,6 +28,7 @@ export default function Home( props ) {
             <LinearGradient 
                 style={ homeStyles.headerShadow }
                 colors={['black', '#9c2c98']}>
+                    
                 </LinearGradient>
             </SafeAreaView>
         </View>
