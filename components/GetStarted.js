@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, Image, View, TextInput } from "react-native";
+import { StyleSheet, Text, Image, View, TextInput, Platform } from "react-native";
 import { connect } from "react-redux";
 import { setFullName, setDisplayName, setEmail, setPassword, setConfirmPassword } from "../store/actions/currentUser";
 
@@ -60,11 +60,12 @@ const gsStyles = StyleSheet.create({
     fontFamily: "Staatliches_400Regular"
   },
   gsForm: {
+    margin: "auto",
     marginTop: 30,
-    marginLeft: 5,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: "#9c2c98"
+    borderColor: "#9c2c98",
+    width: Platform.OS === "ios" || Platform.OS === "android" ? "100%" : "50%"
   },
   logo: {
     height: 100,
@@ -113,9 +114,7 @@ function GetStarted(props) {
           style={gsStyles.textInput}
           onChangeText={text => props.setConfirmPassword(text)}
         />
-        <Text
-          style={gsStyles.gsButton}
-          onPress={() => props.navigation.navigate("AppNavigation", { displayName: props.displayName })}>
+        <Text style={gsStyles.gsButton} onPress={() => props.navigation.navigate("AppNavigation")}>
           Get Started
         </Text>
       </View>

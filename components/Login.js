@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, Image, View, TextInput } from "react-native";
+import { StyleSheet, Text, Image, View, TextInput, Platform } from "react-native";
 import { connect } from "react-redux";
 import { setEmail, setPassword } from "../store/actions/currentUser";
 
@@ -60,11 +60,12 @@ const lStyles = StyleSheet.create({
     fontFamily: "Staatliches_400Regular"
   },
   lForm: {
+    margin: "auto",
     marginTop: 30,
-    marginLeft: 5,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: "#9c2c98"
+    borderColor: "#9c2c98",
+    width: Platform.OS === "ios" || Platform.OS === "android" ? "100%" : "50%"
   },
   logo: {
     height: 100,
@@ -93,9 +94,7 @@ function Login(props) {
           style={lStyles.textInput}
           onChangeText={text => props.setPassword(text)}
         />
-        <Text
-          style={lStyles.lButton}
-          onPress={() => props.navigation.navigate("AppNavigation", { displayName: props.email })}>
+        <Text style={lStyles.lButton} onPress={() => props.navigation.navigate("AppNavigation")}>
           Login
         </Text>
       </View>
