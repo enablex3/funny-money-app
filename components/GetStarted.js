@@ -1,7 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, Image, View, TextInput, Platform } from "react-native";
 import { connect } from "react-redux";
-import { setFullName, setDisplayName, setEmail, setPassword, setConfirmPassword } from "../store/actions/currentUser";
+import { Formik } from "formik";
+import { setFullName, setDisplayName } from "../store/actions/currentUser";
+import SignupSchema from "../utils/validation";
 
 const icon = require("../assets/fmIcon.jpg");
 
@@ -28,6 +30,9 @@ const gsStyles = StyleSheet.create({
     marginTop: 10,
     fontSize: 10,
     fontWeight: "200"
+  },
+  gsErrorText: {
+    color: "red"
   },
   gsLoginLink: {
     color: "#9c2c98",
@@ -81,43 +86,73 @@ function GetStarted(props) {
       </View>
       <Text style={gsStyles.gsText}>Create a free account to get started.</Text>
       <Text style={gsStyles.gsText2}>FunnyMoney does not share your private information with anyone.</Text>
-      <View style={gsStyles.gsForm}>
-        <TextInput
-          placeholder="Full Name:"
-          placeholderTextColor="#555"
-          style={gsStyles.textInput}
-          onChangeText={text => props.setFullName(text)}
-        />
-        <TextInput
-          placeholder="Display Name:"
-          placeholderTextColor="#555"
-          style={gsStyles.textInput}
-          onChangeText={text => props.setDisplayName(text)}
-        />
-        <TextInput
-          placeholder="Email Address:"
-          placeholderTextColor="#555"
-          style={gsStyles.textInput}
-          onChangeText={text => props.setEmail(text)}
-        />
-        <TextInput
-          placeholder="Password:"
-          placeholderTextColor="#555"
-          secureTextEntry
-          style={gsStyles.textInput}
-          onChangeText={text => props.setPassword(text)}
-        />
-        <TextInput
-          placeholder="Confirm Password:"
-          placeholderTextColor="#555"
-          secureTextEntry
-          style={gsStyles.textInput}
-          onChangeText={text => props.setConfirmPassword(text)}
-        />
-        <Text style={gsStyles.gsButton} onPress={() => props.navigation.navigate("AppNavigation")}>
-          Get Started
-        </Text>
-      </View>
+      <Formik
+        initialValues={{ fullName: "", displayName: "", email: "", password: "", confirmPassword: "" }}
+        validationSchema={SignupSchema}
+        onSubmit={values => {
+          props.setFullName(values.fullName);
+          props.setDisplayName(values.displayName);
+          props.navigation.navigate("AppNavigation");
+        }}>
+        {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => (
+          <View style={gsStyles.gsForm}>
+            <TextInput
+              placeholder="Full Name:"
+              placeholderTextColor="#555"
+              style={gsStyles.textInput}
+              onChangeText={handleChange("fullName")}
+              value={values.fullName}
+              onBlur={handleBlur("fullName")}
+            />
+            {errors.fullName && touched.fullName ? <Text style={gsStyles.gsErrorText}>{errors.fullName}</Text> : null}
+            <TextInput
+              placeholder="Display Name:"
+              placeholderTextColor="#555"
+              style={gsStyles.textInput}
+              onChangeText={handleChange("displayName")}
+              value={values.displayName}
+              onBlur={handleBlur("displayName")}
+            />
+            {errors.displayName && touched.displayName ? (
+              <Text style={gsStyles.gsErrorText}>{errors.displayName}</Text>
+            ) : null}
+            <TextInput
+              placeholder="Email Address:"
+              placeholderTextColor="#555"
+              style={gsStyles.textInput}
+              onChangeText={handleChange("email")}
+              value={values.email}
+              onBlur={handleBlur("email")}
+            />
+            {errors.email && touched.email ? <Text style={gsStyles.gsErrorText}>{errors.email}</Text> : null}
+            <TextInput
+              placeholder="Password:"
+              placeholderTextColor="#555"
+              secureTextEntry
+              style={gsStyles.textInput}
+              onChangeText={handleChange("password")}
+              value={values.password}
+              onBlur={handleBlur("password")}
+            />
+            {errors.password && touched.password ? <Text style={gsStyles.gsErrorText}>{errors.password}</Text> : null}
+            <TextInput
+              placeholder="Confirm Password:"
+              placeholderTextColor="#555"
+              secureTextEntry
+              style={gsStyles.textInput}
+              onChangeText={handleChange("confirmPassword")}
+              value={values.confirmPassword}
+              onBlur={handleBlur("confirmPassword")}
+            />
+            {errors.confirmPassword && touched.confirmPassword ? (
+              <Text style={gsStyles.gsErrorText}>{errors.confirmPassword}</Text>
+            ) : null}
+            <Text style={gsStyles.gsButton} onPress={handleSubmit}>
+              Get Started
+            </Text>
+          </View>
+        )}
+      </Formik>
       <Text style={gsStyles.gsText}>Already have an account?</Text>
       <Text style={gsStyles.gsLoginLink} onPress={() => props.navigation.navigate("Login")}>
         Login
@@ -126,15 +161,9 @@ function GetStarted(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  displayName: state.currentUser.displayName
-});
 const mapDispatchToProps = dispatch => ({
   setFullName: fullName => dispatch(setFullName(fullName)),
-  setDisplayName: displayName => dispatch(setDisplayName(displayName)),
-  setEmail: email => dispatch(setEmail(email)),
-  setPassword: password => dispatch(setPassword(password)),
-  setConfirmPassword: confirmPassword => dispatch(setConfirmPassword(confirmPassword))
+  setDisplayName: displayName => dispatch(setDisplayName(displayName))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GetStarted);
+export default connect(null, mapDispatchToProps)(GetStarted);
