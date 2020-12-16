@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-const SignupSchema = Yup.object().shape({
+export const SignupSchema = Yup.object().shape({
   fullName: Yup.string()
     .min(2, "Full Name Should Be At Least 2 Characters")
     .max(50, "Full Name Should Be No More Than 50 Characters")
@@ -20,4 +20,7 @@ const SignupSchema = Yup.object().shape({
   confirmPassword: Yup.string().oneOf([Yup.ref("password"), null], "Passwords Must Match")
 });
 
-export default SignupSchema;
+export const LoginSchema = Yup.object().shape({
+  email: Yup.string().required("Email Is Required"),
+  password: Yup.string().required("Password Is Required")
+});

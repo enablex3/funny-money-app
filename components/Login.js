@@ -1,7 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, Image, View, TextInput, Platform } from "react-native";
 import { connect } from "react-redux";
-import { setEmail, setPassword } from "../store/actions/currentUser";
+import { Formik } from "formik";
+import { setEmail } from "../store/actions/currentUser";
+import { LoginSchema } from "../utils/validation";
 
 const icon = require("../assets/fmIcon.jpg");
 
@@ -28,6 +30,9 @@ const lStyles = StyleSheet.create({
     marginTop: 10,
     fontSize: 10,
     fontWeight: "200"
+  },
+  lErrorText: {
+    color: "red"
   },
   lGSLink: {
     color: "#9c2c98",
@@ -80,24 +85,40 @@ function Login(props) {
         <Image source={icon} style={lStyles.logo} />
       </View>
       <Text style={lStyles.lText}>Login to your account.</Text>
-      <View style={lStyles.lForm}>
-        <TextInput
-          placeholder="Email Address:"
-          placeholderTextColor="#555"
-          style={lStyles.textInput}
-          onChangeText={text => props.setEmail(text)}
-        />
-        <TextInput
-          placeholder="Password:"
-          placeholderTextColor="#555"
-          secureTextEntry
-          style={lStyles.textInput}
-          onChangeText={text => props.setPassword(text)}
-        />
-        <Text style={lStyles.lButton} onPress={() => props.navigation.navigate("AppNavigation")}>
-          Login
-        </Text>
-      </View>
+      <Formik
+        initialValues={{ email: "", password: "" }}
+        validationSchema={LoginSchema}
+        onSubmit={values => {
+          props.setEmail(values.email);
+          props.navigation.navigate("AppNavigation");
+        }}>
+        {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => (
+          <View style={lStyles.lForm}>
+            <TextInput
+              placeholder="Email Address:"
+              placeholderTextColor="#555"
+              style={lStyles.textInput}
+              onChangeText={handleChange("email")}
+              value={values.email}
+              onBlur={handleBlur("email")}
+            />
+            {errors.email && touched.email ? <Text style={lStyles.lErrorText}>{errors.email}</Text> : null}
+            <TextInput
+              placeholder="Password:"
+              placeholderTextColor="#555"
+              secureTextEntry
+              style={lStyles.textInput}
+              onChangeText={handleChange("password")}
+              value={values.password}
+              onBlur={handleBlur("password")}
+            />
+            {errors.password && touched.password ? <Text style={lStyles.lErrorText}>{errors.password}</Text> : null}
+            <Text style={lStyles.lButton} onPress={handleSubmit}>
+              Login
+            </Text>
+          </View>
+        )}
+      </Formik>
       <Text style={lStyles.lText}>Don't have an account?</Text>
       <Text style={lStyles.lGSLink} onPress={() => props.navigation.navigate("Get Started")}>
         Get Started
@@ -106,10 +127,8 @@ function Login(props) {
   );
 }
 
-const mapStateToProps = state => ({ email: state.currentUser.email });
 const mapDispatchToProps = dispatch => ({
-  setEmail: email => dispatch(setEmail(email)),
-  setPassword: password => dispatch(setPassword(password))
+  setEmail: email => dispatch(setEmail(email))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);

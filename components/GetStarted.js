@@ -3,7 +3,7 @@ import { StyleSheet, Text, Image, View, TextInput, Platform } from "react-native
 import { connect } from "react-redux";
 import { Formik } from "formik";
 import { setFullName, setDisplayName } from "../store/actions/currentUser";
-import SignupSchema from "../utils/validation";
+import { SignupSchema } from "../utils/validation";
 
 const icon = require("../assets/fmIcon.jpg");
 
