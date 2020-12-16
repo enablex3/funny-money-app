@@ -5,7 +5,7 @@ const initialState = {
   fullName: "",
   displayName: "",
   fetching: false,
-  error: []
+  error: {}
 };
 
 const currentUserReducer = (state = initialState, action) => {

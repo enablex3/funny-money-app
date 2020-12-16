@@ -18,8 +18,10 @@ export const createUser = user => async dispatch => {
     dispatch(fetchUserStart());
 
     const response = await axios.post(`${ENDPOINT_URL}/users`, user);
-    dispatch(fetchUserSuccess(response.data.user));
+
+    if (response.data.user) dispatch(fetchUserSuccess(response.data.user));
+    else dispatch(fetchUserFail(response.data.error));
   } catch (error) {
-    dispatch(fetchUserFail([error.message]));
+    dispatch(fetchUserFail({ system: error.message }));
   }
 };
