@@ -13,14 +13,18 @@ export const setConfirmPassword = confirmPassword => ({
 export const fetchUserStart = () => ({ type: actionTypes.FETCH_USER_START });
 export const fetchUserSuccess = user => ({ type: actionTypes.FETCH_USER_SUCCESS, payload: user });
 export const fetchUserFail = error => ({ type: actionTypes.FETCH_USER_FAIL, payload: error });
-export const createUser = user => async dispatch => {
+export const createUser = (user, successCallback) => async dispatch => {
   try {
     dispatch(fetchUserStart());
 
     const response = await axios.post(`${ENDPOINT_URL}/users`, user);
 
-    if (response.data.user) dispatch(fetchUserSuccess(response.data.user));
-    else dispatch(fetchUserFail(response.data.error));
+    // a good response will have a user property
+    // a bad response will have an errors property
+    if (response.data.user) {
+      dispatch(fetchUserSuccess(response.data.user));
+      successCallback();
+    } else dispatch(fetchUserFail(response.data.errors));
   } catch (error) {
     dispatch(fetchUserFail({ system: error.message }));
   }

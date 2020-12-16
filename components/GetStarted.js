@@ -79,6 +79,8 @@ const gsStyles = StyleSheet.create({
 });
 
 function GetStarted(props) {
+  const { serverErrors } = props;
+
   return (
     <View style={gsStyles.container}>
       <View style={gsStyles.header}>
@@ -86,12 +88,14 @@ function GetStarted(props) {
       </View>
       <Text style={gsStyles.gsText}>Create a free account to get started.</Text>
       <Text style={gsStyles.gsText2}>FunnyMoney does not share your private information with anyone.</Text>
+      {serverErrors.system ? <Text style={gsStyles.gsErrorText}>{serverErrors.system}</Text> : null}
       <Formik
         initialValues={{ fullName: "", displayName: "", email: "", password: "", confirmPassword: "" }}
         validationSchema={SignupSchema}
         onSubmit={values => {
-          props.createUser(values);
-          props.navigation.navigate("AppNavigation");
+          props.createUser(values, () => {
+            props.navigation.navigate("AppNavigation");
+          });
         }}>
         {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => (
           <View style={gsStyles.gsForm}>
@@ -124,6 +128,7 @@ function GetStarted(props) {
               onBlur={handleBlur("email")}
             />
             {errors.email && touched.email ? <Text style={gsStyles.gsErrorText}>{errors.email}</Text> : null}
+            {serverErrors.email ? <Text style={gsStyles.gsErrorText}>{serverErrors.email}</Text> : null}
             <TextInput
               placeholder="Password:"
               placeholderTextColor="#555"
@@ -160,8 +165,10 @@ function GetStarted(props) {
   );
 }
 
+const mapStateToProps = state => ({ serverErrors: state.currentUser.errors });
+
 const mapDispatchToProps = dispatch => ({
-  createUser: user => dispatch(createUser(user))
+  createUser: (user, successCallback) => dispatch(createUser(user, successCallback))
 });
 
-export default connect(null, mapDispatchToProps)(GetStarted);
+export default connect(mapStateToProps, mapDispatchToProps)(GetStarted);

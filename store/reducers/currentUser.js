@@ -5,7 +5,7 @@ const initialState = {
   fullName: "",
   displayName: "",
   fetching: false,
-  error: {}
+  errors: {}
 };
 
 const currentUserReducer = (state = initialState, action) => {
@@ -24,11 +24,11 @@ const currentUserReducer = (state = initialState, action) => {
       return { ...state, fetching: true };
     case actionTypes.FETCH_USER_SUCCESS: {
       const { fullName, displayName, id } = action.payload;
-      return { ...state, fetching: false, error: [], fullName, displayName, id };
+      return { ...state, fetching: false, errors: {}, fullName, displayName, id };
     }
     case actionTypes.FETCH_USER_FAIL: {
-      const error = action.payload;
-      return { ...state, fetching: false, error };
+      const errors = action.payload;
+      return { ...state, fetching: false, errors };
     }
     default:
       return state;
