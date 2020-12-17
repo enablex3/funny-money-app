@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { connect } from "react-redux";
 import Stats from "./Stats";
@@ -62,26 +62,28 @@ function Home(props) {
   return (
     <View style={homeStyles.container}>
       <SafeAreaView>
-        <View style={homeStyles.header}>
-          <View style={{ flex: 1 }}>
-            <Text style={homeStyles.name}>{displayName}</Text>
-            <Text style={homeStyles.rank}>
-              Rank:
-              {rank}
-            </Text>
+        <ScrollView>
+          <View style={homeStyles.header}>
+            <View style={{ flex: 1 }}>
+              <Text style={homeStyles.name}>{displayName}</Text>
+              <Text style={homeStyles.rank}>
+                Rank:
+                {rank}
+              </Text>
+            </View>
           </View>
-        </View>
-        <LinearGradient style={homeStyles.headerShadow} colors={["black", "#9c2c98"]}>
-          <Text style={{ color: "azure" }}>Home Screen</Text>
-        </LinearGradient>
-        <Stats
-          displayName={displayName}
-          rank={rank}
-          currency={currency}
-          newPredictions={newPredictions}
-          pastPredictions={pastPredictions}
-          accuracy={accuracy}
-        />
+          <LinearGradient style={homeStyles.headerShadow} colors={["black", "#9c2c98"]}>
+            <Text style={{ color: "azure" }}>Home Screen</Text>
+          </LinearGradient>
+          <Stats
+            displayName={displayName}
+            rank={rank}
+            currency={currency}
+            newPredictions={newPredictions}
+            pastPredictions={pastPredictions}
+            accuracy={accuracy}
+          />
+        </ScrollView>
       </SafeAreaView>
     </View>
   );
