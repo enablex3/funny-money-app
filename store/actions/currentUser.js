@@ -5,20 +5,21 @@ import { ENDPOINT_URL } from "../../constants";
 export const fetchUserStart = () => ({ type: actionTypes.FETCH_USER_START });
 export const fetchUserSuccess = user => ({ type: actionTypes.FETCH_USER_SUCCESS, payload: user });
 export const fetchUserFail = error => ({ type: actionTypes.FETCH_USER_FAIL, payload: error });
+export const createUserStart = () => ({ type: actionTypes.CREATE_USER_START });
+export const createUserSuccess = user => ({ type: actionTypes.CREATE_USER_SUCCESS, payload: user });
+export const createUserFail = error => ({ type: actionTypes.FETCH_USER_FAIL, payload: error });
 export const createUser = (user, successCallback) => async dispatch => {
   try {
-    dispatch(fetchUserStart());
+    dispatch(createUserStart());
 
     const response = await axios.post(`${ENDPOINT_URL}/user/dummy_user@fm.com`, user);
 
-    // a good response will have a user property
-    // a bad response will have an errors property
     if (response.status === 201) {
-      dispatch(fetchUserSuccess(response.data));
+      dispatch(createUserSuccess(response.data));
       successCallback();
-    } else dispatch(fetchUserFail(response.data));
+    } else dispatch(createUserFail(response.data));
   } catch (error) {
-    dispatch(fetchUserFail({ system: error.message }));
+    dispatch(createUserFail({ system: error.message }));
   }
 };
 export const getUser = (_email, successCallback) => async dispatch => {

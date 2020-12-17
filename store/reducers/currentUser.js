@@ -36,6 +36,28 @@ const currentUserReducer = (state = initialState, action) => {
       const errors = action.payload;
       return { ...state, fetching: false, errors };
     }
+    case actionTypes.CREATE_USER_START:
+      return { ...state, fetching: true };
+    case actionTypes.CREATE_USER_SUCCESS: {
+      const { id, email, displayName, rank, currency, newPredictions, pastPredictions, accuracy } = action.payload;
+      return {
+        ...state,
+        id,
+        email,
+        displayName,
+        rank,
+        currency,
+        newPredictions,
+        pastPredictions,
+        accuracy,
+        fetching: false,
+        errors: {}
+      };
+    }
+    case actionTypes.CREATE_USER_FAIL: {
+      const errors = action.payload;
+      return { ...state, fetching: false, errors };
+    }
     default:
       return state;
   }
