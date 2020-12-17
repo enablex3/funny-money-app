@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, Image, View, TextInput, Platform } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, Image, View, TextInput, Platform } from "react-native";
 import { connect } from "react-redux";
 import { Formik } from "formik";
 import { getUser } from "../store/actions/currentUser";
@@ -79,10 +79,11 @@ const lStyles = StyleSheet.create({
 });
 
 function Login(props) {
-  const { serverErrors } = props;
+  const { serverErrors, fetching } = props;
 
   return (
     <View style={lStyles.container}>
+      {fetching && <ActivityIndicator size="large" />}
       <View style={lStyles.header}>
         <Image source={icon} style={lStyles.logo} />
       </View>
@@ -134,7 +135,7 @@ function Login(props) {
   );
 }
 
-const mapStateToProps = state => ({ serverErrors: state.currentUser.errors });
+const mapStateToProps = state => ({ serverErrors: state.currentUser.errors, fetching: state.currentUser.fetching });
 
 const mapDispatchToProps = dispatch => ({
   getUser: (email, successCallback) => dispatch(getUser(email, successCallback))
