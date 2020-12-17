@@ -6,4 +6,8 @@ export const currentUserActionTypes = {
   SET_CONFIRM_PASSWORD: "SET_CONFIRM_PASSWORD"
 };
 
+export const getUser = {
+  GET_USER: "GET_USER"
+}
+
 export const appActionTypes = {};
