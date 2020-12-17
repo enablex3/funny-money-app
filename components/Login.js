@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, Image, View, TextInput, Platform } from "react-native";
 import { connect } from "react-redux";
 import { Formik } from "formik";
-import { getUser } from '../store/reducers/getUserReducer';
+import { getUser } from "../store/actions/currentUser";
 import { LoginSchema } from "../utils/validation";
 
 const icon = require("../assets/fmIcon.jpg");
@@ -79,18 +79,25 @@ const lStyles = StyleSheet.create({
 });
 
 function Login(props) {
+  const { serverErrors } = props;
+
   return (
     <View style={lStyles.container}>
       <View style={lStyles.header}>
         <Image source={icon} style={lStyles.logo} />
       </View>
       <Text style={lStyles.lText}>Login to your account.</Text>
+      {serverErrors.system ? <Text style={lStyles.lErrorText}>{serverErrors.system}</Text> : null}
+      {serverErrors.incorrectEmailOrPassword ? (
+        <Text style={lStyles.lErrorText}>{serverErrors.incorrectEmailOrPassword}</Text>
+      ) : null}
       <Formik
         initialValues={{ email: "", password: "" }}
         validationSchema={LoginSchema}
         onSubmit={values => {
-          props.getUser(values.email);
-          props.navigation.navigate("AppNavigation");
+          props.getUser(values.email, () => {
+            props.navigation.navigate("AppNavigation");
+          });
         }}>
         {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => (
           <View style={lStyles.lForm}>
@@ -127,8 +134,10 @@ function Login(props) {
   );
 }
 
+const mapStateToProps = state => ({ serverErrors: state.currentUser.errors });
+
 const mapDispatchToProps = dispatch => ({
-  getUser: email => dispatch(getUser("dummy_user@fm.com"))
+  getUser: (email, successCallback) => dispatch(getUser(email, successCallback))
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
