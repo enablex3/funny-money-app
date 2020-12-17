@@ -2,29 +2,35 @@ import { currentUserActionTypes as actionTypes } from "../actionTypes";
 
 const initialState = {
   id: null,
-  fullName: "",
+  email: "",
   displayName: "",
-  fetching: false,
+  rank: null,
+  currency: "",
+  newPredictions: {},
+  pastPredictions: {},
+  accuracy: null,
   errors: {}
 };
 
 const currentUserReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.SET_FULL_NAME:
-      return { ...state, fullName: action.payload };
-    case actionTypes.SET_DISPLAY_NAME:
-      return { ...state, displayName: action.payload };
-    case actionTypes.SET_EMAIL:
-      return { ...state, email: action.payload };
-    case actionTypes.SET_PASSWORD:
-      return { ...state, password: action.payload };
-    case actionTypes.SET_CONFIRM_PASSWORD:
-      return { ...state, confirmPassword: action.payload };
     case actionTypes.FETCH_USER_START:
       return { ...state, fetching: true };
     case actionTypes.FETCH_USER_SUCCESS: {
-      const { fullName, displayName, id } = action.payload;
-      return { ...state, fetching: false, errors: {}, fullName, displayName, id };
+      const { id, email, displayName, rank, currency, newPredictions, pastPredictions, accuracy } = action.payload;
+      return {
+        ...state,
+        id,
+        email,
+        displayName,
+        rank,
+        currency,
+        newPredictions,
+        pastPredictions,
+        accuracy,
+        fetching: false,
+        errors: {}
+      };
     }
     case actionTypes.FETCH_USER_FAIL: {
       const errors = action.payload;
