@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, Image, View, TextInput, Platform } from "react-native";
 import { connect } from "react-redux";
 import { Formik } from "formik";
-import { setEmail } from "../store/actions/currentUser";
+import { getUser } from '../store/reducers/getUserReducer';
 import { LoginSchema } from "../utils/validation";
 
 const icon = require("../assets/fmIcon.jpg");
@@ -89,7 +89,7 @@ function Login(props) {
         initialValues={{ email: "", password: "" }}
         validationSchema={LoginSchema}
         onSubmit={values => {
-          props.setEmail(values.email);
+          props.getUser(values.email);
           props.navigation.navigate("AppNavigation");
         }}>
         {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => (
@@ -128,7 +128,7 @@ function Login(props) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  setEmail: email => dispatch(setEmail(email))
+  getUser: email => dispatch(getUser("dummy_user@fm.com"))
 });
 
 export default connect(null, mapDispatchToProps)(Login);
