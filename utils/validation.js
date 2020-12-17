@@ -17,7 +17,9 @@ export const SignupSchema = Yup.object().shape({
     )
     .max(128, "Password Should Be No More Than 128 Characters")
     .required("Password Is Required"),
-  confirmPassword: Yup.string().oneOf([Yup.ref("password"), null], "Passwords Must Match")
+  confirmPassword: Yup.string()
+    .required("Passwords Must Match")
+    .oneOf([Yup.ref("password"), null], "Passwords Must Match")
 });
 
 export const LoginSchema = Yup.object().shape({

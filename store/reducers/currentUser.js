@@ -9,7 +9,8 @@ const initialState = {
   newPredictions: {},
   pastPredictions: {},
   accuracy: null,
-  errors: {}
+  errors: {},
+  loggedIn: false
 };
 
 const currentUserReducer = (state = initialState, action) => {
@@ -29,6 +30,7 @@ const currentUserReducer = (state = initialState, action) => {
         pastPredictions,
         accuracy,
         fetching: false,
+        loggedIn: true,
         errors: {}
       };
     }
@@ -51,6 +53,7 @@ const currentUserReducer = (state = initialState, action) => {
         pastPredictions,
         accuracy,
         fetching: false,
+        loggedIn: true,
         errors: {}
       };
     }

@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { connect } from "react-redux";
+import Stats from "./Stats";
 
 const homeStyles = StyleSheet.create({
   container: {
@@ -56,29 +57,39 @@ const homeStyles = StyleSheet.create({
 });
 
 function Home(props) {
-  const { displayName, email } = props;
-  const name = displayName === "" ? email : displayName;
+  const { displayName, rank, currency, newPredictions, pastPredictions, accuracy } = props;
 
   return (
     <View style={homeStyles.container}>
       <SafeAreaView>
         <View style={homeStyles.header}>
           <View style={{ flex: 1 }}>
-            <Text style={homeStyles.name}>{name}</Text>
-            <Text style={homeStyles.rank}>Rank: 100</Text>
+            <Text style={homeStyles.name}>{displayName}</Text>
+            <Text style={homeStyles.rank}>
+              Rank:
+              {rank}
+            </Text>
           </View>
         </View>
         <LinearGradient style={homeStyles.headerShadow} colors={["black", "#9c2c98"]}>
           <Text style={{ color: "azure" }}>Home Screen</Text>
         </LinearGradient>
+        <Stats
+          displayName={displayName}
+          rank={rank}
+          currency={currency}
+          newPredictions={newPredictions}
+          pastPredictions={pastPredictions}
+          accuracy={accuracy}
+        />
       </SafeAreaView>
     </View>
   );
 }
 
 const mapStateToProps = state => {
-  const { displayName, email } = state.currentUser;
-  return { displayName, email };
+  const { displayName, rank, currency, newPredictions, pastPredictions, accuracy } = state.currentUser;
+  return { displayName, rank, currency, newPredictions, pastPredictions, accuracy };
 };
 
 export default connect(mapStateToProps)(Home);
