@@ -10,7 +10,9 @@ const initialState = {
   pastPredictions: {},
   accuracy: null,
   errors: {},
-  loggedIn: false
+  loggedIn: false,
+  password: "",
+  confirmPassword: ""
 };
 
 const currentUserReducer = (state = initialState, action) => {
@@ -61,6 +63,18 @@ const currentUserReducer = (state = initialState, action) => {
       const errors = action.payload;
       return { ...state, fetching: false, errors };
     }
+    case actionTypes.SET_ID:
+      return { ...state, id: action.payload };
+    case actionTypes.SET_RANK:
+      return { ...state, rank: action.payload };
+    case actionTypes.SET_NEW_PREDICTIONS:
+      return { ...state, newPredictions: action.payload };
+    case actionTypes.SET_CURRENCY:
+      return { ...state, currency: action.payload };
+    case actionTypes.SET_ACCURACY:
+      return { ...state, accuracy: action.payload };
+    case actionTypes.SET_PAST_PREDICTIONS:
+      return { ...state, pastPredictions: action.payload };
     default:
       return state;
   }
