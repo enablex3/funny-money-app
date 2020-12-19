@@ -93,11 +93,10 @@ function Home(props) {
         <ScrollView>
           {newPredictionsObject.map((prediction, idx) => (
             <div key={idx}>
-              <Text style={homeStyles.predictionNames}>{prediction.name}</Text>
+              <Text style={homeStyles.predictionNames}>{prediction.name} -&gt; {prediction.value.type}</Text>
               <ol>
                 <li><Text style={homeStyles.predictionInfo}>Predicted Price: {prediction.value.price}</Text></li>
                 <li><Text style={homeStyles.predictionInfo}>Predicted Date: {prediction.value.date}</Text></li>
-                <li><Text style={homeStyles.predictionInfo}>Predicted Type: {prediction.value.type}</Text></li>
               </ol>
             </div>
           ))}
