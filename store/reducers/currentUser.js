@@ -2,7 +2,6 @@ import { currentUserActionTypes as actionTypes } from "../actionTypes";
 
 const initialState = {
   id: null,
-  email: "",
   displayName: "",
   rank: null,
   currency: "",
@@ -11,8 +10,7 @@ const initialState = {
   accuracy: null,
   errors: {},
   loggedIn: false,
-  password: "",
-  confirmPassword: ""
+  fetching: false
 };
 
 const currentUserReducer = (state = initialState, action) => {
@@ -20,11 +18,10 @@ const currentUserReducer = (state = initialState, action) => {
     case actionTypes.FETCH_USER_START:
       return { ...state, fetching: true };
     case actionTypes.FETCH_USER_SUCCESS: {
-      const { id, email, displayName, rank, currency, newPredictions, pastPredictions, accuracy } = action.payload;
+      const { id, displayName, rank, currency, newPredictions, pastPredictions, accuracy } = action.payload;
       return {
         ...state,
         id,
-        email,
         displayName,
         rank,
         currency,
@@ -43,11 +40,10 @@ const currentUserReducer = (state = initialState, action) => {
     case actionTypes.CREATE_USER_START:
       return { ...state, fetching: true };
     case actionTypes.CREATE_USER_SUCCESS: {
-      const { id, email, displayName, rank, currency, newPredictions, pastPredictions, accuracy } = action.payload;
+      const { id, displayName, rank, currency, newPredictions, pastPredictions, accuracy } = action.payload;
       return {
         ...state,
         id,
-        email,
         displayName,
         rank,
         currency,
@@ -63,8 +59,6 @@ const currentUserReducer = (state = initialState, action) => {
       const errors = action.payload;
       return { ...state, fetching: false, errors };
     }
-    case actionTypes.SET_ID:
-      return { ...state, id: action.payload };
     case actionTypes.SET_RANK:
       return { ...state, rank: action.payload };
     case actionTypes.SET_NEW_PREDICTIONS:

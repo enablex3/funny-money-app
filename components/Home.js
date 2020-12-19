@@ -96,26 +96,20 @@ function Home(props) {
         </LinearGradient>
         <ScrollView>
           {newPredictionsObject.map((prediction, idx) => (
-            <div key={idx.toString}>
+            <View key={idx.toString()}>
               <Text style={homeStyles.predictionNames}>
                 {prediction.name}
                 {` ${prediction.value.type}`}
               </Text>
-              <ol>
-                <li>
-                  <Text style={homeStyles.predictionInfo}>
-                    Predicted Price:
-                    {prediction.value.price}
-                  </Text>
-                </li>
-                <li>
-                  <Text style={homeStyles.predictionInfo}>
-                    Predicted Date:
-                    {prediction.value.date}
-                  </Text>
-                </li>
-              </ol>
-            </div>
+              <Text style={homeStyles.predictionInfo}>
+                Predicted Price:
+                {prediction.value.price}
+              </Text>
+              <Text style={homeStyles.predictionInfo}>
+                Predicted Date:
+                {prediction.value.date}
+              </Text>
+            </View>
           ))}
         </ScrollView>
       </SafeAreaView>
