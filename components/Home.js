@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { connect } from "react-redux";
-import Stats from "./Stats";
+import { jsonToArray } from "../utils/jsonToArray";
 
 const homeStyles = StyleSheet.create({
   container: {
@@ -53,36 +53,70 @@ const homeStyles = StyleSheet.create({
     color: "#9c2c98",
     fontSize: 20,
     justifyContent: "flex-end"
+  },
+  accuracy: {
+    fontFamily: "Staatliches_400Regular",
+    color: "azure",
+    fontSize: 15,
+    justifyContent: "flex-end"
+  },
+  predictionNames: {
+    color: "azure",
+    fontSize: 30
+  },
+  predictionInfo: {
+    color: "azure",
+    fontSize: 20
   }
 });
 
 function Home(props) {
-  const { displayName, rank, currency, newPredictions, pastPredictions, accuracy } = props;
+  const { displayName, email, rank, newPredictions, currency, accuracy } = props;
+  const name = displayName === "" ? email : displayName;
+  const newPredictionsObject = jsonToArray(newPredictions);
 
   return (
     <View style={homeStyles.container}>
       <SafeAreaView>
-        <ScrollView>
-          <View style={homeStyles.header}>
-            <View style={{ flex: 1 }}>
-              <Text style={homeStyles.name}>{displayName}</Text>
-              <Text style={homeStyles.rank}>
-                Rank:
-                {rank}
-              </Text>
-            </View>
+        <View style={homeStyles.header}>
+          <View style={{ flex: 1 }}>
+            <Text style={homeStyles.name}>{name}</Text>
+            <Text style={homeStyles.rank}>
+              Rank:
+              {rank}
+            </Text>
+            <Text style={homeStyles.accuracy}>
+              Accuracy:
+              {`${accuracy * 100}%, Currency: ${currency}`}
+            </Text>
           </View>
-          <LinearGradient style={homeStyles.headerShadow} colors={["black", "#9c2c98"]}>
-            <Text style={{ color: "azure" }}>Home Screen</Text>
-          </LinearGradient>
-          <Stats
-            displayName={displayName}
-            rank={rank}
-            currency={currency}
-            newPredictions={newPredictions}
-            pastPredictions={pastPredictions}
-            accuracy={accuracy}
-          />
+        </View>
+        <LinearGradient style={homeStyles.headerShadow} colors={["black", "#9c2c98"]}>
+          <Text style={{ color: "azure" }}>Home Screen</Text>
+        </LinearGradient>
+        <ScrollView>
+          {newPredictionsObject.map((prediction, idx) => (
+            <div key={idx.toString}>
+              <Text style={homeStyles.predictionNames}>
+                {prediction.name}
+                {` ${prediction.value.type}`}
+              </Text>
+              <ol>
+                <li>
+                  <Text style={homeStyles.predictionInfo}>
+                    Predicted Price:
+                    {prediction.value.price}
+                  </Text>
+                </li>
+                <li>
+                  <Text style={homeStyles.predictionInfo}>
+                    Predicted Date:
+                    {prediction.value.date}
+                  </Text>
+                </li>
+              </ol>
+            </div>
+          ))}
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -90,8 +124,8 @@ function Home(props) {
 }
 
 const mapStateToProps = state => {
-  const { displayName, rank, currency, newPredictions, pastPredictions, accuracy } = state.currentUser;
-  return { displayName, rank, currency, newPredictions, pastPredictions, accuracy };
+  const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy } = state.currentUser;
+  return { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy };
 };
 
 export default connect(mapStateToProps)(Home);
