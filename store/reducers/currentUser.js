@@ -5,7 +5,12 @@ const initialState = {
   displayName: "",
   email: "",
   password: "",
-  confirmPassword: ""
+  confirmPassword: "",
+  rank: null,
+  currency: '',
+  newPredictions: {},
+  pastPredictions: {},
+  accuracy: null
 };
 
 const currentUserReducer = (state = initialState, action) => {
@@ -20,6 +25,18 @@ const currentUserReducer = (state = initialState, action) => {
       return { ...state, password: action.payload };
     case actionTypes.SET_CONFIRM_PASSWORD:
       return { ...state, confirmPassword: action.payload };
+    case actionTypes.SET_ID:
+      return { ...state, id: action.payload };
+    case actionTypes.SET_RANK:
+      return { ...state, rank: action.payload };
+    case actionTypes.SET_NEW_PREDICTIONS:
+      return { ...state, newPredictions: action.payload };
+    case actionTypes.SET_CURRENCY:
+      return { ...state, currency: action.payload };
+    case actionTypes.SET_ACCURACY:
+      return { ...state, accuracy: action.payload };
+    case actionTypes.SET_PAST_PREDICTIONS:
+      return { ...state, pastPredictions: action.payload };
     default:
       return state;
   }

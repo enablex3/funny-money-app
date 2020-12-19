@@ -2,6 +2,9 @@ import React from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { connect } from "react-redux";
+import { acc } from "react-native-reanimated";
+import { ScrollView } from "react-native-gesture-handler";
+import { jsonToArray } from "../utils/jsonToArray";
 
 const homeStyles = StyleSheet.create({
   container: {
@@ -52,33 +55,61 @@ const homeStyles = StyleSheet.create({
     color: "#9c2c98",
     fontSize: 20,
     justifyContent: "flex-end"
+  },
+  accuracy: {
+    fontFamily: "Staatliches_400Regular",
+    color: "azure",
+    fontSize: 15,
+    justifyContent: "flex-end"
+  },
+  predictionNames: {
+    color: "azure",
+    fontSize: 30
+  },
+  predictionInfo: {
+    color: "azure",
+    fontSize: 20
   }
 });
 
 function Home(props) {
-  const { displayName, email } = props;
+  const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy } = props;
   const name = displayName === "" ? email : displayName;
-
+  const newPredictionsObject = jsonToArray(newPredictions);
+  console.log(currency);
   return (
     <View style={homeStyles.container}>
       <SafeAreaView>
         <View style={homeStyles.header}>
           <View style={{ flex: 1 }}>
             <Text style={homeStyles.name}>{name}</Text>
-            <Text style={homeStyles.rank}>Rank: 100</Text>
+            <Text style={homeStyles.rank}>Rank: {rank}</Text>
+            <Text style={homeStyles.accuracy}>Accuracy: {accuracy * 100}%, Currency: {currency}</Text>
           </View>
         </View>
         <LinearGradient style={homeStyles.headerShadow} colors={["black", "#9c2c98"]}>
           <Text style={{ color: "azure" }}>Home Screen</Text>
         </LinearGradient>
+        <ScrollView>
+          {newPredictionsObject.map((prediction, idx) => (
+            <div key={idx}>
+              <Text style={homeStyles.predictionNames}>{prediction.name}</Text>
+              <ol>
+                <li><Text style={homeStyles.predictionInfo}>Predicted Price: {prediction.value.price}</Text></li>
+                <li><Text style={homeStyles.predictionInfo}>Predicted Date: {prediction.value.date}</Text></li>
+                <li><Text style={homeStyles.predictionInfo}>Predicted Type: {prediction.value.type}</Text></li>
+              </ol>
+            </div>
+          ))}
+        </ScrollView>
       </SafeAreaView>
     </View>
   );
 }
 
 const mapStateToProps = state => {
-  const { displayName, email } = state.currentUser;
-  return { displayName, email };
+  const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy } = state.currentUser;
+  return { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy};
 };
 
 export default connect(mapStateToProps)(Home);
