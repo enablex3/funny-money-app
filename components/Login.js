@@ -1,7 +1,8 @@
 import React from "react";
-import { ActivityIndicator, StyleSheet, Text, Image, View, TextInput, Platform } from "react-native";
+import { StyleSheet, Text, Image, View, TextInput, Platform } from "react-native";
 import { connect } from "react-redux";
 import { Formik } from "formik";
+import FetchingIndicator from "./FetchingIndicator";
 import { getUser } from "../store/actions/currentUser";
 import { LoginSchema } from "../utils/validation";
 
@@ -83,7 +84,6 @@ function Login(props) {
 
   return (
     <View style={lStyles.container}>
-      {fetching && <ActivityIndicator size="large" />}
       <View style={lStyles.header}>
         <Image source={icon} style={lStyles.logo} />
       </View>
@@ -92,6 +92,7 @@ function Login(props) {
       {serverErrors.incorrectEmailOrPassword ? (
         <Text style={lStyles.lErrorText}>{serverErrors.incorrectEmailOrPassword}</Text>
       ) : null}
+      <FetchingIndicator fetching={fetching} />
       <Formik
         initialValues={{ email: "", password: "" }}
         validationSchema={LoginSchema}

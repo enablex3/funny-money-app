@@ -1,7 +1,8 @@
 import React from "react";
-import { ActivityIndicator, StyleSheet, Text, Image, View, TextInput, Platform } from "react-native";
+import { StyleSheet, Text, Image, View, TextInput, Platform } from "react-native";
 import { connect } from "react-redux";
 import { Formik } from "formik";
+import FetchingIndicator from "./FetchingIndicator";
 import { createUser } from "../store/actions/currentUser";
 import { SignupSchema } from "../utils/validation";
 
@@ -83,13 +84,13 @@ function GetStarted(props) {
 
   return (
     <View style={gsStyles.container}>
-      {fetching && <ActivityIndicator size="large" />}
       <View style={gsStyles.header}>
         <Image source={icon} style={gsStyles.logo} />
       </View>
       <Text style={gsStyles.gsText}>Create a free account to get started.</Text>
       <Text style={gsStyles.gsText2}>FunnyMoney does not share your private information with anyone.</Text>
       {serverErrors.system ? <Text style={gsStyles.gsErrorText}>{serverErrors.system}</Text> : null}
+      <FetchingIndicator fetching={fetching} />
       <Formik
         initialValues={{ fullName: "", displayName: "", email: "", password: "", confirmPassword: "" }}
         validationSchema={SignupSchema}
