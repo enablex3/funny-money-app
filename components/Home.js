@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { connect } from "react-redux";
 import { jsonToArray } from "../utils/jsonToArray";
 
@@ -72,7 +71,6 @@ const homeStyles = StyleSheet.create({
 
 function Home(props) {
   const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy } = props;
-  const name = displayName === "" ? email : displayName;
   const newPredictionsObject = jsonToArray(newPredictions);
   const pastPredictionsObject = jsonToArray(pastPredictions);
 
@@ -81,7 +79,7 @@ function Home(props) {
       <SafeAreaView>
         <View style={homeStyles.header}>
           <View style={{ flex: 1 }}>
-            <Text style={homeStyles.name}>{name}</Text>
+            <Text style={homeStyles.name}>{displayName}</Text>
             <Text style={homeStyles.rank}>
               Rank:
               {rank}
@@ -92,9 +90,6 @@ function Home(props) {
             </Text>
           </View>
         </View>
-        <LinearGradient style={homeStyles.headerShadow} colors={["black", "#9c2c98"]}>
-          <Text style={{ color: "azure" }}>Home Screen</Text>
-        </LinearGradient>
         <ScrollView contentContainerStyle={{ paddingBottom: 150}}>
           <Text style={{ color: 'blue'}}>Latest predictions</Text>
           {newPredictionsObject.map((prediction, idx) => (

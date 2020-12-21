@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { connect } from "react-redux";
 
 const communityStyles = StyleSheet.create({
@@ -52,33 +51,42 @@ const communityStyles = StyleSheet.create({
     color: "#9c2c98",
     fontSize: 20,
     justifyContent: "flex-end"
-  }
+  },
+  accuracy: {
+    fontFamily: "Staatliches_400Regular",
+    color: "azure",
+    fontSize: 15,
+    justifyContent: "flex-end"
+  },
 });
 
 function Community(props) {
-  const { displayName, email } = props;
-  const name = displayName === "" ? email : displayName;
+  const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy } = props;
 
   return (
     <View style={communityStyles.container}>
       <SafeAreaView>
         <View style={communityStyles.header}>
           <View style={{ flex: 1 }}>
-            <Text style={communityStyles.name}>{name}</Text>
-            <Text style={communityStyles.rank}>Rank: 100</Text>
+            <Text style={communityStyles.name}>{displayName}</Text>
+            <Text style={communityStyles.rank}>
+              Rank:
+              {rank}
+            </Text>
+            <Text style={communityStyles.accuracy}>
+              Accuracy:
+              {`${accuracy * 100}%, Currency: ${currency}`}
+            </Text>
           </View>
         </View>
-        <LinearGradient style={communityStyles.headerShadow} colors={["black", "#9c2c98"]}>
-          <Text style={{ color: "azure" }}>Community Screen</Text>
-        </LinearGradient>
       </SafeAreaView>
     </View>
   );
 }
 
 const mapStateToProps = state => {
-  const { displayName, email } = state.currentUser;
-  return { displayName, email };
+  const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy } = state.currentUser;
+  return { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy };
 };
 
 export default connect(mapStateToProps)(Community);
