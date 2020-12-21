@@ -10,7 +10,7 @@ const homeStyles = StyleSheet.create({
     backgroundColor: "black"
   },
   header: {
-    height: 80,
+    height: 90,
     backgroundColor: "black",
     flexDirection: "row"
   },
@@ -71,9 +71,10 @@ const homeStyles = StyleSheet.create({
 });
 
 function Home(props) {
-  const { displayName, email, rank, newPredictions, currency, accuracy } = props;
+  const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy } = props;
   const name = displayName === "" ? email : displayName;
   const newPredictionsObject = jsonToArray(newPredictions);
+  const pastPredictionsObject = jsonToArray(pastPredictions);
 
   return (
     <View style={homeStyles.container}>
@@ -94,8 +95,26 @@ function Home(props) {
         <LinearGradient style={homeStyles.headerShadow} colors={["black", "#9c2c98"]}>
           <Text style={{ color: "azure" }}>Home Screen</Text>
         </LinearGradient>
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ paddingBottom: 150}}>
+          <Text style={{ color: 'blue'}}>Latest predictions</Text>
           {newPredictionsObject.map((prediction, idx) => (
+            <View key={idx.toString()}>
+              <Text style={homeStyles.predictionNames}>
+                {prediction.name}
+                {` ${prediction.value.type}`}
+              </Text>
+              <Text style={homeStyles.predictionInfo}>
+                Predicted Price:
+                {prediction.value.price}
+              </Text>
+              <Text style={homeStyles.predictionInfo}>
+                Predicted Date:
+                {prediction.value.date}
+              </Text>
+            </View>
+          ))}
+          <Text style={{ color: 'blue'}}>Past predictions</Text>
+          {pastPredictionsObject.map((prediction, idx) => (
             <View key={idx.toString()}>
               <Text style={homeStyles.predictionNames}>
                 {prediction.name}
