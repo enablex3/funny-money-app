@@ -70,9 +70,11 @@ const homeStyles = StyleSheet.create({
 });
 
 function Home(props) {
-  const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy } = props;
+  const { displayName, fullName, email, rank, newPredictions, pastPredictions, currency, accuracy } = props;
   const newPredictionsObject = jsonToArray(newPredictions);
   const pastPredictionsObject = jsonToArray(pastPredictions);
+
+  console.log(fullName);
 
   return (
     <View style={homeStyles.container}>
@@ -132,8 +134,8 @@ function Home(props) {
 }
 
 const mapStateToProps = state => {
-  const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy } = state.currentUser;
-  return { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy };
+  const { displayName, fullName, email, rank, newPredictions, pastPredictions, currency, accuracy } = state.currentUser;
+  return { displayName, fullName, email, rank, newPredictions, pastPredictions, currency, accuracy };
 };
 
 export default connect(mapStateToProps)(Home);

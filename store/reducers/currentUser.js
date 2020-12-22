@@ -3,6 +3,7 @@ import { currentUserActionTypes as actionTypes } from "../actionTypes";
 const initialState = {
   id: null,
   displayName: "",
+  fullName: "",
   rank: null,
   currency: "",
   newPredictions: {},
@@ -18,11 +19,12 @@ const currentUserReducer = (state = initialState, action) => {
     case actionTypes.FETCH_USER_START:
       return { ...state, fetching: true };
     case actionTypes.FETCH_USER_SUCCESS: {
-      const { id, displayName, rank, currency, newPredictions, pastPredictions, accuracy } = action.payload;
+      const { id, displayName, fullName, rank, currency, newPredictions, pastPredictions, accuracy } = action.payload;
       return {
         ...state,
         id,
         displayName,
+        fullName,
         rank,
         currency,
         newPredictions,
@@ -40,11 +42,12 @@ const currentUserReducer = (state = initialState, action) => {
     case actionTypes.CREATE_USER_START:
       return { ...state, fetching: true };
     case actionTypes.CREATE_USER_SUCCESS: {
-      const { id, displayName, rank, currency, newPredictions, pastPredictions, accuracy } = action.payload;
+      const { id, displayName, fullName, rank, currency, newPredictions, pastPredictions, accuracy } = action.payload;
       return {
         ...state,
         id,
         displayName,
+        fullName,
         rank,
         currency,
         newPredictions,
