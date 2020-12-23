@@ -12,4 +12,10 @@ export const currentUserActionTypes = {
   SET_PAST_PREDICTIONS: "SET_PAST_PREDICTIONS"
 };
 
+export const newsActionTypes = {
+  FETCH_NEWS_START: "FETCH_NEWS_START",
+  FETCH_NEWS_SUCCESS: "FETCH_NEWS_SUCCESS",
+  FETCH_NEWS_FAIL: "FETCH_NEWS_FAIL"
+};
+
 export const appActionTypes = {};

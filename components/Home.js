@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
+import News from "./News";
 import { jsonToArray } from "../utils/jsonToArray";
 
 const homeStyles = StyleSheet.create({
@@ -70,11 +71,9 @@ const homeStyles = StyleSheet.create({
 });
 
 function Home(props) {
-  const { displayName, fullName, email, rank, newPredictions, pastPredictions, currency, accuracy } = props;
+  const { displayName, rank, newPredictions, pastPredictions, currency, accuracy } = props;
   const newPredictionsObject = jsonToArray(newPredictions);
   const pastPredictionsObject = jsonToArray(pastPredictions);
-
-  console.log(fullName);
 
   return (
     <View style={homeStyles.container}>
@@ -92,8 +91,8 @@ function Home(props) {
             </Text>
           </View>
         </View>
-        <ScrollView contentContainerStyle={{ paddingBottom: 150}}>
-          <Text style={{ color: 'blue'}}>Latest predictions</Text>
+        <ScrollView contentContainerStyle={{ paddingBottom: 150 }}>
+          <Text style={{ color: "blue" }}>Latest predictions</Text>
           {newPredictionsObject.map((prediction, idx) => (
             <View key={idx.toString()}>
               <Text style={homeStyles.predictionNames}>
@@ -110,7 +109,7 @@ function Home(props) {
               </Text>
             </View>
           ))}
-          <Text style={{ color: 'blue'}}>Past predictions</Text>
+          <Text style={{ color: "blue" }}>Past predictions</Text>
           {pastPredictionsObject.map((prediction, idx) => (
             <View key={idx.toString()}>
               <Text style={homeStyles.predictionNames}>
@@ -127,6 +126,7 @@ function Home(props) {
               </Text>
             </View>
           ))}
+          <News />
         </ScrollView>
       </SafeAreaView>
     </View>
