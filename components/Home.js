@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
+import LatestPredictions from "./Predictions/LatestPredictions";
+import PastPredictions from "./Predictions/PastPredictions";
 import News from "./News";
 import { jsonToArray } from "../utils/jsonToArray";
 
@@ -91,41 +93,12 @@ function Home(props) {
             </Text>
           </View>
         </View>
-        <ScrollView contentContainerStyle={{ paddingBottom: 150 }}>
-          <Text style={{ color: "blue" }}>Latest predictions</Text>
-          {newPredictionsObject.map((prediction, idx) => (
-            <View key={idx.toString()}>
-              <Text style={homeStyles.predictionNames}>
-                {prediction.name}
-                {` ${prediction.value.type}`}
-              </Text>
-              <Text style={homeStyles.predictionInfo}>
-                Predicted Price:
-                {prediction.value.price}
-              </Text>
-              <Text style={homeStyles.predictionInfo}>
-                Predicted Date:
-                {prediction.value.date}
-              </Text>
-            </View>
-          ))}
-          <Text style={{ color: "blue" }}>Past predictions</Text>
-          {pastPredictionsObject.map((prediction, idx) => (
-            <View key={idx.toString()}>
-              <Text style={homeStyles.predictionNames}>
-                {prediction.name}
-                {` ${prediction.value.type}`}
-              </Text>
-              <Text style={homeStyles.predictionInfo}>
-                Predicted Price:
-                {prediction.value.price}
-              </Text>
-              <Text style={homeStyles.predictionInfo}>
-                Predicted Date:
-                {prediction.value.date}
-              </Text>
-            </View>
-          ))}
+        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
+          <Text style={{ color: "azure", textAlign: "center", marginTop: 10 }}>Latest predictions</Text>
+          <LatestPredictions />
+          <Text style={{ color: "azure", textAlign: "center", marginTop: 10 }}>Past predictions</Text>
+          <PastPredictions />
+          <Text style={{ color: "azure", textAlign: "center", marginTop: 10 }}>Latest News</Text>
           <News />
         </ScrollView>
       </SafeAreaView>
