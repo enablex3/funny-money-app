@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ScrollView, Image, Linking } from "react-native";
+import { StyleSheet, Text, View, ScrollView, Image, Linking, TouchableHighlight } from "react-native";
 import { connect } from "react-redux";
 import { fetchNews } from "../store/actions/news";
 import FetchingIndicator from "./FetchingIndicator";
@@ -10,6 +10,9 @@ const newsStyles = StyleSheet.create({
     backgroundColor: "black",
     marginVertical: 50
   },
+  textBox: {
+    margin: 5
+  },
   text: {
     color: "black"
   },
@@ -17,11 +20,12 @@ const newsStyles = StyleSheet.create({
     backgroundColor: "white",
     marginHorizontal: 25,
     marginBottom: 50,
-    maxWidth: 300
+    width: 300,
+    height: 400
   },
   image: {
-    width: 50,
-    height: 50
+    width: 300,
+    height: 300
   }
 });
 
@@ -45,13 +49,17 @@ class News extends Component {
               const { title, url, urlToImage } = article;
 
               return (
-                <View key={index.toString()} style={newsStyles.box}>
-                  <Text styles={newsStyles.text}>{source}</Text>
-                  <Text styles={newsStyles.text} onPress={() => Linking.openURL(url)}>
-                    {title}
-                  </Text>
-                  <Image style={newsStyles.image} source={{ uri: urlToImage }} />
-                </View>
+                <TouchableHighlight key={index.toString()} onPress={() => Linking.openURL(url)}>
+                  <View style={newsStyles.box}>
+                    <Image style={newsStyles.image} source={{ uri: urlToImage }} />
+                    <View style={newsStyles.textBox}>
+                      <Text styles={newsStyles.text}>{source}</Text>
+                    </View>
+                    <View style={newsStyles.textBox}>
+                      <Text styles={newsStyles.text}>{title}</Text>
+                    </View>
+                  </View>
+                </TouchableHighlight>
               );
             })}
           </ScrollView>
