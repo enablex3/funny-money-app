@@ -25,15 +25,16 @@ function PastPredictions(props) {
     const tableData = pastPredictionsObject.map(prediction =>
         [
             <Text style={tableStyles.row} onPress={() => showDetails(prediction)}>{prediction.name}</Text>, 
-            <Text style={tableStyles.row}>{accuracy}</Text>,
-            <Text style={tableStyles.row}>${prediction.value.price}</Text>
+            <Text style={tableStyles.row} onPress={() => showDetails(prediction)}>{accuracy}</Text>,
+            <Text style={tableStyles.row} onPress={() => showDetails(prediction)}>${prediction.value.price}</Text>
         ]
     );
 
     const showDetails = (prediction) => {
         Alert.alert("Name: " + prediction.name +
                     "\nDate: " + prediction.value.date + 
-                    "\nPrice: " + prediction.value.price);
+                    "\nPrice: " + prediction.value.price + 
+                    "\nType: " + prediction.value.type);
     }
 
     return(

@@ -24,15 +24,16 @@ function LatestPredictions(props) {
     const tableData = newPredictionsObject.map(prediction =>
         [
             <Text style={tableStyles.row} onPress={() => showDetails(prediction)}>{prediction.name}</Text>, 
-            <Text style={tableStyles.row}>{getDiff(prediction.value.date)}</Text>,
-            <Text style={tableStyles.row}>${prediction.value.price}</Text>
+            <Text style={tableStyles.row} onPress={() => showDetails(prediction)}>{getDiff(prediction.value.date)}</Text>,
+            <Text style={tableStyles.row} onPress={() => showDetails(prediction)}>${prediction.value.price}</Text>
         ]
     );
 
     const showDetails = (prediction) => {
         Alert.alert("Name: " + prediction.name +
                     "\nDate: " + prediction.value.date + 
-                    "\nPrice: " + prediction.value.price);
+                    "\nPrice: " + prediction.value.price + 
+                    "\nType: " + prediction.value.type);
     }
 
     return(

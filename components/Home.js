@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import LatestPredictions from "./Predictions/LatestPredictions";
 import PastPredictions from "./Predictions/PastPredictions";
 import News from "./News";
-import { jsonToArray } from "../utils/jsonToArray";
 
 const homeStyles = StyleSheet.create({
   container: {
@@ -74,8 +73,6 @@ const homeStyles = StyleSheet.create({
 
 function Home(props) {
   const { displayName, rank, newPredictions, pastPredictions, currency, accuracy } = props;
-  const newPredictionsObject = jsonToArray(newPredictions);
-  const pastPredictionsObject = jsonToArray(pastPredictions);
 
   return (
     <View style={homeStyles.container}>
