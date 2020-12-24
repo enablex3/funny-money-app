@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, Button } from "react-native";
 import { connect } from "react-redux";
 import LatestPredictions from "./Predictions/LatestPredictions";
 import PastPredictions from "./Predictions/PastPredictions";
@@ -13,7 +13,9 @@ const homeStyles = StyleSheet.create({
   header: {
     height: 90,
     backgroundColor: "black",
-    flexDirection: "row"
+    flexDirection: "row",
+    borderWidth: 1,
+    borderBottomColor: "#9c2c98"
   },
   headerShadow: {
     justifyContent: "center",
@@ -92,9 +94,21 @@ function Home(props) {
         </View>
         <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
           <Text style={{ color: "azure", textAlign: "center", marginTop: 10 }}>Latest predictions</Text>
-          <LatestPredictions />
+           { Object.keys(newPredictions).length > 0
+             ? <LatestPredictions />
+             : <View>
+                <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: 'bold' }}>You don't have any predictions yet.</Text>
+                <Button title="Create a new prediction" onPress={() => props.navigation.navigate("Predict")}/>
+              </View>
+           }
           <Text style={{ color: "azure", textAlign: "center", marginTop: 10 }}>Past predictions</Text>
-          <PastPredictions />
+          { Object.keys(pastPredictions).length > 0
+            ?  <PastPredictions />
+            : <View>
+                <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: 'bold' }}>You have no past predictions.</Text>
+              </View>
+          }
+
           <Text style={{ color: "azure", textAlign: "center", marginTop: 10 }}>Latest News</Text>
           <News />
         </ScrollView>
