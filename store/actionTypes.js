@@ -18,4 +18,9 @@ export const newsActionTypes = {
   FETCH_NEWS_FAIL: "FETCH_NEWS_FAIL"
 };
 
+export const predictionActionTypes = {
+  SET_NAME_OR_SYMBOL: "SET_NAME_OR_SYMBOL",
+  SET_DATE: "SET_DATE"
+};
+
 export const appActionTypes = {};
