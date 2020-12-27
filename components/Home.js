@@ -77,43 +77,48 @@ function Home(props) {
   const { displayName, rank, newPredictions, pastPredictions, currency, accuracy } = props;
 
   return (
-    <View style={homeStyles.container}>
-      <SafeAreaView>
-        <View style={homeStyles.header}>
-          <View style={{ flex: 1 }}>
-            <Text style={homeStyles.name}>{displayName}</Text>
-            <Text style={homeStyles.rank}>
-              Rank:
-              {rank}
-            </Text>
-            <Text style={homeStyles.accuracy}>
-              Accuracy:
-              {`${accuracy * 100}%, Currency: ${currency}`}
-            </Text>
+    <ScrollView>
+      <View style={homeStyles.container}>
+        <SafeAreaView>
+          <View style={homeStyles.header}>
+            <View style={{ flex: 1 }}>
+              <Text style={homeStyles.name}>{displayName}</Text>
+              <Text style={homeStyles.rank}>
+                Rank:
+                {rank}
+              </Text>
+              <Text style={homeStyles.accuracy}>
+                Accuracy:
+                {`${accuracy * 100}%, Currency: ${currency}`}
+              </Text>
+            </View>
           </View>
-        </View>
-        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
           <Text style={{ color: "azure", textAlign: "center", marginTop: 10 }}>Latest predictions</Text>
-           { Object.keys(newPredictions).length > 0
-             ? <LatestPredictions />
-             : <View>
-                <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: 'bold' }}>You don't have any predictions yet.</Text>
-                <Button title="Create a new prediction" onPress={() => props.navigation.navigate("Predict")}/>
-              </View>
-           }
+          {Object.keys(newPredictions).length > 0 ? (
+            <LatestPredictions />
+          ) : (
+            <View>
+              <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold" }}>
+                You don't have any predictions yet.
+              </Text>
+              <Button title="Create a new prediction" onPress={() => props.navigation.navigate("Predict")} />
+            </View>
+          )}
           <Text style={{ color: "azure", textAlign: "center", marginTop: 10 }}>Past predictions</Text>
-          { Object.keys(pastPredictions).length > 0
-            ?  <PastPredictions />
-            : <View>
-                <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: 'bold' }}>You have no past predictions.</Text>
-              </View>
-          }
-
+          {Object.keys(pastPredictions).length > 0 ? (
+            <PastPredictions />
+          ) : (
+            <View>
+              <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold" }}>
+                You have no past predictions.
+              </Text>
+            </View>
+          )}
           <Text style={{ color: "azure", textAlign: "center", marginTop: 10 }}>Latest News</Text>
           <News />
-        </ScrollView>
-      </SafeAreaView>
-    </View>
+        </SafeAreaView>
+      </View>
+    </ScrollView>
   );
 }
 
