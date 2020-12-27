@@ -3,15 +3,12 @@ import { StyleSheet, Text, View, SafeAreaView, Platform, TextInput, Button } fro
 import DatePicker from "react-datepicker";
 import { connect } from "react-redux";
 import { setDate, setNameOrSymbol } from "../store/actions/prediction";
+import Header from "./Header";
 import "react-datepicker/dist/react-datepicker.css";
 
 const predictStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black"
-  },
-  header: {
-    height: 90,
     backgroundColor: "black"
   },
   nameOrSymbolInput: {
@@ -36,7 +33,8 @@ function Predict({ predictionDate, setPredictionDate, predictionNameOrSymbol, se
   return (
     <View style={predictStyles.container}>
       <SafeAreaView>
-        <View style={predictStyles.header}>
+        <Header />
+        <View>
           <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold" }}>
             Start a new prediction.
           </Text>
