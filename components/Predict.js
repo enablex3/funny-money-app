@@ -12,9 +12,15 @@ const predictStyles = StyleSheet.create({
     backgroundColor: "black"
   },
   nameOrSymbolInput: {
-    width: Platform.OS === "ios" || Platform.OS === "android" ? "100%" : "50%",
-    backgroundColor: "white",
-    color: "black"
+    borderBottomWidth: 1,
+    borderBottomColor: "#333",
+    color: "azure",
+    fontSize: 20,
+    marginTop: 30,
+    marginLeft: 5,
+    marginRight: 5,
+    paddingBottom: 10,
+    fontFamily: "Staatliches_400Regular"
   },
   button: {
     color: "black",
@@ -26,6 +32,21 @@ const predictStyles = StyleSheet.create({
     overflow: "hidden",
     fontSize: 25,
     fontFamily: "Staatliches_400Regular"
+  },
+  text: {
+    marginTop: 5,
+    color: "azure"
+  },
+  form: {
+    margin: "auto",
+    marginTop: 30,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#9c2c98",
+    width: Platform.OS === "ios" || Platform.OS === "android" ? "100%" : "50%"
+  },
+  datePicker: {
+    marginLeft: 5
   }
 });
 
@@ -34,27 +55,30 @@ function Predict({ predictionDate, setPredictionDate, predictionNameOrSymbol, se
     <View style={predictStyles.container}>
       <SafeAreaView>
         <Header />
-        <View>
+        <View style={predictStyles.form}>
           <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold" }}>
             Start a new prediction.
           </Text>
+          <TextInput
+            placeholder="Name or Symbol"
+            placeholderTextColor="#555"
+            style={predictStyles.nameOrSymbolInput}
+            onChangeText={setPredictionNameOrSymbol}
+            value={predictionNameOrSymbol}
+          />
           {Platform.OS === "ios" || Platform.OS === "android" ? (
             <View>
               <Text>This component currently does not support ios and android</Text>
             </View>
           ) : (
-            <View>
-              <Text>Name or Symbol:</Text>
-              <TextInput
-                style={predictStyles.nameOrSymbolInput}
-                onChangeText={setPredictionNameOrSymbol}
-                value={predictionNameOrSymbol}
-              />
-              <Text>Prediction Outcome Date</Text>
-              <DatePicker selected={predictionDate} onChange={setPredictionDate} />
+            <View style={predictStyles.datePicker}>
+              <Text style={predictStyles.text}>Prediction Outcome Date</Text>
+              <DatePicker minDate={new Date()} selected={predictionDate} onChange={setPredictionDate} />
             </View>
           )}
-          <Button style={predictStyles.button}>Create Prediction</Button>
+          <Text style={predictStyles.button} onPress={() => null}>
+            Create Prediction
+          </Text>
         </View>
       </SafeAreaView>
     </View>
