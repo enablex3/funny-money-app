@@ -1,10 +1,8 @@
 import React from "react";
-import { StyleSheet, Text, View, SafeAreaView, Platform, TextInput, Button } from "react-native";
-import DatePicker from "react-datepicker";
+import { StyleSheet, Text, View, SafeAreaView, Platform, TextInput } from "react-native";
 import { connect } from "react-redux";
 import { setDate, setNameOrSymbol } from "../store/actions/prediction";
 import Header from "./Header";
-import "react-datepicker/dist/react-datepicker.css";
 
 const predictStyles = StyleSheet.create({
   container: {
@@ -50,7 +48,7 @@ const predictStyles = StyleSheet.create({
   }
 });
 
-function Predict({ predictionDate, setPredictionDate, predictionNameOrSymbol, setPredictionNameOrSymbol }) {
+function Predict({ predictionNameOrSymbol, setPredictionNameOrSymbol }) {
   return (
     <View style={predictStyles.container}>
       <SafeAreaView>
@@ -66,16 +64,6 @@ function Predict({ predictionDate, setPredictionDate, predictionNameOrSymbol, se
             onChangeText={setPredictionNameOrSymbol}
             value={predictionNameOrSymbol}
           />
-          {Platform.OS === "ios" || Platform.OS === "android" ? (
-            <View>
-              <Text>This component currently does not support ios and android</Text>
-            </View>
-          ) : (
-            <View style={predictStyles.datePicker}>
-              <Text style={predictStyles.text}>Prediction Outcome Date</Text>
-              <DatePicker minDate={new Date()} selected={predictionDate} onChange={setPredictionDate} />
-            </View>
-          )}
           <Text style={predictStyles.button} onPress={() => null}>
             Create Prediction
           </Text>
