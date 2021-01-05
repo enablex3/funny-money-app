@@ -2,14 +2,14 @@ import range from "./index";
 
 class Calendar {
   static calendarPage(date) {
-    const dayIndexOfDate = date.getDay();
+    const dayIndexOfFirst = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
     const numberOfDaysInPreviousMonth = new Date(
       date.getMonth() === 0 ? date.getFullYear() - 1 : date.getFullYear(),
       date.getMonth() === 0 ? 12 : date.getMonth(),
       0
     ).getDate();
     const previousMonthDates = [
-      ...range(numberOfDaysInPreviousMonth - dayIndexOfDate - 2, numberOfDaysInPreviousMonth)
+      ...range(numberOfDaysInPreviousMonth - dayIndexOfFirst + 1, numberOfDaysInPreviousMonth)
     ];
     const numberOfDaysInCurrentMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
     const currentMonthDates = [...range(1, numberOfDaysInCurrentMonth)];
