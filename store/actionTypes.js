@@ -20,7 +20,8 @@ export const newsActionTypes = {
 
 export const predictionActionTypes = {
   SET_NAME_OR_SYMBOL: "SET_NAME_OR_SYMBOL",
-  SET_DATE: "SET_DATE"
+  SET_DATE: "SET_DATE",
+  SET_PRICE: "SET_PRICE"
 };
 
 export const appActionTypes = {};

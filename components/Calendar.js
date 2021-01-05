@@ -6,11 +6,11 @@ import CalendarUtil from "../utils/calendar";
 import { setDate } from "../store/actions/prediction";
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: "black" },
+  container: { backgroundColor: "black" },
   head: { height: 40, backgroundColor: "#808B97" },
   text: { textAlign: "center" },
   row: { flexDirection: "row", backgroundColor: "#FFF1C1" },
-  cell: { height: 25, backgroundColor: "white", borderRadius: 2, textAlign: "center", padding: 5 }
+  cell: { height: 25, backgroundColor: "white", textAlign: "center", padding: 5 }
 });
 
 const tableHead = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
@@ -21,8 +21,13 @@ function Calendar({ predictionDate, setPredictionDate }) {
   const calendarRows = CalendarUtil.rows(predictionDate);
 
   const cell = cellData => {
+    let cellBackground = "white";
+
+    if (+cellData === +predictionDate) cellBackground = "#9c2c98";
+    else if (cellData < currentDate) cellBackground = "grey";
+
     const el = (
-      <View style={styles.cell}>
+      <View style={[styles.cell, { backgroundColor: cellBackground }]}>
         <Text style={styles.text}>{cellData.getDate()}</Text>
       </View>
     );
