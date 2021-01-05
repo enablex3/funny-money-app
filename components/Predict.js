@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, SafeAreaView, Platform, TextInput } from "react-native";
 import { connect } from "react-redux";
+import Calendar from "./Calendar";
 import { setDate, setNameOrSymbol } from "../store/actions/prediction";
 import Header from "./Header";
 
@@ -64,6 +65,7 @@ function Predict({ predictionNameOrSymbol, setPredictionNameOrSymbol }) {
             onChangeText={setPredictionNameOrSymbol}
             value={predictionNameOrSymbol}
           />
+          <Calendar />
           <Text style={predictStyles.button} onPress={() => null}>
             Create Prediction
           </Text>
