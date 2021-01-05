@@ -9,3 +9,8 @@ export const setDate = date => ({
   type: actionTypes.SET_DATE,
   payload: date
 });
+
+export const setPrice = price => ({
+  type: actionTypes.SET_PRICE,
+  payload: price
+});
