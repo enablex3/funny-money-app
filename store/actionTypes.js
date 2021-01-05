@@ -23,4 +23,9 @@ export const predictionActionTypes = {
   SET_DATE: "SET_DATE"
 };
 
+export const themeActionTypes = {
+  SET_DARK_MODE = "SET_DARK_MODE",
+  SET_LIGHT_MODE = "SET_LIGHT_MODE",
+};
+
 export const appActionTypes = {};

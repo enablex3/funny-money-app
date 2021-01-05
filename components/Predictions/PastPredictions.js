@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, View, Text, Alert } from "react-native";
 import { Table, Row, Rows } from "react-native-table-component";
 import { jsonToArray } from "../../utils/jsonToArray";
-import { getDiff } from "../../utils/DateDifference";
 import { connect } from "react-redux";
 import { acc } from "react-native-reanimated";
 

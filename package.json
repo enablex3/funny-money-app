@@ -41,7 +41,8 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "yup": "^0.32.8"
+    "yup": "^0.32.8",
+    "react-native-appearance": "~0.3.3"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
