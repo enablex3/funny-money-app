@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import { Table, TableWrapper, Row, Cell } from "react-native-table-component";
 import CalendarUtil from "../utils/calendar";
 
@@ -8,8 +8,7 @@ const styles = StyleSheet.create({
   head: { height: 40, backgroundColor: "#808B97" },
   text: { margin: 6 },
   row: { flexDirection: "row", backgroundColor: "#FFF1C1" },
-  btn: { width: 58, height: 18, backgroundColor: "#78B7BB", borderRadius: 2 },
-  btnText: { textAlign: "center", color: "#fff" }
+  cell: { width: 58, height: 18, backgroundColor: "#78B7BB", borderRadius: 2 }
 });
 
 const tableHead = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
@@ -18,7 +17,15 @@ function Calendar() {
   const currentDate = new Date();
   const calendarRows = CalendarUtil.rows(currentDate);
 
-  console.log(calendarRows);
+  const cell = cellData => {
+    const el = (
+      <View style={styles.cell}>
+        <Text>{cellData.getDate()}</Text>
+      </View>
+    );
+
+    return cellData > currentDate ? <TouchableOpacity onPress={() => null}>{el}</TouchableOpacity> : el;
+  };
 
   return (
     <View style={styles.container}>
@@ -27,7 +34,7 @@ function Calendar() {
         {calendarRows.map((rowData, index) => (
           <TableWrapper key={index.toString()} style={styles.row}>
             {rowData.map((cellData, cellIndex) => (
-              <Cell key={cellIndex.toString()} data={cellData.getDate()} textStyle={styles.text} />
+              <Cell key={cellIndex.toString()} data={cell(cellData)} textStyle={styles.text} />
             ))}
           </TableWrapper>
         ))}
