@@ -39,11 +39,29 @@ function Calendar({ predictionDate, setPredictionDate }) {
     );
   };
 
+  const yearRow = (
+    <Text style={styles.text}>
+      {predictionDate.getFullYear() !== currentDate.getFullYear() && (
+        <Text onPress={() => setPredictionDate(CalendarUtil.decrementYear(predictionDate))}>🠜</Text>
+      )}
+      <Text>{predictionDate.getFullYear()}</Text>
+      <Text onPress={() => setPredictionDate(CalendarUtil.incrementYear(predictionDate))}>🠞</Text>
+    </Text>
+  );
+
+  const monthRow = (
+    <Text style={styles.text}>
+      <Text onPress={() => setPredictionDate(CalendarUtil.decrementMonth(predictionDate))}>🠜</Text>
+      <Text>{months[predictionDate.getMonth()]}</Text>
+      <Text onPress={() => setPredictionDate(CalendarUtil.incrementMonth(predictionDate))}>🠞</Text>
+    </Text>
+  );
+
   return (
     <View style={styles.container}>
       <Table borderStyle={{ borderColor: "transparent" }}>
-        <Row data={[predictionDate.getFullYear()]} style={styles.head} textStyle={styles.text} />
-        <Row data={[months[predictionDate.getMonth()]]} style={styles.head} textStyle={styles.text} />
+        <Row data={[yearRow]} style={styles.head} />
+        <Row data={[monthRow]} style={styles.head} textStyle={styles.text} />
         <Row data={tableHead} style={styles.head} textStyle={styles.text} />
         {calendarRows.map((rowData, index) => (
           <TableWrapper key={index.toString()} style={styles.row}>

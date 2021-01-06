@@ -50,6 +50,22 @@ class Calendar {
       page.slice(35, 42)
     ];
   }
+
+  static decrementYear(date) {
+    return new Date(date.getFullYear() - 1, date.getMonth(), date.getDate());
+  }
+
+  static incrementYear(date) {
+    return new Date(date.getFullYear() + 1, date.getMonth(), date.getDate());
+  }
+
+  static decrementMonth(date) {
+    return new Date(date.getFullYear(), date.getMonth() === 0 ? 11 : date.getMonth() - 1, date.getDate());
+  }
+
+  static incrementMonth(date) {
+    return new Date(date.getFullYear(), date.getMonth() === 11 ? 0 : date.getMonth() + 1, date.getDate());
+  }
 }
 
 export default Calendar;
