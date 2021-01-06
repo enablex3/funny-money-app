@@ -7,12 +7,14 @@ const initialState = {
 
 const themeReducer = ( state = initialState, action ) => {
     switch(action.type) {
-        case actionTypes.SET_DARK_MODE: 
+        case actionTypes.SET_DARK_MODE: { 
             const { primaryTextColor, backgroundColor } = action.payload;
             return { ...state, primaryTextColor, backgroundColor };
-        case actionTypes.SET_LIGHT_MODE: 
+        }
+        case actionTypes.SET_LIGHT_MODE: {
             const { primaryTextColor, backgroundColor } = action.payload;
             return { ...state, primaryTextColor, backgroundColor };
+        }
         default:
             return state;
     }
