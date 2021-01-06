@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, Platform, TextInput, ScrollView } from "react-n
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
 import Calendar from "./Calendar";
-import { setNameOrSymbol, setPrice } from "../store/actions/prediction";
+import FetchingIndicator from "./FetchingIndicator";
+import { setNameOrSymbol, setPrice, createPrediction } from "../store/actions/prediction";
 import Header from "./Header";
 
 const predictStyles = StyleSheet.create({
@@ -51,12 +52,15 @@ function Predict({
   setPredictionNameOrSymbol,
   predictionDate,
   predictionPrice,
-  setPredictionPrice
+  setPredictionPrice,
+  createNewPrediction,
+  fetching,
+  navigation
 }) {
   return (
     <View style={predictStyles.container}>
+      <Header />
       <ScrollView>
-        <Header />
         <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold" }}>
           Start a new prediction.
         </Text>
@@ -75,6 +79,7 @@ function Predict({
             onChangeText={setPredictionPrice}
             value={predictionPrice}
           />
+          <FetchingIndicator fetching={fetching} />
           <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold" }}>
             Date of Prediction Outcome
           </Text>
@@ -82,7 +87,16 @@ function Predict({
           <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold" }}>
             {dateFormat(predictionDate, "dddd, mmmm dS, yyyy")}
           </Text>
-          <Text style={predictStyles.button} onPress={() => null}>
+          <Text
+            style={predictStyles.button}
+            onPress={() => {
+              createNewPrediction(
+                { nameOrSymbol: predictionNameOrSymbol, date: predictionDate, price: predictionPrice },
+                () => {
+                  navigation.navigate("Home");
+                }
+              );
+            }}>
             Create Prediction
           </Text>
         </View>
@@ -92,13 +106,14 @@ function Predict({
 }
 
 const mapStateToProps = state => {
-  const { date, nameOrSymbol, price } = state.prediction;
-  return { predictionDate: date, predictionNameOrSymbol: nameOrSymbol, predictionPrice: price };
+  const { date, nameOrSymbol, price, fetching, error } = state.prediction;
+  return { predictionDate: date, predictionNameOrSymbol: nameOrSymbol, predictionPrice: price, fetching, error };
 };
 
 const mapDispatchToProps = dispatch => ({
   setPredictionNameOrSymbol: nameOrSymbol => dispatch(setNameOrSymbol(nameOrSymbol)),
-  setPredictionPrice: price => dispatch(setPrice(price))
+  setPredictionPrice: price => dispatch(setPrice(price)),
+  createNewPrediction: (prediction, successCallback) => dispatch(createPrediction(prediction, successCallback))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Predict);
