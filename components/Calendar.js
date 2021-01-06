@@ -1,4 +1,5 @@
 import React from "react";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import { Table, TableWrapper, Row, Cell } from "react-native-table-component";
 import { connect } from "react-redux";
@@ -42,18 +43,26 @@ function Calendar({ predictionDate, setPredictionDate }) {
   const yearRow = (
     <Text style={styles.text}>
       {predictionDate.getFullYear() !== currentDate.getFullYear() && (
-        <Text onPress={() => setPredictionDate(CalendarUtil.decrementYear(predictionDate))}>🠜</Text>
+        <Text onPress={() => setPredictionDate(CalendarUtil.decrementYear(predictionDate))}>
+          <MaterialCommunityIcons name="arrow-left-bold" color="black" size={30} />
+        </Text>
       )}
       <Text>{predictionDate.getFullYear()}</Text>
-      <Text onPress={() => setPredictionDate(CalendarUtil.incrementYear(predictionDate))}>🠞</Text>
+      <Text onPress={() => setPredictionDate(CalendarUtil.incrementYear(predictionDate))}>
+        <MaterialCommunityIcons name="arrow-right-bold" color="black" size={30} />
+      </Text>
     </Text>
   );
 
   const monthRow = (
     <Text style={styles.text}>
-      <Text onPress={() => setPredictionDate(CalendarUtil.decrementMonth(predictionDate))}>🠜</Text>
+      <Text onPress={() => setPredictionDate(CalendarUtil.decrementMonth(predictionDate))}>
+        <MaterialCommunityIcons name="arrow-left-bold" color="black" size={30} />
+      </Text>
       <Text>{months[predictionDate.getMonth()]}</Text>
-      <Text onPress={() => setPredictionDate(CalendarUtil.incrementMonth(predictionDate))}>🠞</Text>
+      <Text onPress={() => setPredictionDate(CalendarUtil.incrementMonth(predictionDate))}>
+        <MaterialCommunityIcons name="arrow-right-bold" color="black" size={30} />
+      </Text>
     </Text>
   );
 
