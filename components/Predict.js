@@ -73,7 +73,7 @@ function Predict({ predictionDate, createNewPrediction, fetching, navigation }) 
           Start a new prediction.
         </Text>
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={{ nameOrSymbol: "", price: "" }}
           validationSchema={predictionSchema}
           onSubmit={values => {
             const { nameOrSymbol, price } = values;
@@ -96,13 +96,13 @@ function Predict({ predictionDate, createNewPrediction, fetching, navigation }) 
                 }) => (
                   <View {...getRootProps({}, { suppressRefError: true })}>
                     <TextInput
+                      {...getInputProps()}
                       placeholder="Name or Symbol"
                       placeholderTextColor="#555"
                       style={predictStyles.input}
                       onChangeText={handleChange("nameOrSymbol")}
-                      value={values.nameOrSymbol}
+                      value={inputValue}
                       onBlur={handleBlur("nameOrSymbol")}
-                      {...getInputProps()}
                     />
                     {isOpen
                       ? items
