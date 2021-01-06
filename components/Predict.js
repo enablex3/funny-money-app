@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Platform, TextInput, ScrollView } from "react-native";
 import { Formik } from "formik";
+import Downshift from "downshift";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
 import Calendar from "./Calendar";
@@ -52,6 +53,17 @@ const predictStyles = StyleSheet.create({
   }
 });
 
+const items = [
+  { value: "XRP" },
+  { value: "BTC" },
+  { value: "APPLE" },
+  { value: "GOLD" },
+  { value: "EWT" },
+  { value: "GSX" },
+  { value: "AIRBNB" },
+  { value: "SILVER" }
+];
+
 function Predict({ predictionDate, createNewPrediction, fetching, navigation }) {
   return (
     <View style={predictStyles.container}>
@@ -72,14 +84,47 @@ function Predict({ predictionDate, createNewPrediction, fetching, navigation }) 
           }}>
           {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => (
             <View style={predictStyles.form}>
-              <TextInput
-                placeholder="Name or Symbol"
-                placeholderTextColor="#555"
-                style={predictStyles.input}
-                onChangeText={handleChange("nameOrSymbol")}
-                value={values.nameOrSymbol}
-                onBlur={handleBlur("nameOrSymbol")}
-              />
+              <Downshift itemToString={item => (item ? item.value : "")}>
+                {({
+                  getRootProps,
+                  getInputProps,
+                  getItemProps,
+                  isOpen,
+                  inputValue,
+                  highlightedIndex,
+                  selectedItem
+                }) => (
+                  <View {...getRootProps({}, { suppressRefError: true })}>
+                    <TextInput
+                      placeholder="Name or Symbol"
+                      placeholderTextColor="#555"
+                      style={predictStyles.input}
+                      onChangeText={handleChange("nameOrSymbol")}
+                      value={values.nameOrSymbol}
+                      onBlur={handleBlur("nameOrSymbol")}
+                      {...getInputProps()}
+                    />
+                    {isOpen
+                      ? items
+                          .filter(item => !inputValue || item.value.toUpperCase().includes(inputValue.toUpperCase()))
+                          .map((item, index) => (
+                            <Text
+                              {...getItemProps({
+                                key: item.value,
+                                item,
+                                style: {
+                                  backgroundColor: highlightedIndex === index ? "lightgray" : "white",
+                                  fontWeight: selectedItem === item ? "bold" : "normal"
+                                },
+                                index
+                              })}>
+                              {item.value}
+                            </Text>
+                          ))
+                      : null}
+                  </View>
+                )}
+              </Downshift>
               {errors.nameOrSymbol && touched.nameOrSymbol && (
                 <Text style={predictStyles.errorText}>{errors.nameOrSymbol}</Text>
               )}

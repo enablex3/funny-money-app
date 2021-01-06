@@ -17,6 +17,7 @@
     "css-loader": "^5.0.1",
     "date-diff": "^0.2.2",
     "dateformat": "^4.4.1",
+    "downshift": "^6.0.10",
     "expo": "~40.0.0",
     "expo-app-loading": "^1.0.1",
     "expo-font": "~8.4.0",
@@ -28,6 +29,7 @@
     "react-dom": "16.13.1",
     "react-hook-form": "^6.12.2",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
+    "react-native-appearance": "~0.3.3",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-popup-menu": "^0.15.10",
@@ -42,8 +44,7 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "yup": "^0.32.8",
-    "react-native-appearance": "~0.3.3"
+    "yup": "^0.32.8"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
