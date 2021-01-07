@@ -1,32 +1,27 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { connect } from "react-redux";
+import ProfilePicture from "./ProfilePicture";
 
 const styles = StyleSheet.create({
   header: {
-    height: 90,
-    backgroundColor: "black",
+    height: 70,
     flexDirection: "row",
+    backgroundColor: "black",
+    display: "flex",
     borderWidth: 1,
-    borderBottomColor: "#9c2c98"
-  },
-  name: {
-    fontFamily: "Staatliches_400Regular",
-    color: "azure",
-    fontSize: 30,
-    justifyContent: "flex-start"
+    borderBottomColor: "#9c2c98",
+    marginTop: 30
   },
   rank: {
     fontFamily: "Staatliches_400Regular",
     color: "#9c2c98",
-    fontSize: 20,
-    justifyContent: "flex-end"
+    fontSize: 15
   },
   accuracy: {
     fontFamily: "Staatliches_400Regular",
     color: "azure",
-    fontSize: 15,
-    justifyContent: "flex-end"
+    fontSize: 15
   }
 });
 
@@ -35,8 +30,7 @@ function Header(props) {
 
   return (
     <View style={styles.header}>
-      <View style={{ flex: 1 }}>
-        <Text style={styles.name}>{displayName}</Text>
+      <View style={{ flex: 1, marginTop: 10 }}>
         <Text style={styles.rank}>
           Rank:
           {rank}
@@ -46,6 +40,7 @@ function Header(props) {
           {`${accuracy * 100}%, Currency: ${currency}`}
         </Text>
       </View>
+      <ProfilePicture />
     </View>
   );
 }

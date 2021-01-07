@@ -6,6 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Home from "./Home";
 import Community from "./Community";
 import Predict from "./Predict";
+import Profile from "./Profile";
 
 const Tab = createBottomTabNavigator();
 
@@ -38,6 +39,13 @@ export default function AppNavigation() {
             tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="chart-line" color={color} size={size} />
           }}
           component={Predict}>
+        </Tab.Screen>
+        <Tab.Screen
+          name="Profile"
+          options={{
+            tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="account-settings" color={color} size={size} />
+          }}
+          component={Profile}>
         </Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>

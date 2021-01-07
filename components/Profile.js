@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import Header from "./Header";
 
-const communityStyles = StyleSheet.create({
+const profileStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "black"
@@ -43,11 +43,11 @@ const communityStyles = StyleSheet.create({
   }
 });
 
-function Community(props) {
+function Profile(props) {
   const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy } = props;
 
   return (
-    <View style={communityStyles.container}>
+    <View style={profileStyles.container}>
       <Header />
     </View>
   );
@@ -58,4 +58,4 @@ const mapStateToProps = state => {
   return { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy };
 };
 
-export default connect(mapStateToProps)(Community);
+export default connect(mapStateToProps)(Profile);
