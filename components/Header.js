@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
   header: {
     height: 70,
     flexDirection: "row",
+    justifyContent: "space-between",
     backgroundColor: "black",
     display: "flex",
     borderWidth: 1,
@@ -30,7 +31,7 @@ function Header(props) {
 
   return (
     <View style={styles.header}>
-      <View style={{ flex: 1, marginTop: 10 }}>
+      <View style={{ marginTop: 10, justifyContent: "flex-end" }}>
         <Text style={styles.rank}>
           Rank:
           {rank}

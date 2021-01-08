@@ -33,6 +33,7 @@ const predictStyles = StyleSheet.create({
     marginTop: 5,
     borderWidth: 1,
     borderRadius: 10,
+    overflow: "hidden",
     fontSize: 25,
     fontFamily: "Staatliches_400Regular"
   },

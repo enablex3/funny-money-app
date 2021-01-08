@@ -9,7 +9,7 @@ import News from "./News";
 const homeStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black"
+    backgroundColor: "black",
   }
 });
 

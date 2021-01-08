@@ -9,7 +9,8 @@ const profilePicStyles = StyleSheet.create({
     container: {
         flex: 1,
         marginTop: 10,
-        justifyContent: "flex-end"
+        alignItems: "flex-end",
+        justifyContent: "flex-end",
     },
     name: {
         fontFamily: "Staatliches_400Regular",
@@ -21,15 +22,32 @@ const profilePicStyles = StyleSheet.create({
 function ProfilePic(props) {
     const { profilePic, displayName } = props;
 
-    profilePicDestination = ( profilePic === "none" ) ? defaultPic : profilePic;
+    const profilePicDestination = ( profilePic === "none" ) ? defaultPic : profilePic;
+    const shape = "rounded";
+
+    const picRender = () => {
+        if ( profilePic == "none" ) {
+            return (
+                <ProfilePicture
+                    isPicture={true}
+                    requirePicture={profilePicDestination}
+                    shape={shape}
+                />
+            )
+        } else {
+            return (
+                <ProfilePicture
+                    isPicture={true}
+                    URLPicture={profilePicDestination}
+                    shape={shape}
+                />
+            )
+        }
+    };
   
     return (
         <View style={profilePicStyles.container}>
-            <ProfilePicture
-                isPicture={true}
-                requirePicture={defaultPic}
-                shape='circle'
-            />
+            { picRender() }
             <Text style={profilePicStyles.name}>
                 {displayName}
             </Text>
