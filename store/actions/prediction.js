@@ -14,6 +14,14 @@ export const setPrice = price => ({
   type: actionTypes.SET_PRICE,
   payload: price
 });
+export const setSelectedYear = year => ({
+  type: actionTypes.SET_SELECTED_YEAR,
+  payload: year
+});
+export const setSelectedMonth = month => ({
+  type: actionTypes.SET_SELECTED_MONTH,
+  payload: month
+});
 export const createPredictionStart = () => ({ type: actionTypes.CREATE_PREDICTION_START });
 export const createPredictionSuccess = prediction => ({
   type: actionTypes.CREATE_PREDICTION_SUCCESS,
