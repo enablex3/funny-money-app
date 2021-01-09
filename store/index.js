@@ -4,7 +4,6 @@ import appReducer from "./reducers";
 import currentUserReducer from "./reducers/currentUser";
 import newsReducer from "./reducers/news";
 import predictionReducer from "./reducers/prediction";
-import themeReducer from "./reducers/theme";
 
 const bindMiddleware = middleware => {
   if (process.env.NODE_ENV !== "production") {

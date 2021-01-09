@@ -1,7 +1,6 @@
 import React from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { StyleSheet, Text } from "react-native";
-import CalendarUtil from "../../utils/calendar";
 
 const styles = StyleSheet.create({
   container: { backgroundColor: "black" },
@@ -13,27 +12,27 @@ const styles = StyleSheet.create({
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-const CalendarHeader = ({ selectedDate, setSelectedDate, currentDate }) => ({
+const CalendarHeader = ({ currentDate, setSelectedYear, setSelectedMonth, selectedMonth, selectedYear }) => ({
   year: [
     <Text style={styles.text}>
-      {selectedDate.getFullYear() !== currentDate.getFullYear() && (
-        <Text onPress={() => setSelectedDate(CalendarUtil.decrementYear(selectedDate))}>
+      {selectedYear !== currentDate.getFullYear() && (
+        <Text onPress={() => setSelectedYear(selectedYear - 1)}>
           <MaterialCommunityIcons name="arrow-left-bold" color="black" size={30} />
         </Text>
       )}
-      <Text>{selectedDate.getFullYear()}</Text>
-      <Text onPress={() => setSelectedDate(CalendarUtil.incrementYear(selectedDate))}>
+      <Text>{selectedYear}</Text>
+      <Text onPress={() => setSelectedYear(selectedYear + 1)}>
         <MaterialCommunityIcons name="arrow-right-bold" color="black" size={30} />
       </Text>
     </Text>
   ],
   month: [
     <Text style={styles.text}>
-      <Text onPress={() => setSelectedDate(CalendarUtil.decrementMonth(selectedDate))}>
+      <Text onPress={() => setSelectedMonth(selectedMonth - 1)}>
         <MaterialCommunityIcons name="arrow-left-bold" color="black" size={30} />
       </Text>
-      <Text>{months[selectedDate.getMonth()]}</Text>
-      <Text onPress={() => setSelectedDate(CalendarUtil.incrementMonth(selectedDate))}>
+      <Text>{months[selectedMonth]}</Text>
+      <Text onPress={() => setSelectedMonth(selectedMonth + 1)}>
         <MaterialCommunityIcons name="arrow-right-bold" color="black" size={30} />
       </Text>
     </Text>

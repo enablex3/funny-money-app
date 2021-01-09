@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import CalendarHeader from "./CalendarHeader";
 import CalendarCell from "./CalendarCell";
 import CalendarUtil from "../../utils/calendar";
-import { setDate } from "../../store/actions/prediction";
+import { setDate, setSelectedYear, setSelectedMonth } from "../../store/actions/prediction";
 
 const styles = StyleSheet.create({
   container: { backgroundColor: "black" },
@@ -15,9 +15,16 @@ const styles = StyleSheet.create({
   cell: { height: 25, backgroundColor: "white", textAlign: "center", padding: 5 }
 });
 
-function Calendar({ predictionDate, setPredictionDate }) {
+function Calendar({
+  predictionDate,
+  setPredictionDate,
+  selectedYear,
+  setCalendarSelectedYear,
+  selectedMonth,
+  setCalendarSelectedMonth
+}) {
   const currentDate = new Date();
-  const calendarRows = CalendarUtil.rows(predictionDate);
+  const calendarRows = CalendarUtil.rows(new Date(selectedYear, selectedMonth, 1));
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
@@ -26,11 +33,16 @@ function Calendar({ predictionDate, setPredictionDate }) {
     }).start();
   };
   const { year, month, weekdays } = CalendarHeader({
-    selectedDate: predictionDate,
-    setSelectedDate: date => {
-      setPredictionDate(date);
+    setSelectedYear: newYear => {
+      setCalendarSelectedYear(newYear);
       fadeAnim.resetAnimation();
     },
+    setSelectedMonth: newMonth => {
+      setCalendarSelectedMonth(newMonth);
+      fadeAnim.resetAnimation();
+    },
+    selectedYear,
+    selectedMonth,
     currentDate
   });
 
@@ -65,7 +77,15 @@ function Calendar({ predictionDate, setPredictionDate }) {
   );
 }
 
-const mapStateToProps = state => ({ predictionDate: state.prediction.date });
-const mapDispatchToProps = dispatch => ({ setPredictionDate: date => dispatch(setDate(date)) });
+const mapStateToProps = state => {
+  const { date, selectedYear, selectedMonth } = state.prediction;
+
+  return { predictionDate: date, selectedYear, selectedMonth };
+};
+const mapDispatchToProps = dispatch => ({
+  setPredictionDate: date => dispatch(setDate(date)),
+  setCalendarSelectedYear: year => dispatch(setSelectedYear(year)),
+  setCalendarSelectedMonth: month => dispatch(setSelectedMonth(month))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Calendar);

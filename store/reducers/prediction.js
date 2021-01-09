@@ -8,7 +8,9 @@ const initialState = () => {
     date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1),
     price: "",
     fetching: false,
-    errors: {}
+    errors: {},
+    selectedYear: currentDate.getFullYear(),
+    selectedMonth: currentDate.getMonth()
   };
 };
 
@@ -20,6 +22,10 @@ const predictionReducer = (state = initialState(), action) => {
       return { ...state, date: action.payload };
     case actionTypes.SET_PRICE:
       return { ...state, price: action.payload };
+    case actionTypes.SET_SELECTED_YEAR:
+      return { ...state, selectedYear: action.payload };
+    case actionTypes.SET_SELECTED_MONTH:
+      return { ...state, selectedMonth: action.payload };
     case actionTypes.CREATE_PREDICTION_START:
       return { ...state, fetching: true };
     case actionTypes.CREATE_PREDICTION_SUCCESS: {
