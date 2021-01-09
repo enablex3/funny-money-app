@@ -1,8 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import ProfilePicture from "react-native-profile-picture";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const defaultPic = require("../assets/blankAvatar.png");
 
