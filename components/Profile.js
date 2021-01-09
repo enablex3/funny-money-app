@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import Header from "./Header";
 
@@ -17,29 +18,20 @@ const profileStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  hText: {
-    color: "azure",
-    textAlign: "center",
-    marginTop: 30,
-    fontSize: 20,
-    fontFamily: "Staatliches_400Regular"
-  },
-  textInput: {
-    borderBottomWidth: 1,
+  pText: {
+    borderBottomWidth: 10,
     borderBottomColor: "#333",
     color: "azure",
     fontSize: 20,
-    marginTop: 30,
+    marginTop: 20,
     marginLeft: 5,
     marginRight: 5,
-    paddingBottom: 10,
     fontFamily: "Staatliches_400Regular"
   },
-  logo: {
-    height: 50,
-    width: 50,
-    justifyContent: "flex-start",
-    marginLeft: 10
+  tOp: { 
+    borderBottomWidth: 1, 
+    borderBottomColor: "azure",
+    justifyContent: "flex-end"
   }
 });
 
@@ -49,6 +41,17 @@ function Profile(props) {
   return (
     <View style={profileStyles.container}>
       <Header navigation={props.navigation} />
+      <ScrollView>
+        <TouchableOpacity style={profileStyles.tOp}>
+          <Text style={profileStyles.pText}>Change Profile Picture</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={profileStyles.tOp}>
+          <Text style={profileStyles.pText}>Set App Theme</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={profileStyles.tOp}>
+          <Text style={profileStyles.pText}>Update Your Password</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 }
