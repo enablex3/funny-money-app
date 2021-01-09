@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View, ScrollView, Button } from "react-native";
 import { connect } from "react-redux";
-import Header from "./Header";
-import LatestPredictions from "./Predictions/LatestPredictions";
-import PastPredictions from "./Predictions/PastPredictions";
-import News from "./News";
+import Header from "../Header/Header";
+import LatestPredictions from "../Predictions/LatestPredictions";
+import PastPredictions from "../Predictions/PastPredictions";
+import News from "../News/News";
 
 const homeStyles = StyleSheet.create({
   container: {

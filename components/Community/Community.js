@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
-import Header from "./Header";
+import Header from "../Header/Header";
 
 const communityStyles = StyleSheet.create({
   container: {

@@ -29,7 +29,8 @@ function Calendar({
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 500
+      duration: 500,
+      useNativeDriver: true
     }).start();
   };
   const { year, month, weekdays } = CalendarHeader({

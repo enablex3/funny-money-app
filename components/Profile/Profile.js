@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
-import Header from "./Header";
+import Header from "../Header/Header";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const profileStyles = StyleSheet.create({

@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import ProfilePicture from "react-native-profile-picture";
 
-const defaultPic = require("../assets/blankAvatar.png");
+const defaultPic = require("../../assets/blankAvatar.png");
 
 const profilePicStyles = StyleSheet.create({
     container: {
@@ -16,6 +16,7 @@ const profilePicStyles = StyleSheet.create({
         fontFamily: "Staatliches_400Regular",
         color: "azure",
         fontSize: 10,
+        textAlign: "center"
     }
 });
 

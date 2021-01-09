@@ -4,11 +4,11 @@ import { Formik } from "formik";
 import Downshift from "downshift";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
-import Calendar from "./Calendar";
-import FetchingIndicator from "./FetchingIndicator";
-import { createPrediction } from "../store/actions/prediction";
-import Header from "./Header";
-import { predictionSchema } from "../utils/validation";
+import Calendar from "../Calendar";
+import FetchingIndicator from "../FetchingIndicator";
+import { createPrediction } from "../../store/actions/prediction";
+import Header from "../Header/Header";
+import { predictionSchema } from "../../utils/validation";
 
 const predictStyles = StyleSheet.create({
   container: {

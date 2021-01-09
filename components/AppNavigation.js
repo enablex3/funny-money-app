@@ -3,10 +3,10 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Home from "./Home";
-import Community from "./Community";
-import Predict from "./Predict";
-import Profile from "./Profile";
+import Home from "./Home/Home";
+import Community from "./Community/Community";
+import Predict from "./Predict/Predict";
+import Profile from "./Profile/Profile";
 
 const Tab = createBottomTabNavigator();
 

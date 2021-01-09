@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { connect } from "react-redux";
-import ProfilePicture from "./ProfilePicture";
+import ProfilePic from "../Profile/ProfilePic";
 
 const styles = StyleSheet.create({
   header: {
@@ -41,7 +41,7 @@ function Header(props) {
           {`${accuracy * 100}%, Currency: ${currency}`}
         </Text>
       </View>
-      <ProfilePicture navigation={props.navigation} />
+      <ProfilePic navigation={props.navigation} />
     </View>
   );
 }

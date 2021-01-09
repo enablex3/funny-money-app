@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, ScrollView, Image, Linking, TouchableHighlight } from "react-native";
 import { connect } from "react-redux";
-import { fetchNews } from "../store/actions/news";
-import FetchingIndicator from "./FetchingIndicator";
+import { fetchNews } from "../../store/actions/news";
+import FetchingIndicator from "../FetchingIndicator";
 
 const newsStyles = StyleSheet.create({
   container: {
