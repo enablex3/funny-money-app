@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useRef } from "react";
+import { Animated, StyleSheet, View } from "react-native";
 import { Table, TableWrapper, Row, Cell } from "react-native-table-component";
 import { connect } from "react-redux";
 import CalendarHeader from "./CalendarHeader";
@@ -18,35 +18,49 @@ const styles = StyleSheet.create({
 function Calendar({ predictionDate, setPredictionDate }) {
   const currentDate = new Date();
   const calendarRows = CalendarUtil.rows(predictionDate);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const fadeIn = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 500
+    }).start();
+  };
   const { year, month, weekdays } = CalendarHeader({
     selectedDate: predictionDate,
-    setSelectedDate: setPredictionDate,
+    setSelectedDate: date => {
+      setPredictionDate(date);
+      fadeAnim.resetAnimation();
+    },
     currentDate
   });
 
+  fadeIn();
+
   return (
     <View style={styles.container}>
-      <Table borderStyle={{ borderColor: "transparent" }}>
-        <Row data={year} style={styles.head} />
-        <Row data={month} style={styles.head} textStyle={styles.text} />
-        <Row data={weekdays} style={styles.head} textStyle={styles.text} />
-        {calendarRows.map((rowData, index) => (
-          <TableWrapper key={index.toString()} style={styles.row}>
-            {rowData.map((cellData, cellIndex) => (
-              <Cell
-                key={cellIndex.toString()}
-                data={CalendarCell({
-                  calendarDate: cellData,
-                  selectedDate: predictionDate,
-                  setSelectedDate: setPredictionDate,
-                  currentDate
-                })}
-                textStyle={styles.text}
-              />
-            ))}
-          </TableWrapper>
-        ))}
-      </Table>
+      <Animated.View style={{ opacity: fadeAnim }}>
+        <Table borderStyle={{ borderColor: "transparent" }}>
+          <Row data={year} style={styles.head} />
+          <Row data={month} style={styles.head} textStyle={styles.text} />
+          <Row data={weekdays} style={styles.head} textStyle={styles.text} />
+          {calendarRows.map((rowData, index) => (
+            <TableWrapper key={index.toString()} style={styles.row}>
+              {rowData.map((cellData, cellIndex) => (
+                <Cell
+                  key={cellIndex.toString()}
+                  data={CalendarCell({
+                    calendarDate: cellData,
+                    selectedDate: predictionDate,
+                    setSelectedDate: setPredictionDate,
+                    currentDate
+                  })}
+                  textStyle={styles.text}
+                />
+              ))}
+            </TableWrapper>
+          ))}
+        </Table>
+      </Animated.View>
     </View>
   );
 }
