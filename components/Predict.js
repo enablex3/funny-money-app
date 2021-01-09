@@ -68,7 +68,7 @@ const items = [
 function Predict({ predictionDate, createNewPrediction, fetching, navigation }) {
   return (
     <View style={predictStyles.container}>
-      <Header />
+      <Header navigation={navigation} />
       <ScrollView>
         <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold" }}>
           Start a new prediction.

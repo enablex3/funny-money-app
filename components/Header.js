@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 });
 
 function Header(props) {
-  const { displayName, rank, currency, accuracy } = props;
+  const { rank, currency, accuracy } = props;
 
   return (
     <View style={styles.header}>
@@ -41,15 +41,15 @@ function Header(props) {
           {`${accuracy * 100}%, Currency: ${currency}`}
         </Text>
       </View>
-      <ProfilePicture />
+      <ProfilePicture navigation={props.navigation} />
     </View>
   );
 }
 
 const mapStateToProps = state => {
-  const { displayName, rank, currency, accuracy } = state.currentUser;
+  const { rank, currency, accuracy } = state.currentUser;
 
-  return { displayName, rank, currency, accuracy };
+  return { rank, currency, accuracy };
 };
 
 export default connect(mapStateToProps)(Header);

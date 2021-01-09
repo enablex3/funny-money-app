@@ -48,7 +48,7 @@ function Community(props) {
 
   return (
     <View style={communityStyles.container}>
-      <Header />
+      <Header navigation={props.navigation} />
     </View>
   );
 }

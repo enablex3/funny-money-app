@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import ProfilePicture from "react-native-profile-picture";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const defaultPic = require("../assets/blankAvatar.png");
 
@@ -46,12 +47,12 @@ function ProfilePic(props) {
     };
   
     return (
-        <View style={profilePicStyles.container}>
+        <TouchableOpacity style={profilePicStyles.container} onPress={() => props.navigation.navigate("Profile")} activeOpacity={1}>
             { picRender() }
             <Text style={profilePicStyles.name}>
                 {displayName}
             </Text>
-        </View>
+        </TouchableOpacity>
     );
   }
   

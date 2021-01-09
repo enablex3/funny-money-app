@@ -18,7 +18,7 @@ function Home(props) {
 
   return (
     <View style={homeStyles.container}>
-      <Header />
+      <Header navigation={props.navigation} />
       <ScrollView>
         <Text style={{ color: "azure", textAlign: "center", marginTop: 10 }}>Latest predictions</Text>
         {Object.keys(newPredictions).length > 0 ? (

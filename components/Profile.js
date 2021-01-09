@@ -48,7 +48,7 @@ function Profile(props) {
 
   return (
     <View style={profileStyles.container}>
-      <Header />
+      <Header navigation={props.navigation} />
     </View>
   );
 }
