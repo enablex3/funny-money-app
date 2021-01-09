@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   rank: {
     fontFamily: "Staatliches_400Regular",
     color: "#9c2c98",
-    fontSize: 15
+    fontSize: 20
   },
   accuracy: {
     fontFamily: "Staatliches_400Regular",

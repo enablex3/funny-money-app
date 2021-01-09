@@ -8,7 +8,7 @@ const newsStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "black",
-    marginBottom: 100
+    marginBottom: 50
   },
   textBox: {
     margin: 5
@@ -21,7 +21,7 @@ const newsStyles = StyleSheet.create({
     marginHorizontal: 25,
     width: 300,
     height: 400,
-    marginBottom: 400
+    marginBottom: 10
   },
   image: {
     backgroundColor: "transparent",

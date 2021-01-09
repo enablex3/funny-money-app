@@ -41,7 +41,7 @@ function Home(props) {
             </Text>
           </View>
         )}
-        <Text style={{ color: "azure", textAlign: "center", marginTop: 10 }}>Latest News</Text>
+        <Text style={{ color: "azure", textAlign: "center", marginTop: 10, marginBottom: 10 }}>Latest News</Text>
         <News />
       </ScrollView>
     </View>

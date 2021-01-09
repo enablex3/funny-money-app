@@ -46,7 +46,7 @@ export const getUser = (_email, successCallback) => async dispatch => {
   try {
     dispatch(fetchUserStart());
 
-    const response = await axios.get(`${ENDPOINT_URL}/user/dummy_user@fm.com`);
+    const response = await axios.get(`${ENDPOINT_URL}/user/${_email.toLowerCase()}`);
 
     if (response.status === 200) {
       dispatch(fetchUserSuccess(response.data));
