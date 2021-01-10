@@ -97,6 +97,8 @@ const currentUserReducer = (state = initialState, action) => {
       return { ...state, accuracy: action.payload };
     case actionTypes.SET_PAST_PREDICTIONS:
       return { ...state, pastPredictions: action.payload };
+    case actionTypes.SET_PROFILE_PIC:
+      return { ...state, profilePic: action.payload };
     default:
       return state;
   }
