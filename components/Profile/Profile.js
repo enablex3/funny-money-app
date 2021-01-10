@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import Header from "../Header/Header";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import AppThemeModal from "./Options/AppThemeModal";
+import PhotoUploadModal from "./Options/PhotoUploadModal";
 
 const profileStyles = StyleSheet.create({
   container: {
@@ -43,15 +45,6 @@ const profileStyles = StyleSheet.create({
     fontFamily: "Staatliches_400Regular"
   },
   tOp: { 
-    borderBottomWidth: 1, 
-    borderBottomColor: "azure",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    flex: 1
-  },
-  tOpInfl: { 
-    borderBottomWidth: 1, 
-    borderBottomColor: "#9c2c98",
     flexDirection: "row",
     justifyContent: "space-between",
     flex: 1
@@ -63,23 +56,30 @@ const profileStyles = StyleSheet.create({
 });
 
 function Profile(props) {
-  const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy } = props;
+  const { rank } = props;
 
   const influenceRank = 30;
+
+  // track option clicks
+  const [influenceClicked, setInfluenceClicked] = useState(false);
+  const [picClicked, setPicClicked] = useState(false);
+  const [themeClicked, setThemeClicked] = useState(false);
+  const [passClicked, setPassClicked] = useState(false);
+  const [currencyClicked, setCurrencyClicked] = useState(false);
 
   const isInfluencerRank = () => {
     if ( rank >= influenceRank ) {
       return (
-        <TouchableOpacity style={profileStyles.tOpInfl}>
-          <Text style={profileStyles.pTextInfl}>Influencer</Text>
-          <MaterialCommunityIcons name="chevron-right" color="#9c2c98" size={30} style={profileStyles.mIcon} />
+        <TouchableOpacity style={profileStyles.tOp} onPress={() => setInfluenceClicked(!influenceClicked)} activeOpacity={1}>
+          <Text style={profileStyles.pText}>Influencer</Text>
+          <MaterialCommunityIcons name={influenceClicked ? "minus" : "plus-thick"} color="azure" size={30} style={profileStyles.mIcon} />
         </TouchableOpacity>
       );
     } else {
       return (
         <TouchableOpacity style={profileStyles.tOp} disabled={true}>
           <Text style={profileStyles.pTextDisabled}>Influencer (must be at least rank {influenceRank})</Text>
-          <MaterialCommunityIcons name="chevron-right" color="gray" size={30} style={profileStyles.mIcon} />
+          <MaterialCommunityIcons name={"plus-thick"} color="gray" size={30} style={profileStyles.mIcon} />
         </TouchableOpacity>
       )
     }
@@ -89,22 +89,24 @@ function Profile(props) {
     <View style={profileStyles.container}>
       <Header navigation={props.navigation} />
       <ScrollView>
-        <TouchableOpacity style={profileStyles.tOp}>
+        <TouchableOpacity style={profileStyles.tOp} onPress={() => setPicClicked(!picClicked)} activeOpacity={1}>
           <Text style={profileStyles.pText}>Change Profile Picture</Text>
-          <MaterialCommunityIcons name="chevron-right" color="azure" size={30} style={profileStyles.mIcon} />
+          <MaterialCommunityIcons name={picClicked ? "minus" : "plus-thick"} color="azure" size={30} style={profileStyles.mIcon} />
         </TouchableOpacity>
-        <TouchableOpacity style={profileStyles.tOp}>
+        { picClicked ? <PhotoUploadModal /> : null }
+        <TouchableOpacity style={profileStyles.tOp} onPress={() => setThemeClicked(!themeClicked)} activeOpacity={1}>
           <Text style={profileStyles.pText}>Set App Theme</Text>
-          <MaterialCommunityIcons name="chevron-right" color="azure" size={30} style={profileStyles.mIcon} />
+          <MaterialCommunityIcons name={themeClicked ? "minus" : "plus-thick"} color="azure" size={30} style={profileStyles.mIcon} />
         </TouchableOpacity>
-        <TouchableOpacity style={profileStyles.tOp}>
+        { themeClicked ? <AppThemeModal /> : null }
+        <TouchableOpacity style={profileStyles.tOp} onPress={() => setPassClicked(!passClicked)} activeOpacity={1}>
           <Text style={profileStyles.pText}>Reset Your Password</Text>
-          <MaterialCommunityIcons name="chevron-right" color="azure" size={30} style={profileStyles.mIcon} />
+          <MaterialCommunityIcons name={passClicked ? "minus" : "plus-thick"} color="azure" size={30} style={profileStyles.mIcon} />
         </TouchableOpacity>
         {isInfluencerRank()}
-        <TouchableOpacity style={profileStyles.tOp}>
+        <TouchableOpacity style={profileStyles.tOp} onPress={() => setCurrencyClicked(!currencyClicked)} activeOpacity={1}>
           <Text style={profileStyles.pText}>Change Currency Preference</Text>
-          <MaterialCommunityIcons name="chevron-right" color="azure" size={30} style={profileStyles.mIcon} />
+          <MaterialCommunityIcons name={currencyClicked ? "minus" : "plus-thick"} color="azure" size={30} style={profileStyles.mIcon} />
         </TouchableOpacity>
       </ScrollView>
     </View>
