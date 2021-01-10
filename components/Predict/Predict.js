@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, Platform, TextInput, ScrollView } from "react-n
 import { Formik } from "formik";
 import Downshift from "downshift";
 import { connect } from "react-redux";
-import dateFormat from "dateformat";
 import Calendar from "../Calendar";
 import FetchingIndicator from "../FetchingIndicator";
 import { createPrediction } from "../../store/actions/prediction";
@@ -144,7 +143,7 @@ function Predict({ predictionDate, createNewPrediction, fetching, navigation }) 
               </Text>
               <Calendar />
               <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold" }}>
-                {dateFormat(predictionDate, "dddd, mmmm dS, yyyy")}
+                {predictionDate.toString()}
               </Text>
               <Text style={predictStyles.button} onPress={handleSubmit}>
                 Create Prediction

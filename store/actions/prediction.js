@@ -1,4 +1,5 @@
 import axios from "axios";
+import { addNewPrediction } from "./currentUser";
 import { predictionActionTypes as actionTypes } from "../actionTypes";
 import { ENDPOINT_URL } from "../../constants";
 
@@ -34,10 +35,12 @@ export const createPrediction = (prediction, successCallback) => async dispatch 
     dispatch(createPredictionStart());
 
     const stringDate = typeof prediction.date === "string" ? prediction.date : prediction.date.toString();
-
     const response = await axios.post(`${ENDPOINT_URL}/user/prediction`, { ...prediction, date: stringDate });
 
     if (response.status === 201) {
+      const { price, type, nameOrSymbol, date } = response.data;
+      const newPrediction = { [nameOrSymbol]: { price, date, type } };
+      dispatch(addNewPrediction(newPrediction));
       dispatch(createPredictionSuccess(response.data));
       successCallback();
     } else dispatch(createPredictionFail(response.data));

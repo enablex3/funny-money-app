@@ -10,6 +10,10 @@ export const setNewPredictions = newPredictions => ({
   type: actionTypes.SET_NEW_PREDICTIONS,
   payload: newPredictions
 });
+export const addNewPrediction = newPrediction => ({
+  type: actionTypes.ADD_NEW_PREDICTION,
+  payload: newPrediction
+});
 export const setCurrency = currency => ({
   type: actionTypes.SET_CURRENCY,
   payload: currency

@@ -20,7 +20,17 @@ const currentUserReducer = (state = initialState, action) => {
     case actionTypes.FETCH_USER_START:
       return { ...state, fetching: true };
     case actionTypes.FETCH_USER_SUCCESS: {
-      const { id, displayName, fullName, rank, currency, profilePic, newPredictions, pastPredictions, accuracy } = action.payload;
+      const {
+        id,
+        displayName,
+        fullName,
+        rank,
+        currency,
+        profilePic,
+        newPredictions,
+        pastPredictions,
+        accuracy
+      } = action.payload;
       return {
         ...state,
         id,
@@ -44,7 +54,17 @@ const currentUserReducer = (state = initialState, action) => {
     case actionTypes.CREATE_USER_START:
       return { ...state, fetching: true };
     case actionTypes.CREATE_USER_SUCCESS: {
-      const { id, displayName, fullName, rank, currency, profilePic, newPredictions, pastPredictions, accuracy } = action.payload;
+      const {
+        id,
+        displayName,
+        fullName,
+        rank,
+        currency,
+        profilePic,
+        newPredictions,
+        pastPredictions,
+        accuracy
+      } = action.payload;
       return {
         ...state,
         id,
@@ -69,6 +89,8 @@ const currentUserReducer = (state = initialState, action) => {
       return { ...state, rank: action.payload };
     case actionTypes.SET_NEW_PREDICTIONS:
       return { ...state, newPredictions: action.payload };
+    case actionTypes.ADD_NEW_PREDICTION:
+      return { ...state, newPredictions: { ...state.newPredictions, ...action.payload } };
     case actionTypes.SET_CURRENCY:
       return { ...state, currency: action.payload };
     case actionTypes.SET_ACCURACY:
