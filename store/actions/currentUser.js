@@ -26,6 +26,10 @@ export const setPastPredictions = pastPredictions => ({
   type: actionTypes.SET_PAST_PREDICTIONS,
   payload: pastPredictions
 });
+export const setProfilePic = profilePic => ({
+  type: actionTypes.SET_PROFILE_PIC,
+  payload: profilePic
+});
 export const fetchUserStart = () => ({ type: actionTypes.FETCH_USER_START });
 export const fetchUserSuccess = user => ({ type: actionTypes.FETCH_USER_SUCCESS, payload: user });
 export const fetchUserFail = error => ({ type: actionTypes.FETCH_USER_FAIL, payload: error });

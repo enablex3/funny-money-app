@@ -1,7 +1,9 @@
 import React from "react";
 import { StyleSheet, Button, View, TouchableOpacity } from "react-native";
+import { connect } from "react-redux";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import CameraRoll from "../../CameraRoll";
+import { setProfilePic } from "../../../store/actions/currentUser";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +24,7 @@ const styles = StyleSheet.create({
   }
 });
 
-function PhotoUploadModal() {
+function PhotoUploadModal({ setProfilePicture }) {
   return (
     <View style={styles.container}>
       <View style={styles.column}>
@@ -34,11 +36,15 @@ function PhotoUploadModal() {
       <View style={styles.column}>
         <TouchableOpacity>
           <MaterialCommunityIcons name="camera-image" color="azure" size={50} style={styles.icon} />
-          <CameraRoll buttonColor="#9c2c98" />
+          <CameraRoll buttonColor="#9c2c98" setProfilePicture={setProfilePicture} />
         </TouchableOpacity>
       </View>
     </View>
   );
 }
 
-export default PhotoUploadModal;
+const mapDispatchToProps = dispatch => ({
+  setProfilePicture: profilePic => dispatch(setProfilePic(profilePic))
+});
+
+export default connect(null, mapDispatchToProps)(PhotoUploadModal);
