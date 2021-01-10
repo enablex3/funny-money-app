@@ -1,4 +1,5 @@
 import { predictionActionTypes as actionTypes } from "../actionTypes";
+import { dateFromString } from "../../utils/DateDifference";
 
 const initialState = () => {
   const currentDate = new Date();
@@ -30,7 +31,7 @@ const predictionReducer = (state = initialState(), action) => {
       return { ...state, fetching: true };
     case actionTypes.CREATE_PREDICTION_SUCCESS: {
       const { nameOrSymbol, date, price } = action.payload;
-      const jsDate = new Date(date);
+      const jsDate = dateFromString(date);
 
       return {
         ...state,
