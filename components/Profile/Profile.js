@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import ResetPasswordForm from "../ResetPasswordForm";
 import Header from "../Header/Header";
 import AppThemeModal from "./Options/AppThemeModal";
 import PhotoUploadModal from "./Options/PhotoUploadModal";
@@ -128,6 +129,7 @@ function Profile(props) {
             style={profileStyles.mIcon}
           />
         </TouchableOpacity>
+        {passClicked && <ResetPasswordForm />}
         {isInfluencerRank()}
         <TouchableOpacity
           style={profileStyles.tOp}

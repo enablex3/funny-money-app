@@ -34,6 +34,20 @@ export const predictionSchema = Yup.object().shape({
     .required("Price Is Required")
 });
 
-export const ResetPasswordSchema = Yup.object().shape({
+export const ForgotPasswordSchema = Yup.object().shape({
   email: Yup.string().email("Invalid Email Address").required("Email Is Required")
+});
+
+export const ChangePasswordSchema = Yup.object().shape({
+  currentPassword: Yup.string().required("Current Password Is Required"),
+  newPassword: Yup.string()
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number And One Special Case Character"
+    )
+    .max(128, "New Password Should Be No More Than 128 Characters")
+    .required("New Password Is Required"),
+  confirmNewPassword: Yup.string()
+    .required("Passwords Must Match")
+    .oneOf([Yup.ref("newPassword"), null], "Passwords Must Match")
 });
