@@ -5,7 +5,6 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Header from "../Header/Header";
 import AppThemeModal from "./Options/AppThemeModal";
 import PhotoUploadModal from "./Options/PhotoUploadModal";
-import ResetPasswordForm from "../ResetPasswordForm";
 
 const profileStyles = StyleSheet.create({
   container: {
@@ -129,7 +128,6 @@ function Profile(props) {
             style={profileStyles.mIcon}
           />
         </TouchableOpacity>
-        {passClicked && <ResetPasswordForm />}
         {isInfluencerRank()}
         <TouchableOpacity
           style={profileStyles.tOp}

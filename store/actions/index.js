@@ -9,6 +9,7 @@ export const resetPasswordTokenStart = () => ({ type: actionTypes.RESET_PASSWORD
 export const resetPasswordTokenSuccess = () => ({ type: actionTypes.RESET_PASSWORD_TOKEN_SUCCESS });
 export const resetPasswordTokenFail = errors => ({ type: actionTypes.RESET_PASSWORD_TOKEN_FAIL, payload: errors });
 export const retryToken = () => ({ type: actionTypes.RETRY_TOKEN });
+export const showResetPasswordForm = () => ({ type: actionTypes.SHOW_RESET_PASSWORD_FORM });
 
 export const resetPasswordToken = email => async dispatch => {
   try {
