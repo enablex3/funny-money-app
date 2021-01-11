@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, TextInput, Platform } from "react-native";
 import { connect } from "react-redux";
 import { Formik } from "formik";
+import { resetPasswordToken } from "../../store/actions";
 import FetchingIndicator from "../FetchingIndicator";
 import { ResetPasswordSchema } from "../../utils/validation";
 
@@ -42,33 +43,57 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     fontSize: 25,
     fontFamily: "Staatliches_400Regular"
+  },
+  text: {
+    color: "azure",
+    textAlign: "center",
+    marginTop: 30,
+    fontSize: 20,
+    fontFamily: "Staatliches_400Regular"
   }
 });
 
-function ResetPasswordForm({ fetching }) {
+function ResetPasswordForm({ fetching, serverErrors, tokenSentToEmail, resetPassToken }) {
   return (
     <View style={styles.container}>
-      <FetchingIndicator fething={fetching} />
-      <Formik initialValues={{ email: "" }} validationSchema={ResetPasswordSchema} onSubmit={values => null}>
-        {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => (
-          <View style={styles.form}>
-            <TextInput
-              placeholder="Email Address:"
-              placeholderTextColor="#555"
-              style={styles.textInput}
-              onChangeText={handleChange("email")}
-              value={values.email}
-              onBlur={handleBlur("email")}
-            />
-            {errors.email && touched.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
-            <Text style={styles.button} onPress={handleSubmit}>
-              Send Password Reset Link
-            </Text>
-          </View>
-        )}
-      </Formik>
+      {tokenSentToEmail ? (
+        <Text style={styles.text}>Password Reset Link Sent To Email</Text>
+      ) : (
+        <View>
+          <FetchingIndicator fething={fetching} />
+          <Formik
+            initialValues={{ email: "" }}
+            validationSchema={ResetPasswordSchema}
+            onSubmit={values => resetPassToken(values.email)}>
+            {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => (
+              <View style={styles.form}>
+                <TextInput
+                  placeholder="Email Address:"
+                  placeholderTextColor="#555"
+                  style={styles.textInput}
+                  onChangeText={handleChange("email")}
+                  value={values.email}
+                  onBlur={handleBlur("email")}
+                />
+                {errors.email && touched.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
+                {serverErrors && <Text style={styles.errorText}>{JSON.stringify(serverErrors)}</Text>}
+                <Text style={styles.button} onPress={handleSubmit}>
+                  Send Password Reset Link
+                </Text>
+              </View>
+            )}
+          </Formik>
+        </View>
+      )}
     </View>
   );
 }
 
-export default ResetPasswordForm;
+const mapStateToProps = state => {
+  const { fetching, tokenSentToEmail, errors } = state.app;
+  return { fetching, tokenSentToEmail, serverErrors: errors };
+};
+
+const mapDispatchToProps = dispatch => ({ resetPassToken: email => dispatch(resetPasswordToken(email)) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPasswordForm);
