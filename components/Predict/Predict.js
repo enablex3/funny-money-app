@@ -72,7 +72,7 @@ const items = [
   { value: "SILVER" }
 ];
 
-function Predict({ predictionDate, createNewPrediction, fetching, navigation, primaryTextColor, backgroundColor }) {
+function Predict({ predictionDate, createNewPrediction, fetching, navigation, primaryTextColor, backgroundColor, purpleTheme }) {
   return (
     <View style={[predictStyles.container, {backgroundColor: backgroundColor}]}>
       <Header navigation={navigation} />
@@ -153,7 +153,7 @@ function Predict({ predictionDate, createNewPrediction, fetching, navigation, pr
               <Text style={[predictStyles.sectionHeader, {color: primaryTextColor}]}>
                 {dateFormat(predictionDate, "dddd, mmmm dS, yyyy")}
               </Text>
-              <Text style={predictStyles.button} onPress={handleSubmit}>
+              <Text style={[predictStyles.button, {backgroundColor: purpleTheme}]} onPress={handleSubmit}>
                 Create Prediction
               </Text>
             </View>
@@ -166,8 +166,8 @@ function Predict({ predictionDate, createNewPrediction, fetching, navigation, pr
 
 const mapStateToProps = state => {
   const { date, fetching, error } = state.prediction;
-  const { primaryTextColor, backgroundColor } = state.theme;
-  return { predictionDate: date, fetching, error, primaryTextColor, backgroundColor };
+  const { primaryTextColor, backgroundColor, purpleTheme } = state.theme;
+  return { predictionDate: date, fetching, error, primaryTextColor, backgroundColor, purpleTheme };
 };
 
 const mapDispatchToProps = dispatch => ({

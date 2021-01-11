@@ -2,19 +2,20 @@ import { themeActionTypes as actionTypes } from "../actionTypes";
 
 const initialState = {
   primaryTextColor: "azure",
-  backgroundColor: "black"
+  backgroundColor: "black",
+  purpleTheme: "#9C2C98"
 };
 
 const themeReducer = (state = initialState, action) => {
   
   switch (action.type) {
     case actionTypes.SET_DARK_MODE: {
-      const { primaryTextColor, backgroundColor } = action.payload;
-      return { ...state, primaryTextColor, backgroundColor };
+      const { primaryTextColor, backgroundColor, purpleTheme } = action.payload;
+      return { ...state, primaryTextColor, backgroundColor, purpleTheme };
     }
     case actionTypes.SET_LIGHT_MODE: {
-      const { primaryTextColor, backgroundColor } = action.payload;
-      return { ...state, primaryTextColor, backgroundColor };
+      const { primaryTextColor, backgroundColor, purpleTheme } = action.payload;
+      return { ...state, primaryTextColor, backgroundColor, purpleTheme };
     }
     default: {
       return state;

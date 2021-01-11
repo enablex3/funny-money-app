@@ -19,6 +19,7 @@ function AppNavigation(props) {
         tabBarOptions={{
           activeTintColor: "#9c2c98",
           inactiveTintColor: "gray",
+          showLabel: false,
           style: { borderTopColor: "#9c2c98", borderWidth: 1, backgroundColor: backgroundColor }
         }}>
         <Tab.Screen

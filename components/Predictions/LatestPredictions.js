@@ -20,12 +20,12 @@ const showDetails = prediction => {
 };
 
 function LatestPredictions(props) {
-  const { newPredictions, primaryTextColor, backgroundColor } = props;
+  const { newPredictions, primaryTextColor, backgroundColor, purpleTheme } = props;
   const newPredictionsObject = jsonToArray(newPredictions);
   const tableHeaders = [
-    <Text style={tableStyles.column}>Name</Text>,
-    <Text style={tableStyles.column}>Time Left</Text>,
-    <Text style={tableStyles.column}>Current Price</Text>
+    <Text style={[tableStyles.column, {color: primaryTextColor}]}>Name</Text>,
+    <Text style={[tableStyles.column, {color: primaryTextColor}]}>Time Left</Text>,
+    <Text style={[tableStyles.column, {color: primaryTextColor}]}>Current Price</Text>
   ];
   const tableData = newPredictionsObject.map(prediction => [
     <Text style={[tableStyles.row, {color: primaryTextColor}]} onPress={() => showDetails(prediction)}>
@@ -43,7 +43,7 @@ function LatestPredictions(props) {
     <View style={[tableStyles.container, {backgroundColor: backgroundColor}]}>
       <Table
         borderStyle={{ borderWidth: 2, borderColor: "transparent", borderBottomWidth: 2, borderBottomColor: "azure" }}>
-        <Row data={tableHeaders} style={tableStyles.head} textStyle={tableStyles.text} />
+        <Row data={tableHeaders} style={[tableStyles.head, {backgroundColor: purpleTheme}]} textStyle={tableStyles.text} />
         <Rows data={tableData} textStyle={tableStyles.text} />
       </Table>
     </View>
@@ -52,8 +52,8 @@ function LatestPredictions(props) {
 
 const mapStateToProps = state => {
   const { newPredictions } = state.currentUser;
-  const { primaryTextColor, backgroundColor } = state.theme;
-  return { newPredictions, primaryTextColor, backgroundColor };
+  const { primaryTextColor, backgroundColor, purpleTheme } = state.theme;
+  return { newPredictions, primaryTextColor, backgroundColor, purpleTheme };
 };
 
 export default connect(mapStateToProps)(LatestPredictions);

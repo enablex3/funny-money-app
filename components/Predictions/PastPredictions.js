@@ -14,12 +14,12 @@ const tableStyles = StyleSheet.create({
   });
 
 function PastPredictions(props) {
-    const { pastPredictions, accuracy, primaryTextColor, backgroundColor } = props;
+    const { pastPredictions, accuracy, primaryTextColor, backgroundColor, purpleTheme } = props;
     const pastPredictionsObject = jsonToArray(pastPredictions);
     const tableHeaders = [
-        <Text style={tableStyles.column}>Name</Text>, 
-        <Text style={tableStyles.column}>Accuracy</Text>,
-        <Text style={tableStyles.column}>Final Price</Text>
+        <Text style={[tableStyles.column, {color: primaryTextColor}]}>Name</Text>, 
+        <Text style={[tableStyles.column, {color: primaryTextColor}]}>Accuracy</Text>,
+        <Text style={[tableStyles.column, {color: primaryTextColor}]}>Final Price</Text>
     ];
     const tableData = pastPredictionsObject.map(prediction =>
         [
@@ -39,7 +39,7 @@ function PastPredictions(props) {
     return(
         <View style={[tableStyles.container, {backgroundColor: backgroundColor}]}>
         <Table borderStyle={{borderWidth: 2, borderColor: 'transparent'}}>
-          <Row data={tableHeaders} style={tableStyles.head} textStyle={tableStyles.text}/>
+          <Row data={tableHeaders} style={[tableStyles.head, {backgroundColor: purpleTheme}]} textStyle={tableStyles.text}/>
           <Rows data={tableData} textStyle={tableStyles.text} />
         </Table>
       </View>
@@ -48,8 +48,8 @@ function PastPredictions(props) {
 
 const mapStateToProps = state => {
     const { pastPredictions, accuracy } = state.currentUser;
-    const { primaryTextColor, backgroundColor } = state.theme;
-    return { pastPredictions, accuracy, primaryTextColor, backgroundColor };
+    const { primaryTextColor, backgroundColor, purpleTheme } = state.theme;
+    return { pastPredictions, accuracy, primaryTextColor, backgroundColor, purpleTheme };
 };
 
 export default connect(mapStateToProps)(PastPredictions);

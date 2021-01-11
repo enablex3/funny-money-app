@@ -2,12 +2,14 @@ import { themeActionTypes as actionTypes } from "../actionTypes";
 
 const darkTheme = {
     primaryTextColor: "azure",
-    backgroundColor: "black"
+    backgroundColor: "black",
+    purpleTheme: "#9C2C98"
 };
 
 const lightTheme = {
     primaryTextColor: "black",
-    backgroundColor: "azure"
+    backgroundColor: "azure",
+    purpleTheme: "#CB6CE6"
 };
 
 export const setDarkMode = () => ({

@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   }
 });
 
-function ChangePassword({ fetching, serverErrors, changePass, primaryTextColor, backgroundColor }) {
+function ChangePassword({ fetching, serverErrors, changePass, primaryTextColor, backgroundColor, purpleTheme }) {
   return (
     <View style={[styles.container, {backgroundColor: backgroundColor}]}>
       <FetchingIndicator fething={fetching} />
@@ -97,7 +97,7 @@ function ChangePassword({ fetching, serverErrors, changePass, primaryTextColor, 
               <Text style={styles.errorText}>{errors.confirmNewPassword}</Text>
             )}
             {serverErrors && <Text style={styles.errorText}>{JSON.stringify(serverErrors)}</Text>}
-            <Text style={styles.button} onPress={handleSubmit}>
+            <Text style={[styles.button, {backgroundColor: purpleTheme}]} onPress={handleSubmit}>
               Change Password
             </Text>
           </View>
@@ -108,8 +108,8 @@ function ChangePassword({ fetching, serverErrors, changePass, primaryTextColor, 
 }
 
 const mapStateToProps = state => {
-  const { primaryTextColor, backgroundColor } = state.theme;
-  return { primaryTextColor, backgroundColor };
+  const { primaryTextColor, backgroundColor, purpleTheme } = state.theme;
+  return { primaryTextColor, backgroundColor, purpleTheme };
 };
 
 export default connect(mapStateToProps)(ChangePassword);
