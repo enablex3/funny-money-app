@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
+import { setDarkMode, setLightMode } from "../../../store/actions/theme";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const styles = StyleSheet.create({
@@ -37,16 +38,20 @@ const styles = StyleSheet.create({
 
 function AppThemeModal(props) {
 
+    const { primaryTextColor, backgroundColor } = props;
+
+    console.log(primaryTextColor, backgroundColor);
+
     return (
         <View style={styles.container}>
             <View style={styles.columnDark}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => setDarkMode()}>
                     <MaterialCommunityIcons name={"brightness-3"} color="azure" size={50} style={styles.icon} />
                     <Text style={styles.textDark}>Dark Theme</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.columnLight}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => setLightMode()}>
                     <MaterialCommunityIcons name={"brightness-5"} color="black" size={50} style={styles.icon} />
                     <Text style={styles.textLight}>Light Theme</Text>
                 </TouchableOpacity>
@@ -55,4 +60,14 @@ function AppThemeModal(props) {
     );
 };
 
-export default AppThemeModal;
+const mapStateToProps = state => {
+    const { primaryTextColor, backgroundColor } = state.theme;
+    return { primaryTextColor, backgroundColor };
+};
+
+const mapDispatchToProps = dispatch => ({
+    setDarkMode: () => dispatch(setDarkMode()),
+    setLightMode:() => dispatch(setLightMode())
+  });
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppThemeModal);

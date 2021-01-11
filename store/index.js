@@ -4,6 +4,7 @@ import appReducer from "./reducers";
 import currentUserReducer from "./reducers/currentUser";
 import newsReducer from "./reducers/news";
 import predictionReducer from "./reducers/prediction";
+import themeReducer from "./reducers/theme";
 
 const bindMiddleware = middleware => {
   if (process.env.NODE_ENV !== "production") {
@@ -19,7 +20,8 @@ const store = createStore(
     app: appReducer,
     currentUser: currentUserReducer,
     news: newsReducer,
-    prediction: predictionReducer
+    prediction: predictionReducer,
+    theme: themeReducer
   }),
   bindMiddleware([thunkMiddleware])
 );

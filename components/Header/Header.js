@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { connect } from "react-redux";
 import ProfilePic from "../Profile/ProfilePic";
 
-const styles = StyleSheet.create({
+let styles = StyleSheet.create({
   header: {
     height: 70,
     flexDirection: "row",
@@ -27,7 +27,10 @@ const styles = StyleSheet.create({
 });
 
 function Header(props) {
-  const { rank, currency, accuracy } = props;
+  const { rank, currency, accuracy, primaryTextColor, backgroundColor } = props;
+
+  styles.header.backgroundColor = backgroundColor;
+  styles.accuracy.color = primaryTextColor;
 
   return (
     <View style={styles.header}>
@@ -48,8 +51,8 @@ function Header(props) {
 
 const mapStateToProps = state => {
   const { rank, currency, accuracy } = state.currentUser;
-
-  return { rank, currency, accuracy };
+  const { primaryTextColor, backgroundColor } = state.theme;
+  return { rank, currency, accuracy, primaryTextColor, backgroundColor };
 };
 
 export default connect(mapStateToProps)(Header);

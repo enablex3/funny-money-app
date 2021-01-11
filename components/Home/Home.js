@@ -6,15 +6,26 @@ import LatestPredictions from "../Predictions/LatestPredictions";
 import PastPredictions from "../Predictions/PastPredictions";
 import News from "../News/News";
 
-const homeStyles = StyleSheet.create({
+let homeStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "black",
+  },
+  predictionText: {
+    color: "azure", 
+    textAlign: "center", 
+    marginTop: 10, 
+    fontSize: 20, 
+    fontWeight: "bold"
   }
 });
 
 function Home(props) {
-  const { newPredictions, pastPredictions } = props;
+
+  const { newPredictions, pastPredictions, primaryTextColor, backgroundColor } = props;
+
+  homeStyles.container.backgroundColor = backgroundColor;
+  homeStyles.predictionText.color = primaryTextColor;
 
   return (
     <View style={homeStyles.container}>
@@ -25,7 +36,7 @@ function Home(props) {
           <LatestPredictions />
         ) : (
           <View>
-            <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold" }}>
+            <Text style={homeStyles.predictionText}>
               You don't have any predictions yet.
             </Text>
             <Button title="Create a new prediction" onPress={() => props.navigation.navigate("Predict")} />
@@ -36,7 +47,7 @@ function Home(props) {
           <PastPredictions />
         ) : (
           <View>
-            <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold" }}>
+            <Text style={homeStyles.predictionText}>
               You have no past predictions.
             </Text>
           </View>
@@ -50,7 +61,8 @@ function Home(props) {
 
 const mapStateToProps = state => {
   const { newPredictions, pastPredictions } = state.currentUser;
-  return { newPredictions, pastPredictions };
+  const { primaryTextColor, backgroundColor } = state.theme;
+  return { newPredictions, pastPredictions, primaryTextColor, backgroundColor };
 };
 
 export default connect(mapStateToProps)(Home);

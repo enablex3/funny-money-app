@@ -20,7 +20,9 @@ const profilePicStyles = StyleSheet.create({
 });
 
 function ProfilePic(props) {
-  const { profilePic, displayName } = props;
+  const { profilePic, displayName, primaryTextColor, backgroundColor } = props;
+
+  //profilePicStyles.name.color = primaryTextColor;
 
   const profilePicEl =
     profilePic === "none" ? (
@@ -42,7 +44,8 @@ function ProfilePic(props) {
 
 const mapStateToProps = state => {
   const { profilePic, displayName } = state.currentUser;
-  return { profilePic, displayName };
+  const { primaryTextColor, backgroundColor } = state.theme;
+  return { profilePic, displayName, primaryTextColor, backgroundColor };
 };
 
 export default connect(mapStateToProps)(ProfilePic);
