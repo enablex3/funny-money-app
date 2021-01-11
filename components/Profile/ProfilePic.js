@@ -9,7 +9,8 @@ let profilePicStyles = StyleSheet.create({
     flex: 1,
     marginTop: 10,
     alignItems: "flex-end",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+    backgroundColor: "black"
   },
   name: {
     fontFamily: "Staatliches_400Regular",
@@ -20,7 +21,7 @@ let profilePicStyles = StyleSheet.create({
 });
 
 function ProfilePic(props) {
-  const { profilePic, displayName, primaryTextColor } = props;
+  const { profilePic, displayName, primaryTextColor, backgroundColor } = props;
 
   const profilePicEl =
     profilePic === "none" ? (
@@ -31,7 +32,7 @@ function ProfilePic(props) {
 
   return (
     <TouchableOpacity
-      style={profilePicStyles.container}
+      style={[profilePicStyles.container, {backgroundColor: backgroundColor}]}
       onPress={() => props.navigation.navigate("Profile")}
       activeOpacity={1}>
       {profilePicEl}
@@ -42,8 +43,8 @@ function ProfilePic(props) {
 
 const mapStateToProps = state => {
   const { profilePic, displayName } = state.currentUser;
-  const { primaryTextColor } = state.theme;
-  return { profilePic, displayName, primaryTextColor };
+  const { primaryTextColor, backgroundColor } = state.theme;
+  return { profilePic, displayName, primaryTextColor, backgroundColor };
 };
 
 export default connect(mapStateToProps)(ProfilePic);

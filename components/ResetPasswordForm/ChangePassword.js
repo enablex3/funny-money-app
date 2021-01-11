@@ -86,9 +86,9 @@ function ChangePassword({ fetching, serverErrors, changePass, primaryTextColor, 
             {errors.newPassword && touched.newPassword && <Text style={styles.errorText}>{errors.newPassword}</Text>}
             <TextInput
               secureTextEntry
-              placeholder="Confirm New Password"
+              placeholder="Confirm New Password:"
               placeholderTextColor="#555"
-              style={styles.textInput}
+              style={[styles.textInput, {color: primaryTextColor}]}
               onChangeText={handleChange("confirmNewPassword")}
               value={values.confirmNewPassword}
               onBlur={handleBlur("confirmNewPassword")}
