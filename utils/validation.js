@@ -23,7 +23,7 @@ export const SignupSchema = Yup.object().shape({
 });
 
 export const LoginSchema = Yup.object().shape({
-  email: Yup.string().required("Email Is Required"),
+  email: Yup.string().email("Invalid Email Address").required("Email Is Required"),
   password: Yup.string().required("Password Is Required")
 });
 
@@ -32,4 +32,8 @@ export const predictionSchema = Yup.object().shape({
   price: Yup.string()
     .matches(/^[0-9]+(\.[0-9][0-9]?)?$/, "Price Must Be A Number With No More Than 2 Digits After Decimal Point")
     .required("Price Is Required")
+});
+
+export const ResetPasswordSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid Email Address").required("Email Is Required")
 });

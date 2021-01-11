@@ -3,7 +3,9 @@ import { StyleSheet, Text, Image, View, TextInput, Platform } from "react-native
 import { connect } from "react-redux";
 import { Formik } from "formik";
 import FetchingIndicator from "./FetchingIndicator";
+import ResetPasswordForm from "./ResetPasswordForm";
 import { getUser } from "../store/actions/currentUser";
+import { showResetPasswordForm } from "../store/actions";
 import { LoginSchema } from "../utils/validation";
 
 const icon = require("../assets/fmIcon.jpg");
@@ -80,7 +82,7 @@ const lStyles = StyleSheet.create({
 });
 
 function Login(props) {
-  const { serverErrors, fetching } = props;
+  const { serverErrors, fetching, shouldShowResetPasswordForm, showResetForm } = props;
 
   return (
     <View style={lStyles.container}>
@@ -128,6 +130,13 @@ function Login(props) {
           </View>
         )}
       </Formik>
+      {shouldShowResetPasswordForm ? (
+        <ResetPasswordForm />
+      ) : (
+        <Text style={lStyles.lText} onPress={showResetForm}>
+          Forgot Password?
+        </Text>
+      )}
       <Text style={lStyles.lText}>Don't have an account?</Text>
       <Text style={lStyles.lGSLink} onPress={() => props.navigation.navigate("Get Started")}>
         Get Started
@@ -136,10 +145,15 @@ function Login(props) {
   );
 }
 
-const mapStateToProps = state => ({ serverErrors: state.currentUser.errors, fetching: state.currentUser.fetching });
+const mapStateToProps = state => ({
+  serverErrors: state.currentUser.errors,
+  fetching: state.currentUser.fetching,
+  shouldShowResetPasswordForm: state.app.shouldShowResetPasswordForm
+});
 
 const mapDispatchToProps = dispatch => ({
-  getUser: (email, successCallback) => dispatch(getUser(email, successCallback))
+  getUser: (email, successCallback) => dispatch(getUser(email, successCallback)),
+  showResetForm: () => dispatch(showResetPasswordForm())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
