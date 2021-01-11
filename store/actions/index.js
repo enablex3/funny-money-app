@@ -8,6 +8,7 @@ export const resetPasswordFail = errors => ({ type: actionTypes.RESET_PASSWORD_F
 export const resetPasswordTokenStart = () => ({ type: actionTypes.RESET_PASSWORD_TOKEN_START });
 export const resetPasswordTokenSuccess = () => ({ type: actionTypes.RESET_PASSWORD_TOKEN_SUCCESS });
 export const resetPasswordTokenFail = errors => ({ type: actionTypes.RESET_PASSWORD_TOKEN_FAIL, payload: errors });
+export const retryToken = () => ({ type: actionTypes.RETRY_TOKEN });
 
 export const resetPasswordToken = email => async dispatch => {
   try {

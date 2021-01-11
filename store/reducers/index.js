@@ -14,6 +14,8 @@ const appReducer = (state = initialState, action) => {
       return { ...state, fetching: false, errors: null, tokenSentToEmail: true };
     case actionTypes.RESET_PASSWORD_TOKEN_FAIL:
       return { ...state, fetching: false, errors: action.payload, tokenSentToEmail: false };
+    case actionTypes.RETRY_TOKEN:
+      return { ...state, errors: null, tokenSentToEmail: false };
     default:
       return state;
   }

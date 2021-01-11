@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, TextInput, Platform } from "react-native";
 import { connect } from "react-redux";
 import { Formik } from "formik";
-import { resetPasswordToken } from "../../store/actions";
+import { resetPasswordToken, retryToken } from "../../store/actions";
 import FetchingIndicator from "../FetchingIndicator";
 import { ResetPasswordSchema } from "../../utils/validation";
 
@@ -47,17 +47,23 @@ const styles = StyleSheet.create({
   text: {
     color: "azure",
     textAlign: "center",
-    marginTop: 30,
+    marginTop: 5,
     fontSize: 20,
     fontFamily: "Staatliches_400Regular"
   }
 });
 
-function ResetPasswordForm({ fetching, serverErrors, tokenSentToEmail, resetPassToken }) {
+function ResetPasswordForm({ fetching, serverErrors, tokenSentToEmail, resetPassToken, retryResetToken }) {
   return (
     <View style={styles.container}>
       {tokenSentToEmail ? (
-        <Text style={styles.text}>Password Reset Link Sent To Email</Text>
+        <View>
+          <Text style={styles.text}>Password Reset Link Sent To Email</Text>
+          <Text style={[styles.text, { fontSize: 15 }]}>Did Not Receive Password Reset Link?</Text>
+          <Text style={[styles.text, { fontSize: 15, color: "#9c2c98" }]} onPress={retryResetToken}>
+            Try again
+          </Text>
+        </View>
       ) : (
         <View>
           <FetchingIndicator fething={fetching} />
@@ -94,6 +100,9 @@ const mapStateToProps = state => {
   return { fetching, tokenSentToEmail, serverErrors: errors };
 };
 
-const mapDispatchToProps = dispatch => ({ resetPassToken: email => dispatch(resetPasswordToken(email)) });
+const mapDispatchToProps = dispatch => ({
+  resetPassToken: email => dispatch(resetPasswordToken(email)),
+  retryResetToken: () => dispatch(retryToken())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetPasswordForm);
