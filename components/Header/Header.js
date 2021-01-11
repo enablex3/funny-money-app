@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { connect } from "react-redux";
 import ProfilePic from "../Profile/ProfilePic";
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
   header: {
     height: 70,
     flexDirection: "row",
@@ -27,24 +27,21 @@ let styles = StyleSheet.create({
 });
 
 function Header(props) {
-  const { rank, currency, accuracy, primaryTextColor, backgroundColor } = props;
-
-  styles.header.backgroundColor = backgroundColor;
-  styles.accuracy.color = primaryTextColor;
+  const { rank, currency, accuracy, primaryTextColor, backgroundColor, navigation } = props;
 
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, { backgroundColor }]}>
       <View style={{ marginTop: 10, justifyContent: "flex-end" }}>
         <Text style={styles.rank}>
           Rank:
           {rank}
         </Text>
-        <Text style={styles.accuracy}>
+        <Text style={[styles.accuracy, { color: primaryTextColor }]}>
           Accuracy:
           {`${accuracy * 100}%, Currency: ${currency}`}
         </Text>
       </View>
-      <ProfilePic navigation={props.navigation} />
+      <ProfilePic navigation={navigation} />
     </View>
   );
 }

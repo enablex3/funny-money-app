@@ -6,39 +6,33 @@ import LatestPredictions from "../Predictions/LatestPredictions";
 import PastPredictions from "../Predictions/PastPredictions";
 import News from "../News/News";
 
-let homeStyles = StyleSheet.create({
+const homeStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "black"
   },
   predictionText: {
-    color: "azure", 
-    textAlign: "center", 
-    marginTop: 10, 
-    fontSize: 20, 
+    color: "azure",
+    textAlign: "center",
+    marginTop: 10,
+    fontSize: 20,
     fontWeight: "bold"
   }
 });
 
 function Home(props) {
-
-  const { newPredictions, pastPredictions, primaryTextColor, backgroundColor } = props;
-
-  homeStyles.container.backgroundColor = backgroundColor;
-  homeStyles.predictionText.color = primaryTextColor;
+  const { newPredictions, pastPredictions, primaryTextColor, backgroundColor, navigation } = props;
 
   return (
-    <View style={homeStyles.container}>
-      <Header navigation={props.navigation} />
+    <View style={[homeStyles.container, { backgroundColor }]}>
+      <Header navigation={navigation} />
       <ScrollView>
         <Text style={{ color: "azure", textAlign: "center", marginTop: 10 }}>Latest predictions</Text>
         {Object.keys(newPredictions).length > 0 ? (
           <LatestPredictions />
         ) : (
           <View>
-            <Text style={homeStyles.predictionText}>
-              You don't have any predictions yet.
-            </Text>
+            <Text style={homeStyles.predictionText}>You don't have any predictions yet.</Text>
             <Button title="Create a new prediction" onPress={() => props.navigation.navigate("Predict")} />
           </View>
         )}
@@ -47,9 +41,7 @@ function Home(props) {
           <PastPredictions />
         ) : (
           <View>
-            <Text style={homeStyles.predictionText}>
-              You have no past predictions.
-            </Text>
+            <Text style={[homeStyles.predictionText, { color: primaryTextColor }]}>You have no past predictions.</Text>
           </View>
         )}
         <Text style={{ color: "azure", textAlign: "center", marginTop: 10, marginBottom: 10 }}>Latest News</Text>
