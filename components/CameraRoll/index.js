@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Button, View, Platform } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
-const CameraRoll = ({ buttonColor, setProfilePicture }) => {
+const CameraRoll = ({ buttonColor, setProfilePicture, onSelect }) => {
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -24,6 +24,7 @@ const CameraRoll = ({ buttonColor, setProfilePicture }) => {
 
     if (!result.cancelled) {
       setProfilePicture(result.uri);
+      onSelect();
     }
   };
 
