@@ -41,19 +41,23 @@ function PhotoUploadModal({ setProfilePicture, primaryTextColor, backgroundColor
   const buttonColor = "#9c2c98";
 
   return (
-    <View style={[styles.container, {backgroundColor: backgroundColor}]}>
+    <View style={[styles.container, { backgroundColor }]}>
       <View>
         {Platform.OS === "web" ? (
           <Overlay ModalComponent={Modal} isVisible={overlayVisible} onBackdropPress={toggleOverlay}>
-            <Text style={styles.text}>Profile picture changed!</Text>
-            <ProfilePic />
-            <Button color={buttonColor} title="Ok" onPress={toggleOverlay} />
+            <View>
+              <Text style={styles.text}>Profile picture changed!</Text>
+              <ProfilePic />
+              <Button color={buttonColor} title="Ok" onPress={toggleOverlay} />
+            </View>
           </Overlay>
         ) : (
           <Overlay isVisible={overlayVisible} onBackdropPress={toggleOverlay}>
-            <Text style={styles.text}>Profile picture changed!</Text>
-            <ProfilePic />
-            <Button color={buttonColor} title="Ok" onPress={toggleOverlay} />
+            <View>
+              <Text style={styles.text}>Profile picture changed!</Text>
+              <ProfilePic />
+              <Button color={buttonColor} title="Ok" onPress={toggleOverlay} />
+            </View>
           </Overlay>
         )}
       </View>
@@ -75,7 +79,7 @@ function PhotoUploadModal({ setProfilePicture, primaryTextColor, backgroundColor
 
 const mapStateToProps = state => {
   const { primaryTextColor, backgroundColor } = state.theme;
-  return {primaryTextColor, backgroundColor };
+  return { primaryTextColor, backgroundColor };
 };
 
 const mapDispatchToProps = dispatch => ({
