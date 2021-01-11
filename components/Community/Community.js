@@ -44,10 +44,10 @@ const communityStyles = StyleSheet.create({
 });
 
 function Community(props) {
-  const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy } = props;
+  const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy, primaryTextColor, backgroundColor } = props;
 
   return (
-    <View style={communityStyles.container}>
+    <View style={[communityStyles.container, {backgroundColor: backgroundColor}]}>
       <Header navigation={props.navigation} />
     </View>
   );
@@ -55,7 +55,8 @@ function Community(props) {
 
 const mapStateToProps = state => {
   const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy } = state.currentUser;
-  return { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy };
+  const { primaryTextColor, backgroundColor } = state.theme;
+  return { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy, primaryTextColor, backgroundColor };
 };
 
 export default connect(mapStateToProps)(Community);

@@ -20,7 +20,7 @@ const showDetails = prediction => {
 };
 
 function LatestPredictions(props) {
-  const { newPredictions } = props;
+  const { newPredictions, primaryTextColor, backgroundColor } = props;
   const newPredictionsObject = jsonToArray(newPredictions);
   const tableHeaders = [
     <Text style={tableStyles.column}>Name</Text>,
@@ -28,19 +28,19 @@ function LatestPredictions(props) {
     <Text style={tableStyles.column}>Current Price</Text>
   ];
   const tableData = newPredictionsObject.map(prediction => [
-    <Text style={tableStyles.row} onPress={() => showDetails(prediction)}>
+    <Text style={[tableStyles.row, {color: primaryTextColor}]} onPress={() => showDetails(prediction)}>
       {prediction.name}
     </Text>,
-    <Text style={tableStyles.row} onPress={() => showDetails(prediction)}>
+    <Text style={[tableStyles.row, {color: primaryTextColor}]} onPress={() => showDetails(prediction)}>
       {getDiff(prediction.value.date)}
     </Text>,
-    <Text style={tableStyles.row} onPress={() => showDetails(prediction)}>
+    <Text style={[tableStyles.row, {color: primaryTextColor}]} onPress={() => showDetails(prediction)}>
       {`$ ${prediction.value.price}`}
     </Text>
   ]);
 
   return (
-    <View style={tableStyles.container}>
+    <View style={[tableStyles.container, {backgroundColor: backgroundColor}]}>
       <Table
         borderStyle={{ borderWidth: 2, borderColor: "transparent", borderBottomWidth: 2, borderBottomColor: "azure" }}>
         <Row data={tableHeaders} style={tableStyles.head} textStyle={tableStyles.text} />
@@ -52,7 +52,8 @@ function LatestPredictions(props) {
 
 const mapStateToProps = state => {
   const { newPredictions } = state.currentUser;
-  return { newPredictions };
+  const { primaryTextColor, backgroundColor } = state.theme;
+  return { newPredictions, primaryTextColor, backgroundColor };
 };
 
 export default connect(mapStateToProps)(LatestPredictions);

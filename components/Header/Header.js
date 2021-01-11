@@ -3,14 +3,14 @@ import { StyleSheet, View, Text } from "react-native";
 import { connect } from "react-redux";
 import ProfilePic from "../Profile/ProfilePic";
 
-const styles = StyleSheet.create({
+let styles = StyleSheet.create({
   header: {
     height: 70,
     flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: "black",
     display: "flex",
-    borderWidth: 1,
+    borderBottomWidth: 1,
     borderBottomColor: "#9c2c98",
     marginTop: 30
   },

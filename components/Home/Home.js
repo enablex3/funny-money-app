@@ -17,6 +17,12 @@ const homeStyles = StyleSheet.create({
     marginTop: 10,
     fontSize: 20,
     fontWeight: "bold"
+  },
+  sectionHeader: {
+    color: "azure", 
+    textAlign: "center", 
+    marginTop: 10,
+    fontWeight: "bold"
   }
 });
 
@@ -27,16 +33,16 @@ function Home(props) {
     <View style={[homeStyles.container, { backgroundColor }]}>
       <Header navigation={navigation} />
       <ScrollView>
-        <Text style={{ color: "azure", textAlign: "center", marginTop: 10 }}>Latest predictions</Text>
+        <Text style={[homeStyles.sectionHeader,  {color: primaryTextColor}]}>Latest predictions</Text>
         {Object.keys(newPredictions).length > 0 ? (
           <LatestPredictions />
         ) : (
           <View>
-            <Text style={homeStyles.predictionText}>You don't have any predictions yet.</Text>
+            <Text style={[homeStyles.predictionText,  {color: primaryTextColor}]}>You don't have any predictions yet.</Text>
             <Button title="Create a new prediction" onPress={() => props.navigation.navigate("Predict")} />
           </View>
         )}
-        <Text style={{ color: "azure", textAlign: "center", marginTop: 10 }}>Past predictions</Text>
+        <Text style={[homeStyles.sectionHeader,  {color: primaryTextColor}]}>Past predictions</Text>
         {Object.keys(pastPredictions).length > 0 ? (
           <PastPredictions />
         ) : (
@@ -44,7 +50,7 @@ function Home(props) {
             <Text style={[homeStyles.predictionText, { color: primaryTextColor }]}>You have no past predictions.</Text>
           </View>
         )}
-        <Text style={{ color: "azure", textAlign: "center", marginTop: 10, marginBottom: 10 }}>Latest News</Text>
+        <Text style={[homeStyles.sectionHeader,  {color: primaryTextColor}]}>Latest News</Text>
         <News />
       </ScrollView>
     </View>

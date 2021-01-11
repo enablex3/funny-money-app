@@ -24,18 +24,18 @@ const styles = StyleSheet.create({
   }
 });
 
-function PhotoUploadModal({ setProfilePicture }) {
+function PhotoUploadModal({ setProfilePicture, primaryTextColor, backgroundColor }) {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: backgroundColor}]}>
       <View style={styles.column}>
         <TouchableOpacity>
-          <MaterialCommunityIcons name="camera" color="azure" size={50} style={styles.icon} />
+          <MaterialCommunityIcons name="camera" color={primaryTextColor} size={50} style={styles.icon} />
           <Button color="#9c2c98" title="Use camera" />
         </TouchableOpacity>
       </View>
       <View style={styles.column}>
         <TouchableOpacity>
-          <MaterialCommunityIcons name="camera-image" color="azure" size={50} style={styles.icon} />
+          <MaterialCommunityIcons name="camera-image" color={primaryTextColor} size={50} style={styles.icon} />
           <CameraRoll buttonColor="#9c2c98" setProfilePicture={setProfilePicture} />
         </TouchableOpacity>
       </View>
@@ -43,8 +43,13 @@ function PhotoUploadModal({ setProfilePicture }) {
   );
 }
 
+const mapStateToProps = state => {
+  const { primaryTextColor, backgroundColor } = state.theme;
+  return {primaryTextColor, backgroundColor };
+};
+
 const mapDispatchToProps = dispatch => ({
   setProfilePicture: profilePic => dispatch(setProfilePic(profilePic))
 });
 
-export default connect(null, mapDispatchToProps)(PhotoUploadModal);
+export default connect(mapStateToProps, mapDispatchToProps)(PhotoUploadModal);

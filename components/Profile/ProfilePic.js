@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import ProfilePicture from "react-native-profile-picture";
 
-const profilePicStyles = StyleSheet.create({
+let profilePicStyles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 10,
@@ -20,9 +20,7 @@ const profilePicStyles = StyleSheet.create({
 });
 
 function ProfilePic(props) {
-  const { profilePic, displayName, primaryTextColor, backgroundColor } = props;
-
-  //profilePicStyles.name.color = primaryTextColor;
+  const { profilePic, displayName, primaryTextColor } = props;
 
   const profilePicEl =
     profilePic === "none" ? (
@@ -37,15 +35,15 @@ function ProfilePic(props) {
       onPress={() => props.navigation.navigate("Profile")}
       activeOpacity={1}>
       {profilePicEl}
-      <Text style={profilePicStyles.name}>{displayName}</Text>
+      <Text style={[profilePicStyles.name, {color: primaryTextColor}]}>{displayName}</Text>
     </TouchableOpacity>
   );
 }
 
 const mapStateToProps = state => {
   const { profilePic, displayName } = state.currentUser;
-  const { primaryTextColor, backgroundColor } = state.theme;
-  return { profilePic, displayName, primaryTextColor, backgroundColor };
+  const { primaryTextColor } = state.theme;
+  return { profilePic, displayName, primaryTextColor };
 };
 
 export default connect(mapStateToProps)(ProfilePic);

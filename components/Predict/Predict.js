@@ -51,6 +51,13 @@ const predictStyles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#9c2c98",
     width: Platform.OS === "ios" || Platform.OS === "android" ? "100%" : "50%"
+  },
+  sectionHeader: {
+    color: "azure", 
+    textAlign: "center", 
+    marginTop: 10, 
+    fontSize: 20, 
+    fontWeight: "bold"
   }
 });
 
@@ -65,13 +72,13 @@ const items = [
   { value: "SILVER" }
 ];
 
-function Predict({ predictionDate, createNewPrediction, fetching, navigation }) {
+function Predict({ predictionDate, createNewPrediction, fetching, navigation, primaryTextColor, backgroundColor }) {
   return (
-    <View style={predictStyles.container}>
+    <View style={[predictStyles.container, {backgroundColor: backgroundColor}]}>
       <Header navigation={navigation} />
       <ScrollView>
-        <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold" }}>
-          Start a new prediction.
+        <Text style={[predictStyles.sectionHeader, {color: primaryTextColor}]}>
+          Start a new prediction
         </Text>
         <Formik
           initialValues={{ nameOrSymbol: "", price: "" }}
@@ -100,7 +107,7 @@ function Predict({ predictionDate, createNewPrediction, fetching, navigation }) 
                       {...getInputProps()}
                       placeholder="Name or Symbol"
                       placeholderTextColor="#555"
-                      style={predictStyles.input}
+                      style={[predictStyles.input, {color: primaryTextColor}]}
                       onChangeText={handleChange("nameOrSymbol")}
                       value={inputValue}
                       onBlur={handleBlur("nameOrSymbol")}
@@ -132,18 +139,18 @@ function Predict({ predictionDate, createNewPrediction, fetching, navigation }) 
               <TextInput
                 placeholder="Price"
                 placeholderTextColor="#555"
-                style={predictStyles.input}
+                style={[predictStyles.input, {color: primaryTextColor}]}
                 onChangeText={handleChange("price")}
                 value={values.price}
                 onBlur={handleBlur("price")}
               />
               {errors.price && touched.price && <Text style={predictStyles.errorText}>{errors.price}</Text>}
               <FetchingIndicator fetching={fetching} />
-              <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold" }}>
+              <Text style={[predictStyles.sectionHeader, {color: primaryTextColor}]}>
                 Date of Prediction Outcome
               </Text>
               <Calendar />
-              <Text style={{ color: "azure", textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold" }}>
+              <Text style={[predictStyles.sectionHeader, {color: primaryTextColor}]}>
                 {dateFormat(predictionDate, "dddd, mmmm dS, yyyy")}
               </Text>
               <Text style={predictStyles.button} onPress={handleSubmit}>
@@ -159,7 +166,8 @@ function Predict({ predictionDate, createNewPrediction, fetching, navigation }) 
 
 const mapStateToProps = state => {
   const { date, fetching, error } = state.prediction;
-  return { predictionDate: date, fetching, error };
+  const { primaryTextColor, backgroundColor } = state.theme;
+  return { predictionDate: date, fetching, error, primaryTextColor, backgroundColor };
 };
 
 const mapDispatchToProps = dispatch => ({

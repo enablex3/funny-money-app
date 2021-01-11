@@ -1,6 +1,6 @@
 import React from "react";
-// import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { connect } from "react-redux";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Home from "./Home/Home";
@@ -10,14 +10,16 @@ import Profile from "./Profile/Profile";
 
 const Tab = createBottomTabNavigator();
 
-export default function AppNavigation() {
+function AppNavigation(props) {
+  const { primaryTextColor, backgroundColor } = props;
+
   return (
     <NavigationContainer independent>
       <Tab.Navigator
         tabBarOptions={{
           activeTintColor: "#9c2c98",
           inactiveTintColor: "gray",
-          style: { borderTopColor: "#9c2c98", borderWidth: 1, backgroundColor: "black" }
+          style: { borderTopColor: "#9c2c98", borderWidth: 1, backgroundColor: backgroundColor }
         }}>
         <Tab.Screen
           name="Home"
@@ -50,4 +52,11 @@ export default function AppNavigation() {
       </Tab.Navigator>
     </NavigationContainer>
   );
-}
+};
+
+const mapStateToProps = state => {
+  const { primaryTextColor, backgroundColor } = state.theme;
+  return { primaryTextColor, backgroundColor };
+};
+
+export default connect(mapStateToProps)(AppNavigation);

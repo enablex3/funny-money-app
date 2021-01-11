@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TextInput, StyleSheet, Platform } from "react-native";
 import { Formik } from "formik";
+import { connect } from "react-redux";
 import FetchingIndicator from "../FetchingIndicator";
 import { ChangePasswordSchema } from "../../utils/validation";
 
@@ -51,9 +52,9 @@ const styles = StyleSheet.create({
   }
 });
 
-function ChangePassword({ fetching, serverErrors, changePass }) {
+function ChangePassword({ fetching, serverErrors, changePass, primaryTextColor, backgroundColor }) {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: backgroundColor}]}>
       <FetchingIndicator fething={fetching} />
       <Formik
         initialValues={{ currentPassword: "", newPassword: "", confirmNewPassword: "" }}
@@ -65,7 +66,7 @@ function ChangePassword({ fetching, serverErrors, changePass }) {
               secureTextEntry
               placeholder="Current Password:"
               placeholderTextColor="#555"
-              style={styles.textInput}
+              style={[styles.textInput, {color: primaryTextColor}]}
               onChangeText={handleChange("currentPassword")}
               value={values.currentPassword}
               onBlur={handleBlur("currentPassword")}
@@ -77,7 +78,7 @@ function ChangePassword({ fetching, serverErrors, changePass }) {
               secureTextEntry
               placeholder="New Password:"
               placeholderTextColor="#555"
-              style={styles.textInput}
+              style={[styles.textInput, {color: primaryTextColor}]}
               onChangeText={handleChange("newPassword")}
               value={values.newPassword}
               onBlur={handleBlur("newPassword")}
@@ -106,4 +107,9 @@ function ChangePassword({ fetching, serverErrors, changePass }) {
   );
 }
 
-export default ChangePassword;
+const mapStateToProps = state => {
+  const { primaryTextColor, backgroundColor } = state.theme;
+  return { primaryTextColor, backgroundColor };
+};
+
+export default connect(mapStateToProps)(ChangePassword);

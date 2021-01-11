@@ -39,10 +39,10 @@ class News extends Component {
   }
 
   render() {
-    const { articles, fetching } = this.props;
+    const { articles, fetching, primaryTextColor, backgroundColor } = this.props;
 
     return (
-      <View style={newsStyles.container}>
+      <View style={[newsStyles.container, {backgroundColor: backgroundColor}]}>
         {fetching ? (
           <FetchingIndicator fetching={fetching} />
         ) : (
@@ -74,10 +74,12 @@ class News extends Component {
 
 const mapStateToProps = state => {
   const { articles, fetching } = state.news;
-
+  const { primaryTextColor, backgroundColor } = state.theme;
   return {
     articles,
-    fetching
+    fetching,
+    primaryTextColor,
+    backgroundColor
   };
 };
 

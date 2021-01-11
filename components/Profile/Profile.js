@@ -29,14 +29,6 @@ const profileStyles = StyleSheet.create({
     marginRight: 5,
     fontFamily: "Staatliches_400Regular"
   },
-  pTextInfl: {
-    color: "#9c2c98",
-    fontSize: 20,
-    marginTop: 20,
-    marginLeft: 5,
-    marginRight: 5,
-    fontFamily: "Staatliches_400Regular"
-  },
   pTextDisabled: {
     color: "gray",
     fontSize: 20,
@@ -57,7 +49,7 @@ const profileStyles = StyleSheet.create({
 });
 
 function Profile(props) {
-  const { rank, navigation } = props;
+  const { rank, navigation, primaryTextColor, backgroundColor } = props;
 
   const influenceRank = 30;
 
@@ -75,10 +67,10 @@ function Profile(props) {
           style={profileStyles.tOp}
           onPress={() => setInfluenceClicked(!influenceClicked)}
           activeOpacity={1}>
-          <Text style={profileStyles.pText}>Influencer</Text>
+          <Text style={[profileStyles.pText, {color: primaryTextColor}]}>Influencer</Text>
           <MaterialCommunityIcons
             name={influenceClicked ? "minus" : "plus-thick"}
-            color="azure"
+            color={primaryTextColor}
             size={30}
             style={profileStyles.mIcon}
           />
@@ -97,34 +89,34 @@ function Profile(props) {
   };
 
   return (
-    <View style={profileStyles.container}>
+    <View style={[profileStyles.container, {backgroundColor: backgroundColor}]}>
       <Header navigation={navigation} />
       <ScrollView>
         <TouchableOpacity style={profileStyles.tOp} onPress={() => setPicClicked(!picClicked)} activeOpacity={1}>
-          <Text style={profileStyles.pText}>Change Profile Picture</Text>
+          <Text style={[profileStyles.pText, {color: primaryTextColor}]}>Change Profile Picture</Text>
           <MaterialCommunityIcons
             name={picClicked ? "minus" : "plus-thick"}
-            color="azure"
+            color={primaryTextColor}
             size={30}
             style={profileStyles.mIcon}
           />
         </TouchableOpacity>
         {picClicked ? <PhotoUploadModal /> : null}
         <TouchableOpacity style={profileStyles.tOp} onPress={() => setThemeClicked(!themeClicked)} activeOpacity={1}>
-          <Text style={profileStyles.pText}>Set App Theme</Text>
+          <Text style={[profileStyles.pText, {color: primaryTextColor}]}>Set App Theme</Text>
           <MaterialCommunityIcons
             name={themeClicked ? "minus" : "plus-thick"}
-            color="azure"
+            color={primaryTextColor}
             size={30}
             style={profileStyles.mIcon}
           />
         </TouchableOpacity>
         {themeClicked ? <AppThemeModal /> : null}
         <TouchableOpacity style={profileStyles.tOp} onPress={() => setPassClicked(!passClicked)} activeOpacity={1}>
-          <Text style={profileStyles.pText}>Reset Your Password</Text>
+          <Text style={[profileStyles.pText, {color: primaryTextColor}]}>Reset Your Password</Text>
           <MaterialCommunityIcons
             name={passClicked ? "minus" : "plus-thick"}
-            color="azure"
+            color={primaryTextColor}
             size={30}
             style={profileStyles.mIcon}
           />
@@ -135,10 +127,10 @@ function Profile(props) {
           style={profileStyles.tOp}
           onPress={() => setCurrencyClicked(!currencyClicked)}
           activeOpacity={1}>
-          <Text style={profileStyles.pText}>Change Currency Preference</Text>
+          <Text style={[profileStyles.pText, {color: primaryTextColor}]}>Change Currency Preference</Text>
           <MaterialCommunityIcons
             name={currencyClicked ? "minus" : "plus-thick"}
-            color="azure"
+            color={primaryTextColor}
             size={30}
             style={profileStyles.mIcon}
           />
@@ -150,7 +142,8 @@ function Profile(props) {
 
 const mapStateToProps = state => {
   const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy } = state.currentUser;
-  return { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy };
+  const { primaryTextColor, backgroundColor } = state.theme;
+  return { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy, primaryTextColor, backgroundColor };
 };
 
 export default connect(mapStateToProps)(Profile);

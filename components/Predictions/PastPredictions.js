@@ -14,7 +14,7 @@ const tableStyles = StyleSheet.create({
   });
 
 function PastPredictions(props) {
-    const { pastPredictions, accuracy } = props;
+    const { pastPredictions, accuracy, primaryTextColor, backgroundColor } = props;
     const pastPredictionsObject = jsonToArray(pastPredictions);
     const tableHeaders = [
         <Text style={tableStyles.column}>Name</Text>, 
@@ -23,9 +23,9 @@ function PastPredictions(props) {
     ];
     const tableData = pastPredictionsObject.map(prediction =>
         [
-            <Text style={tableStyles.row} onPress={() => showDetails(prediction)}>{prediction.name}</Text>, 
-            <Text style={tableStyles.row} onPress={() => showDetails(prediction)}>{accuracy}</Text>,
-            <Text style={tableStyles.row} onPress={() => showDetails(prediction)}>${prediction.value.price}</Text>
+            <Text style={[tableStyles.row, {color: primaryTextColor}]} onPress={() => showDetails(prediction)}>{prediction.name}</Text>, 
+            <Text style={[tableStyles.row, {color: primaryTextColor}]} onPress={() => showDetails(prediction)}>{accuracy}</Text>,
+            <Text style={[tableStyles.row, {color: primaryTextColor}]} onPress={() => showDetails(prediction)}>${prediction.value.price}</Text>
         ]
     );
 
@@ -37,7 +37,7 @@ function PastPredictions(props) {
     }
 
     return(
-        <View style={tableStyles.container}>
+        <View style={[tableStyles.container, {backgroundColor: backgroundColor}]}>
         <Table borderStyle={{borderWidth: 2, borderColor: 'transparent'}}>
           <Row data={tableHeaders} style={tableStyles.head} textStyle={tableStyles.text}/>
           <Rows data={tableData} textStyle={tableStyles.text} />
@@ -48,7 +48,8 @@ function PastPredictions(props) {
 
 const mapStateToProps = state => {
     const { pastPredictions, accuracy } = state.currentUser;
-    return { pastPredictions, accuracy };
+    const { primaryTextColor, backgroundColor } = state.theme;
+    return { pastPredictions, accuracy, primaryTextColor, backgroundColor };
 };
 
 export default connect(mapStateToProps)(PastPredictions);
