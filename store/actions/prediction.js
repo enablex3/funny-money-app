@@ -23,6 +23,7 @@ export const setSelectedMonth = month => ({
   type: actionTypes.SET_SELECTED_MONTH,
   payload: month
 });
+export const setVisibility = visibility => ({ type: actionTypes.SET_VISIBILITY, payload: visibility });
 export const createPredictionStart = () => ({ type: actionTypes.CREATE_PREDICTION_START });
 export const createPredictionSuccess = prediction => ({
   type: actionTypes.CREATE_PREDICTION_SUCCESS,

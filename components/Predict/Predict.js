@@ -2,11 +2,13 @@ import React from "react";
 import { StyleSheet, Text, View, Platform, TextInput, ScrollView } from "react-native";
 import { Formik } from "formik";
 import Downshift from "downshift";
+import { RadioButton } from "react-native-paper";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
 import Calendar from "../Calendar";
 import FetchingIndicator from "../FetchingIndicator";
-import { createPrediction } from "../../store/actions/prediction";
+import { createPrediction, setVisibility } from "../../store/actions/prediction";
 import Header from "../Header/Header";
 import { predictionSchema } from "../../utils/validation";
 
@@ -39,7 +41,8 @@ const predictStyles = StyleSheet.create({
   },
   text: {
     marginTop: 5,
-    color: "azure"
+    color: "azure",
+    fontFamily: "Staatliches_400Regular"
   },
   errorText: {
     color: "red"
@@ -53,10 +56,10 @@ const predictStyles = StyleSheet.create({
     width: Platform.OS === "ios" || Platform.OS === "android" ? "100%" : "50%"
   },
   sectionHeader: {
-    color: "azure", 
-    textAlign: "center", 
-    marginTop: 10, 
-    fontSize: 20, 
+    color: "azure",
+    textAlign: "center",
+    marginTop: 10,
+    fontSize: 20,
     fontWeight: "bold"
   }
 });
@@ -72,21 +75,27 @@ const items = [
   { value: "SILVER" }
 ];
 
-function Predict({ predictionDate, createNewPrediction, fetching, navigation, primaryTextColor, backgroundColor, purpleTheme }) {
+function Predict({
+  predictionDate,
+  createNewPrediction,
+  fetching,
+  visibility,
+  navigation,
+  primaryTextColor,
+  backgroundColor,
+  purpleTheme,
+  setPredictionVisibility
+}) {
   return (
-    <View style={[predictStyles.container, {backgroundColor: backgroundColor}]}>
+    <View style={[predictStyles.container, { backgroundColor }]}>
       <Header navigation={navigation} />
       <ScrollView>
-        <Text style={[predictStyles.sectionHeader, {color: primaryTextColor}]}>
-          Start a new prediction
-        </Text>
+        <Text style={[predictStyles.sectionHeader, { color: primaryTextColor }]}>Start a new prediction</Text>
         <Formik
-          initialValues={{ nameOrSymbol: "", price: "" }}
+          initialValues={{ nameOrSymbol: "", price: "", comment: "" }}
           validationSchema={predictionSchema}
           onSubmit={values => {
-            const { nameOrSymbol, price } = values;
-
-            createNewPrediction({ date: predictionDate, nameOrSymbol, price }, () => {
+            createNewPrediction({ ...values, visibility, date: predictionDate }, () => {
               navigation.navigate("Home");
             });
           }}>
@@ -107,7 +116,7 @@ function Predict({ predictionDate, createNewPrediction, fetching, navigation, pr
                       {...getInputProps()}
                       placeholder="Name or Symbol"
                       placeholderTextColor="#555"
-                      style={[predictStyles.input, {color: primaryTextColor}]}
+                      style={[predictStyles.input, { color: primaryTextColor }]}
                       onChangeText={handleChange("nameOrSymbol")}
                       value={inputValue}
                       onBlur={handleBlur("nameOrSymbol")}
@@ -139,21 +148,72 @@ function Predict({ predictionDate, createNewPrediction, fetching, navigation, pr
               <TextInput
                 placeholder="Price"
                 placeholderTextColor="#555"
-                style={[predictStyles.input, {color: primaryTextColor}]}
+                style={[predictStyles.input, { color: primaryTextColor }]}
                 onChangeText={handleChange("price")}
                 value={values.price}
                 onBlur={handleBlur("price")}
               />
               {errors.price && touched.price && <Text style={predictStyles.errorText}>{errors.price}</Text>}
+              <TextInput
+                placeholder="Comment"
+                placeholderTextColor="#555"
+                style={[predictStyles.input, { color: primaryTextColor, borderColor: "grey" }]}
+                numberOfLines={4}
+                onChangeText={handleChange("comment")}
+                value={values.comment}
+                multiline
+              />
+              <View>
+                <Text style={[predictStyles.text, { fontSize: 20, color: primaryTextColor }]}>
+                  Who Can See This Prediction?
+                </Text>
+                <Text
+                  style={[predictStyles.text, { color: primaryTextColor }]}
+                  onPress={() => setPredictionVisibility(0)}>
+                  Everyone Can See
+                  <RadioButton
+                    value={0}
+                    status={visibility === 0 ? "checked" : "unchecked"}
+                    uncheckedColor="#9c2c98"
+                    color="#9c2c98"
+                    onPress={() => setPredictionVisibility(0)}
+                  />
+                  <MaterialCommunityIcons name="account-multiple-plus" color="white" size={20} />
+                </Text>
+                <Text
+                  style={[predictStyles.text, { color: primaryTextColor }]}
+                  onPress={() => setPredictionVisibility(1)}>
+                  You And Your Subscribers Can See
+                  <RadioButton
+                    value={1}
+                    status={visibility === 1 ? "checked" : "unchecked"}
+                    uncheckedColor="#9c2c98"
+                    color="#9c2c98"
+                    onPress={() => setPredictionVisibility(1)}
+                  />
+                  <MaterialCommunityIcons name="account-multiple-remove" color="white" size={20} />
+                </Text>
+                <Text
+                  style={[predictStyles.text, { color: primaryTextColor }]}
+                  onPress={() => setPredictionVisibility(2)}>
+                  Only You Can See
+                  <RadioButton
+                    value={2}
+                    status={visibility === 2 ? "checked" : "unchecked"}
+                    uncheckedColor="#9c2c98"
+                    color="#9c2c98"
+                    onPress={() => setPredictionVisibility(2)}
+                  />
+                  <MaterialCommunityIcons name="account-lock" color="white" size={20} />
+                </Text>
+              </View>
               <FetchingIndicator fetching={fetching} />
-              <Text style={[predictStyles.sectionHeader, {color: primaryTextColor}]}>
-                Date of Prediction Outcome
-              </Text>
+              <Text style={[predictStyles.sectionHeader, { color: primaryTextColor }]}>Date of Prediction Outcome</Text>
               <Calendar />
-              <Text style={[predictStyles.sectionHeader, {color: primaryTextColor}]}>
+              <Text style={[predictStyles.sectionHeader, { color: primaryTextColor }]}>
                 {dateFormat(predictionDate, "dddd, mmmm dS, yyyy")}
               </Text>
-              <Text style={[predictStyles.button, {backgroundColor: purpleTheme}]} onPress={handleSubmit}>
+              <Text style={[predictStyles.button, { backgroundColor: purpleTheme }]} onPress={handleSubmit}>
                 Create Prediction
               </Text>
             </View>
@@ -165,13 +225,14 @@ function Predict({ predictionDate, createNewPrediction, fetching, navigation, pr
 }
 
 const mapStateToProps = state => {
-  const { date, fetching, error } = state.prediction;
+  const { date, fetching, error, visibility } = state.prediction;
   const { primaryTextColor, backgroundColor, purpleTheme } = state.theme;
-  return { predictionDate: date, fetching, error, primaryTextColor, backgroundColor, purpleTheme };
+  return { predictionDate: date, fetching, error, visibility, primaryTextColor, backgroundColor, purpleTheme };
 };
 
 const mapDispatchToProps = dispatch => ({
-  createNewPrediction: (prediction, successCallback) => dispatch(createPrediction(prediction, successCallback))
+  createNewPrediction: (prediction, successCallback) => dispatch(createPrediction(prediction, successCallback)),
+  setPredictionVisibility: visibility => dispatch(setVisibility(visibility))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Predict);
