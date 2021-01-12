@@ -152,15 +152,16 @@ function Predict({
                 value={values.price}
                 onBlur={handleBlur("price")}
               />
+              {errors.price && touched.price && <Text style={predictStyles.errorText}>{errors.price}</Text>}
               <TextInput
+                placeholder="Comment"
+                placeholderTextColor="#555"
                 style={[predictStyles.input, { color: primaryTextColor, borderColor: "grey" }]}
                 numberOfLines={4}
                 onChangeText={handleChange("comment")}
                 value={values.comment}
-                placeholder="Comment"
                 multiline
               />
-              {errors.price && touched.price && <Text style={predictStyles.errorText}>{errors.price}</Text>}
               <View>
                 <Text style={[predictStyles.text, { fontSize: 20, color: primaryTextColor }]}>
                   Who Can See This Prediction?
