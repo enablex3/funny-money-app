@@ -14,6 +14,11 @@ export const currentUserActionTypes = {
   SET_PROFILE_PIC: "SET_PROFILE_PIC"
 };
 
+export const communityPredictionsActionTypes = {
+  FETCH_USER_POSTS: "FETCH_USER_PREDICTIONS",
+  POST_USER_POST: "POST_USER_PREDICTION"
+};
+
 export const newsActionTypes = {
   FETCH_NEWS_START: "FETCH_NEWS_START",
   FETCH_NEWS_SUCCESS: "FETCH_NEWS_SUCCESS",
