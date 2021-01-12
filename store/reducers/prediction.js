@@ -11,7 +11,8 @@ const initialState = () => {
     fetching: false,
     errors: {},
     selectedYear: currentDate.getFullYear(),
-    selectedMonth: currentDate.getMonth()
+    selectedMonth: currentDate.getMonth(),
+    visibility: 0
   };
 };
 
@@ -27,6 +28,8 @@ const predictionReducer = (state = initialState(), action) => {
       return { ...state, selectedYear: action.payload };
     case actionTypes.SET_SELECTED_MONTH:
       return { ...state, selectedMonth: action.payload };
+    case actionTypes.SET_VISIBILITY:
+      return { ...state, visibility: action.payload };
     case actionTypes.CREATE_PREDICTION_START:
       return { ...state, fetching: true };
     case actionTypes.CREATE_PREDICTION_SUCCESS: {
