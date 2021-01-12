@@ -91,7 +91,7 @@ function Predict({
       <ScrollView>
         <Text style={[predictStyles.sectionHeader, { color: primaryTextColor }]}>Start a new prediction</Text>
         <Formik
-          initialValues={{ nameOrSymbol: "", price: "" }}
+          initialValues={{ nameOrSymbol: "", price: "", comment: "" }}
           validationSchema={predictionSchema}
           onSubmit={values => {
             createNewPrediction({ ...values, visibility, date: predictionDate }, () => {
@@ -152,6 +152,15 @@ function Predict({
                 value={values.price}
                 onBlur={handleBlur("price")}
               />
+              <TextInput
+                style={[predictStyles.input, { color: primaryTextColor, borderColor: "grey" }]}
+                numberOfLines={4}
+                onChangeText={handleChange("comment")}
+                value={values.comment}
+                placeholder="Comment"
+                multiline
+              />
+              {errors.price && touched.price && <Text style={predictStyles.errorText}>{errors.price}</Text>}
               <View>
                 <Text style={[predictStyles.text, { fontSize: 20, color: primaryTextColor }]}>
                   Who Can See This Prediction?
@@ -193,7 +202,6 @@ function Predict({
                   />
                 </Text>
               </View>
-              {errors.price && touched.price && <Text style={predictStyles.errorText}>{errors.price}</Text>}
               <FetchingIndicator fetching={fetching} />
               <Text style={[predictStyles.sectionHeader, { color: primaryTextColor }]}>Date of Prediction Outcome</Text>
               <Calendar />
