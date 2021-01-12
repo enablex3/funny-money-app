@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Platform, TextInput, ScrollView } from "react-n
 import { Formik } from "formik";
 import Downshift from "downshift";
 import { RadioButton } from "react-native-paper";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
 import Calendar from "../Calendar";
@@ -177,6 +178,7 @@ function Predict({
                     color="#9c2c98"
                     onPress={() => setPredictionVisibility(0)}
                   />
+                  <MaterialCommunityIcons name="account-multiple-plus" color="white" size={20} />
                 </Text>
                 <Text
                   style={[predictStyles.text, { color: primaryTextColor }]}
@@ -189,6 +191,7 @@ function Predict({
                     color="#9c2c98"
                     onPress={() => setPredictionVisibility(1)}
                   />
+                  <MaterialCommunityIcons name="account-multiple-remove" color="white" size={20} />
                 </Text>
                 <Text
                   style={[predictStyles.text, { color: primaryTextColor }]}
@@ -201,6 +204,7 @@ function Predict({
                     color="#9c2c98"
                     onPress={() => setPredictionVisibility(2)}
                   />
+                  <MaterialCommunityIcons name="account-lock" color="white" size={20} />
                 </Text>
               </View>
               <FetchingIndicator fetching={fetching} />
