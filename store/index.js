@@ -5,6 +5,7 @@ import currentUserReducer from "./reducers/currentUser";
 import newsReducer from "./reducers/news";
 import predictionReducer from "./reducers/prediction";
 import themeReducer from "./reducers/theme";
+import communityReducer from "./reducers/communityPredictions";
 
 const bindMiddleware = middleware => {
   if (process.env.NODE_ENV !== "production") {
@@ -21,7 +22,8 @@ const store = createStore(
     currentUser: currentUserReducer,
     news: newsReducer,
     prediction: predictionReducer,
-    theme: themeReducer
+    theme: themeReducer,
+    community: communityReducer
   }),
   bindMiddleware([thunkMiddleware])
 );

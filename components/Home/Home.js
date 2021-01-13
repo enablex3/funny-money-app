@@ -27,7 +27,7 @@ const homeStyles = StyleSheet.create({
 });
 
 function Home(props) {
-  const { newPredictions, pastPredictions, primaryTextColor, backgroundColor, navigation } = props;
+  const { newPredictions, pastPredictions, primaryTextColor, backgroundColor, navigation, posts } = props;
 
   return (
     <View style={[homeStyles.container, { backgroundColor }]}>
@@ -60,7 +60,8 @@ function Home(props) {
 const mapStateToProps = state => {
   const { newPredictions, pastPredictions } = state.currentUser;
   const { primaryTextColor, backgroundColor } = state.theme;
-  return { newPredictions, pastPredictions, primaryTextColor, backgroundColor };
+  const { posts } = state.community;
+  return { newPredictions, pastPredictions, primaryTextColor, backgroundColor, posts };
 };
 
 export default connect(mapStateToProps)(Home);

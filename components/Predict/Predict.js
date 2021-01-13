@@ -178,7 +178,7 @@ function Predict({
                     color="#9c2c98"
                     onPress={() => setPredictionVisibility(0)}
                   />
-                  <MaterialCommunityIcons name="account-multiple-plus" color="white" size={20} />
+                  <MaterialCommunityIcons name="account-multiple-plus" color={primaryTextColor} size={20} />
                 </Text>
                 <Text
                   style={[predictStyles.text, { color: primaryTextColor }]}
@@ -191,7 +191,7 @@ function Predict({
                     color="#9c2c98"
                     onPress={() => setPredictionVisibility(1)}
                   />
-                  <MaterialCommunityIcons name="account-multiple-remove" color="white" size={20} />
+                  <MaterialCommunityIcons name="account-multiple-remove" color={primaryTextColor} size={20} />
                 </Text>
                 <Text
                   style={[predictStyles.text, { color: primaryTextColor }]}
@@ -204,7 +204,7 @@ function Predict({
                     color="#9c2c98"
                     onPress={() => setPredictionVisibility(2)}
                   />
-                  <MaterialCommunityIcons name="account-lock" color="white" size={20} />
+                  <MaterialCommunityIcons name="account-lock" color={primaryTextColor} size={20} />
                 </Text>
               </View>
               <FetchingIndicator fetching={fetching} />

@@ -1,6 +1,8 @@
 import React from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { connect } from "react-redux";
+import { jsonToArray } from "../../utils/jsonToArray";
+import PostContent from "./PostContent";
 import Header from "../Header/Header";
 
 const communityStyles = StyleSheet.create({
@@ -44,19 +46,47 @@ const communityStyles = StyleSheet.create({
 });
 
 function Community(props) {
-  const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy, primaryTextColor, backgroundColor } = props;
+  const { primaryTextColor, backgroundColor, posts } = props;
+
+  const postObject = jsonToArray(posts);
+
+  let predictionsObject;
+  let profilePic;
 
   return (
     <View style={[communityStyles.container, {backgroundColor: backgroundColor}]}>
       <Header navigation={props.navigation} />
+        <ScrollView contentContainerStyle={{ marginBottom: 20}}>
+          {postObject.map((user, idx) => {
+            predictionsObject = jsonToArray(user.value.predictions);
+            profilePic = user.value.profilePic;
+            return (
+              predictionsObject.map((item, idx) => {
+                return (
+                  <PostContent 
+                    key={idx} 
+                    displayName={user.name} 
+                    profilePic={profilePic}
+                    predictionName={item.name}
+                    predictionTargetDate={item.value.date}
+                    dateMade={item.value.dateMade}
+                    price={item.value.price}
+                    comment={item.value.comment}
+                    type={item.value.type}
+                  />
+                );
+              })
+            );
+          })}
+        </ScrollView>
     </View>
   );
 }
 
 const mapStateToProps = state => {
-  const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy } = state.currentUser;
   const { primaryTextColor, backgroundColor } = state.theme;
-  return { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy, primaryTextColor, backgroundColor };
+  const { posts } = state.community;
+  return { primaryTextColor, backgroundColor, posts };
 };
 
 export default connect(mapStateToProps)(Community);
