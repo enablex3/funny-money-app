@@ -1,5 +1,6 @@
 import React from "react";
 import { Provider } from "react-redux";
+import { StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AppLoading from "expo-app-loading";
@@ -20,6 +21,8 @@ export default function App() {
   if (!fontsLoaded) {
     return <AppLoading />;
   }
+
+  StatusBar.setHidden(true, 'none');
 
   return (
     <Provider store={store}>

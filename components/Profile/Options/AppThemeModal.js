@@ -26,10 +26,12 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   textDark: {
-    color: "azure"
+    color: "azure",
+    fontFamily: "Staatliches_400Regular"
   },
   textLight: {
-    color: "black"
+    color: "black",
+    fontFamily: "Staatliches_400Regular"
   },
   icon: {
     textAlign: "center"

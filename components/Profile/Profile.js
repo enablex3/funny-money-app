@@ -81,7 +81,7 @@ function Profile(props) {
       <TouchableOpacity style={profileStyles.tOp} disabled>
         <Text style={profileStyles.pTextDisabled}>
           Influencer (must be at least rank
-          {influenceRank}
+          {influenceRank})
         </Text>
         <MaterialCommunityIcons name="plus-thick" color="gray" size={30} style={profileStyles.mIcon} />
       </TouchableOpacity>
