@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     name: {
         fontFamily: "Staatliches_400Regular",
         color: "azure",
-        fontSize: 20,
+        fontSize: 15,
         justifyContent: "flex-end"
     },
     predictionName: {
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-around",
         display: "flex",
-        borderBottomColor: "#A9A9A9",
+        borderBottomColor: "#383838",
         borderBottomWidth: 1
     },
     bottomIconContainer: {
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
           width: 0,
           height: 2
         },
-        shadowOpacity: 0.25,
+        shadowOpacity: 0.75,
         shadowRadius: 3.84,
         elevation: 5
     },
@@ -96,14 +96,26 @@ const styles = StyleSheet.create({
         right: 0,
         top: 0,
         bottom: 0
-    }
+    },
+    rank: {
+        fontFamily: "Staatliches_400Regular",
+        color: "#9c2c98",
+        fontSize: 20
+      },
+      accuracy: {
+        fontFamily: "Staatliches_400Regular",
+        color: "azure",
+        fontSize: 15
+      }
   });
 
   function PostContent(props) {
 
     const { 
         displayName, 
-        profilePic, 
+        profilePic,
+        rank,
+        accuracy,
         primaryTextColor, 
         backgroundColor,
         purpleTheme,
@@ -133,15 +145,15 @@ const styles = StyleSheet.create({
     return (
         <View style={[styles.container, {backgroundColor: backgroundColor}]}>
             <View style={[styles.topSection, {backgroundColor: backgroundColor}]}>
-                <View style={{ flex: 1, flexDirection: "column" }}>
+                <View style={{ flex: 1, flexDirection: "column", marginTop: 8 }}>
                     {profilePicEl}
                     <Text style={[styles.name, {color: primaryTextColor}]}>{displayName}</Text>
                 </View>
-                <View style={{ flex: 1, flexDirection: "column" }}>
+                <View style={{ flex: 1, flexDirection: "column", marginTop: 30, marginLeft: 20 }}>
                     <Text style={[styles.predictionName, {color: primaryTextColor}]}>{predictionName}</Text>
                     <Text style={[styles.predictionPrice, {color: primaryTextColor}]}>{price}</Text>
                 </View>
-                <View style={{ flex: 1, flexDirection: "column" }}>
+                <View style={{ flex: 1, flexDirection: "column", marginTop: 30 }}>
                     <Text style={[styles.predictionName, {color: primaryTextColor}]}>Target Date</Text>
                     <Text style={[styles.predictionPrice, {color: primaryTextColor}]}>{predictionTargetDate}</Text>
                 </View>
@@ -150,11 +162,11 @@ const styles = StyleSheet.create({
                 <Text style={styles.dateMade}>Posted on {dateMade}</Text>
                 <Text style={[styles.comment, { color: primaryTextColor}]}>{ (comment === undefined ) ? "No comment." : comment}</Text>
             </View>
-            <View style={styles.bottomSection}>
+            <View style={[styles.bottomSection, {borderBottomColor: (backgroundColor === "black") ? "#383838" : "#D0D0D0"}]}>
                 <View style={styles.bottomIconContainer}>
                     <TouchableOpacity style={{flexDirection: "row"}} onPress={() => setHeadOutlineClicked(!headOutlineClicked)}>
-                        <MaterialCommunityIcons name="head-check-outline" size={20} color={headOutlineClicked ? purpleTheme : primaryTextColor} />
-                        <Text style={[styles.bottomIconLabel, {color: headOutlineClicked ? purpleTheme : primaryTextColor}]}>Agree</Text>
+                        <MaterialCommunityIcons name="head-check-outline" size={20} color={headOutlineClicked ? "#00ff40" : primaryTextColor} />
+                        <Text style={[styles.bottomIconLabel, {color: headOutlineClicked ? "#00ff40" : primaryTextColor}]}>Agree</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.bottomIconContainer}>
@@ -179,14 +191,18 @@ const styles = StyleSheet.create({
                 }}
             >
                 <View style={styles.centeredView}>
-                    <View style={[styles.modalView, {backgroundColor: backgroundColor}]}>
+                    <View style={[styles.modalView, {backgroundColor: backgroundColor, shadowColor: ( primaryTextColor === "azure") ? "#FFF": "#000"}]}>
                         <TouchableOpacity activeOpacity={1} style={styles.closeModal} onPress={() => setModalVisible(!modalVisible)}>
                                     <MaterialCommunityIcons name="close" size={30} color="red"/>
                         </TouchableOpacity>
-                        <View style={[styles.topSection, {backgroundColor: backgroundColor}]}>
+                        <View style={[styles.topSection, {backgroundColor: backgroundColor, flexDirection: "row", justifyContent: "space-between"}]}>
                             <View style={{ flex: 1, flexDirection: "column" }}>
                                 {profilePicEl}
                                 <Text style={[styles.name, {color: primaryTextColor}]}>{displayName}</Text>
+                            </View>
+                            <View style={{ flex: 1, flexDirection: "column", marginTop: 22 }}>
+                                <Text style={[styles.rank, {color: purpleTheme}]}>Rank: {rank}</Text>
+                                <Text style={[styles.accuracy, {color: primaryTextColor}]}>Accuracy: {accuracy * 100}%</Text>
                             </View>
                         </View>
                     </View>

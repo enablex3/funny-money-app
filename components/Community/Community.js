@@ -52,6 +52,8 @@ function Community(props) {
 
   let predictionsObject;
   let profilePic;
+  let accuracy;
+  let rank;
 
   return (
     <View style={[communityStyles.container, {backgroundColor: backgroundColor}]}>
@@ -60,6 +62,8 @@ function Community(props) {
           {postObject.map((user, idx) => {
             predictionsObject = jsonToArray(user.value.predictions);
             profilePic = user.value.profilePic;
+            rank = user.value.rank;
+            accuracy = user.value.accuracy;
             return (
               predictionsObject.map((item, idx) => {
                 return (
@@ -67,6 +71,8 @@ function Community(props) {
                     key={idx} 
                     displayName={user.name} 
                     profilePic={profilePic}
+                    rank={rank}
+                    accuracy={accuracy}
                     predictionName={item.name}
                     predictionTargetDate={item.value.date}
                     dateMade={item.value.dateMade}
