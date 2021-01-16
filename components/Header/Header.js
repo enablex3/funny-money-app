@@ -32,7 +32,7 @@ function Header(props) {
   return (
     <View style={[styles.header, { backgroundColor }]}>
       <View style={{ marginTop: 10, justifyContent: "flex-end" }}>
-        <Text style={styles.rank}>
+        <Text style={[styles.rank, {color: ( primaryTextColor === "azure") ? "#CB6CE6": "#9C2C98" }]}>
           Rank:
           {rank}
         </Text>

@@ -3,13 +3,15 @@ import { themeActionTypes as actionTypes } from "../actionTypes";
 const darkTheme = {
     primaryTextColor: "azure",
     backgroundColor: "black",
-    purpleTheme: "#9C2C98"
+    purpleTheme: "#9C2C98",
+    agreeTheme: "#00ff40"
 };
 
 const lightTheme = {
     primaryTextColor: "black",
     backgroundColor: "azure",
-    purpleTheme: "#CB6CE6"
+    purpleTheme: "#CB6CE6",
+    agreeTheme: "#008000"
 };
 
 export const setDarkMode = () => ({

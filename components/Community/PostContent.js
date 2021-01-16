@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { connect } from "react-redux"; 
-import { StyleSheet, Text, View, Alert, TouchableOpacity, Modal } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Platform, TextInput } from "react-native";
+import { Modal as MobileModal } from "react-native";
+import Modal from "modal-enhanced-react-native-web";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import ProfilePicture from "react-native-profile-picture";
 
@@ -106,10 +108,37 @@ const styles = StyleSheet.create({
         fontFamily: "Staatliches_400Regular",
         color: "azure",
         fontSize: 15
-      }
+      },
+      textInput: {
+        color: "azure",
+        fontSize: 15,
+        marginLeft: 20,
+        marginRight: 20,
+        paddingBottom: 10,
+      },
+      commentSubmitButton: {
+        color: "black",
+        backgroundColor: "#9c2c98",
+        textAlign: "center",
+        marginTop: 5,
+        marginLeft: 20,
+        marginRight: 20,
+        borderWidth: 1,
+        borderRadius: 10,
+        overflow: "hidden",
+        fontSize: 15,
+        fontFamily: "Staatliches_400Regular"
+      },
   });
 
   function PostContent(props) {
+    let platform;
+
+    if (Platform.OS === "ios" || Platform.OS === "android") {
+        platform = "mobile";
+    } else {
+        platform = "web";
+    }
 
     const { 
         displayName, 
@@ -119,6 +148,7 @@ const styles = StyleSheet.create({
         primaryTextColor, 
         backgroundColor,
         purpleTheme,
+        agreeTheme,
         predictionName,
         predictionTargetDate,
         dateMade,
@@ -129,6 +159,7 @@ const styles = StyleSheet.create({
     const [modalVisible, setModalVisible] = useState(false);
     const [headOutlineClicked, setHeadOutlineClicked] = useState(false);
     const [cancelClicked, setCancelClicked] = useState(false);
+    const [commentClicked, setCommentClicked] = useState(false);
 
     const profilePicEl =
     profilePic === "none" ? (
@@ -142,8 +173,46 @@ const styles = StyleSheet.create({
         </TouchableOpacity>
     );
 
+    const modalContent = () => {
+        return (
+            <View style={styles.centeredView}>
+                <View style={[styles.modalView, {backgroundColor: backgroundColor, shadowColor: ( primaryTextColor === "azure") ? "#CB6CE6": "#9C2C98"}]}>
+                    <TouchableOpacity activeOpacity={1} style={styles.closeModal} onPress={() => setModalVisible(!modalVisible)}>
+                                <MaterialCommunityIcons name="close" size={30} color="red"/>
+                    </TouchableOpacity>
+                    <View style={[styles.topSection, {backgroundColor: backgroundColor, flexDirection: "row", justifyContent: "space-between"}]}>
+                        <View style={{ flex: 1, flexDirection: "column" }}>
+                            {profilePicEl}
+                            <Text style={[styles.name, {color: primaryTextColor}]}>{displayName}</Text>
+                        </View>
+                        <View style={{ flex: 1, flexDirection: "column", marginTop: 22 }}>
+                            <Text style={[styles.rank, {color: ( primaryTextColor === "azure") ? "#CB6CE6": "#9C2C98" }]}>Rank: {rank}</Text>
+                            <Text style={[styles.accuracy, {color: primaryTextColor}]}>Accuracy: {accuracy * 100}%</Text>
+                        </View>
+                    </View>
+                </View>
+            </View> 
+        );
+    }
+
+    const appropriateModal = 
+    platform === "web" ? (
+        <Modal
+            isVisible={modalVisible}
+            onBackdropPress={() => setModalVisible(!modalVisible)}
+            >{modalContent()}
+        </Modal>
+    ) : (
+        <MobileModal
+            transparent={true}
+            animation="slide"
+            visible={modalVisible}
+        >{modalContent()}
+        </MobileModal>
+    );
+
     return (
-        <View style={[styles.container, {backgroundColor: backgroundColor}]}>
+        <View style={[styles.container, {backgroundColor: backgroundColor, height: commentClicked ? 400 : 220}]}>
             <View style={[styles.topSection, {backgroundColor: backgroundColor}]}>
                 <View style={{ flex: 1, flexDirection: "column", marginTop: 8 }}>
                     {profilePicEl}
@@ -163,59 +232,40 @@ const styles = StyleSheet.create({
                 <Text style={[styles.comment, { color: primaryTextColor}]}>{ (comment === undefined ) ? "No comment." : comment}</Text>
             </View>
             <View style={[styles.bottomSection, {borderBottomColor: (backgroundColor === "black") ? "#383838" : "#D0D0D0"}]}>
-                <View style={styles.bottomIconContainer}>
-                    <TouchableOpacity style={{flexDirection: "row"}} onPress={() => setHeadOutlineClicked(!headOutlineClicked)}>
-                        <MaterialCommunityIcons name="head-check-outline" size={20} color={headOutlineClicked ? "#00ff40" : primaryTextColor} />
-                        <Text style={[styles.bottomIconLabel, {color: headOutlineClicked ? "#00ff40" : primaryTextColor}]}>Agree</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.bottomIconContainer}>
-                    <TouchableOpacity style={{flexDirection: "row"}} onPress={() => setCancelClicked(!cancelClicked)}>
-                        <MaterialCommunityIcons name="cancel" size={20} color={cancelClicked ? "red" : primaryTextColor} />
-                        <Text style={[styles.bottomIconLabel, { color: cancelClicked ? "red" : primaryTextColor}]}>Disagree</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.bottomIconContainer}>
-                    <TouchableOpacity style={{flexDirection: "row"}}>
-                        <MaterialCommunityIcons name="comment-processing" size={20} color={primaryTextColor} />
-                        <Text style={[styles.bottomIconLabel, {color: primaryTextColor}]}>Comment</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");
-                }}
-            >
-                <View style={styles.centeredView}>
-                    <View style={[styles.modalView, {backgroundColor: backgroundColor, shadowColor: ( primaryTextColor === "azure") ? "#FFF": "#000"}]}>
-                        <TouchableOpacity activeOpacity={1} style={styles.closeModal} onPress={() => setModalVisible(!modalVisible)}>
-                                    <MaterialCommunityIcons name="close" size={30} color="red"/>
-                        </TouchableOpacity>
-                        <View style={[styles.topSection, {backgroundColor: backgroundColor, flexDirection: "row", justifyContent: "space-between"}]}>
-                            <View style={{ flex: 1, flexDirection: "column" }}>
-                                {profilePicEl}
-                                <Text style={[styles.name, {color: primaryTextColor}]}>{displayName}</Text>
-                            </View>
-                            <View style={{ flex: 1, flexDirection: "column", marginTop: 22 }}>
-                                <Text style={[styles.rank, {color: purpleTheme}]}>Rank: {rank}</Text>
-                                <Text style={[styles.accuracy, {color: primaryTextColor}]}>Accuracy: {accuracy * 100}%</Text>
-                            </View>
-                        </View>
+                <TouchableOpacity style={{flexDirection: "row"}} onPress={() => setHeadOutlineClicked(!headOutlineClicked)} disabled={cancelClicked}>
+                    <View style={styles.bottomIconContainer}>
+                            <MaterialCommunityIcons name="head-check-outline" size={20} color={headOutlineClicked ? agreeTheme : primaryTextColor} />
+                            <Text style={[styles.bottomIconLabel, {color: headOutlineClicked ? agreeTheme : primaryTextColor}]}>Agree</Text>
                     </View>
-                </View>
-            </Modal>  
+                </TouchableOpacity>
+                <TouchableOpacity style={{flexDirection: "row"}} onPress={() => setCancelClicked(!cancelClicked)} disabled={headOutlineClicked}>
+                    <View style={styles.bottomIconContainer}>
+                            <MaterialCommunityIcons name="cancel" size={20} color={cancelClicked ? "red" : primaryTextColor} />
+                            <Text style={[styles.bottomIconLabel, { color: cancelClicked ? "red" : primaryTextColor}]}>Disagree</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={{flexDirection: "row"}} onPress={() => setCommentClicked(!commentClicked)}>
+                    <View style={styles.bottomIconContainer}>
+                            <MaterialCommunityIcons name="comment-processing" size={20} color={commentClicked ? purpleTheme : primaryTextColor} />
+                            <Text style={[styles.bottomIconLabel, {color: commentClicked ? purpleTheme : primaryTextColor}]}>Comment</Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
+            { commentClicked ? <TextInput placeholder="What are your thoughts?" placeholderTextColor="#555" style={[styles.textInput, {color: primaryTextColor}]} multiline={true} /> : null }
+            { commentClicked ? 
+                <TouchableOpacity>
+                    <Text style={[styles.commentSubmitButton, {backgroundColor: purpleTheme}]}>Post</Text>
+                </TouchableOpacity>
+                 : null }
+            {appropriateModal}
         </View>
     )
 
   };
 
   const mapStateToProps = state => {
-    const { primaryTextColor, backgroundColor, purpleTheme } = state.theme;
-    return { primaryTextColor, backgroundColor, purpleTheme };
+    const { primaryTextColor, backgroundColor, purpleTheme, agreeTheme } = state.theme;
+    return { primaryTextColor, backgroundColor, purpleTheme, agreeTheme };
   };
   
 

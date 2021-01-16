@@ -84,10 +84,10 @@ function GetStarted(props) {
 
   return (
     <View style={gsStyles.container}>
+      <ScrollView>
       <View style={gsStyles.header}>
         <Image source={icon} style={gsStyles.logo} />
       </View>
-      <SafeAreaView>
         <Text style={gsStyles.gsText}>Create a free account to get started.</Text>
         <Text style={gsStyles.gsText2}>FunnyMoney does not share your private information with anyone.</Text>
         {serverErrors.system ? <Text style={gsStyles.gsErrorText}>{serverErrors.system}</Text> : null}
@@ -166,7 +166,7 @@ function GetStarted(props) {
         <Text style={gsStyles.gsLoginLink} onPress={() => props.navigation.navigate("Login")}>
           Login
         </Text>
-      </SafeAreaView>
+      </ScrollView>
     </View>
   );
 }
