@@ -204,8 +204,8 @@ const styles = StyleSheet.create({
         </Modal>
     ) : (
         <MobileModal
-            transparent={true}
             animation="slide"
+            transparent={true}
             visible={modalVisible}
         >{modalContent()}
         </MobileModal>

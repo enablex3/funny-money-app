@@ -4,11 +4,11 @@
     "slug": "FunnyMoney",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/fmFullSquare.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/fmIcon.jpg",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -26,8 +26,8 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/fmFullSquare.png"
     },
-    "description": ""
+    "description": "The social media platform for investors."
   }
 }
