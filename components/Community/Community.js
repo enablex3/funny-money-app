@@ -1,9 +1,10 @@
 import React from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { jsonToArray } from "../../utils/jsonToArray";
 import PostContent from "./PostContent";
 import Header from "../Header/Header";
+import { dateFromString } from "../../utils/DateDifference";
 
 const communityStyles = StyleSheet.create({
   container: {
@@ -46,45 +47,48 @@ const communityStyles = StyleSheet.create({
 });
 
 function Community(props) {
-  const { primaryTextColor, backgroundColor, posts } = props;
+  const { backgroundColor, posts, navigation } = props;
 
-  const postObject = jsonToArray(posts);
+  const postList = jsonToArray(posts);
+  const predictions = [];
 
-  let predictionsObject;
-  let profilePic;
-  let accuracy;
-  let rank;
+  postList.forEach(post => {
+    Object.keys(post.value.predictions).forEach(prediction => {
+      predictions.push({
+        profilePic: post.value.profilePic,
+        rank: post.value.rank,
+        accuracy: post.value.accuracy,
+        displayName: post.name,
+        name: prediction,
+        ...post.value.predictions[prediction]
+      });
+    });
+  });
+
+  const sortedPredictions = [
+    ...predictions.sort((pred1, pred2) => dateFromString(pred2.dateMade) - dateFromString(pred1.dateMade))
+  ];
 
   return (
-    <View style={[communityStyles.container, {backgroundColor: backgroundColor}]}>
-      <Header navigation={props.navigation} />
-        <ScrollView contentContainerStyle={{ marginBottom: 20}}>
-          {postObject.map((user, idx) => {
-            predictionsObject = jsonToArray(user.value.predictions);
-            profilePic = user.value.profilePic;
-            rank = user.value.rank;
-            accuracy = user.value.accuracy;
-            return (
-              predictionsObject.map((item, idx) => {
-                return (
-                  <PostContent 
-                    key={idx} 
-                    displayName={user.name} 
-                    profilePic={profilePic}
-                    rank={rank}
-                    accuracy={accuracy}
-                    predictionName={item.name}
-                    predictionTargetDate={item.value.date}
-                    dateMade={item.value.dateMade}
-                    price={item.value.price}
-                    comment={item.value.comment}
-                    type={item.value.type}
-                  />
-                );
-              })
-            );
-          })}
-        </ScrollView>
+    <View style={[communityStyles.container, { backgroundColor }]}>
+      <Header navigation={navigation} />
+      <ScrollView contentContainerStyle={{ marginBottom: 20 }}>
+        {sortedPredictions.map((prediction, index) => (
+          <PostContent
+            key={index.toString()}
+            displayName={prediction.displayName}
+            profilePic={prediction.profilePic}
+            rank={prediction.rank}
+            accuracy={prediction.accuracy}
+            predictionName={prediction.name}
+            predictionTargetDate={prediction.date}
+            dateMade={prediction.dateMade}
+            price={prediction.price}
+            comment={prediction.comment}
+            type={prediction.type}
+          />
+        ))}
+      </ScrollView>
     </View>
   );
 }
