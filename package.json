@@ -5,6 +5,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "buildWeb": "expo build:web",
     "eject": "expo eject",
     "postinstall": "patch-package"
   },
