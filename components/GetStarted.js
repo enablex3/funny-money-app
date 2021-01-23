@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, Image, View, TextInput, Platform, SafeAreaView, ScrollView } from "react-native";
+import { StyleSheet, Text, Image, View, TextInput, Platform, ImageBackground, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Formik } from "formik";
 import FetchingIndicator from "./FetchingIndicator";
@@ -7,11 +7,16 @@ import { createUser } from "../store/actions/currentUser";
 import { SignupSchema } from "../utils/validation";
 
 const icon = require("../assets/fmIcon.jpg");
+const appBackgroundImage = require("../assets/appBackground.jpg");
 
 const gsStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black"
+    flexDirection: "column"
+  },
+  imgBack: {
+    flex: 1,
+    resizeMode: "cover"
   },
   header: {
     alignItems: "center",
@@ -75,7 +80,8 @@ const gsStyles = StyleSheet.create({
   },
   logo: {
     height: 100,
-    width: 100
+    width: 100,
+    marginTop: 10
   }
 });
 
@@ -84,89 +90,90 @@ function GetStarted(props) {
 
   return (
     <View style={gsStyles.container}>
-      <ScrollView>
-      <View style={gsStyles.header}>
-        <Image source={icon} style={gsStyles.logo} />
-      </View>
-        <Text style={gsStyles.gsText}>Create a free account to get started.</Text>
-        <Text style={gsStyles.gsText2}>FunnyMoney does not share your private information with anyone.</Text>
-        {serverErrors.system ? <Text style={gsStyles.gsErrorText}>{serverErrors.system}</Text> : null}
-        <FetchingIndicator fetching={fetching} />
+      <ImageBackground source={appBackgroundImage} style={gsStyles.imgBack}>
         <ScrollView>
-        <Formik
-          initialValues={{ fullName: "", displayName: "", email: "", password: "", confirmPassword: "" }}
-          validationSchema={SignupSchema}
-          onSubmit={values => {
-            props.createUser(values, () => {
-              props.navigation.navigate("AppNavigation");
-            });
-          }}>
-          {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => (
-            <View style={gsStyles.gsForm}>
-              <TextInput
-                placeholder="Full Name:"
-                placeholderTextColor="#555"
-                style={gsStyles.textInput}
-                onChangeText={handleChange("fullName")}
-                value={values.fullName}
-                onBlur={handleBlur("fullName")}
-              />
-              {errors.fullName && touched.fullName ? <Text style={gsStyles.gsErrorText}>{errors.fullName}</Text> : null}
-              <TextInput
-                placeholder="Display Name:"
-                placeholderTextColor="#555"
-                style={gsStyles.textInput}
-                onChangeText={handleChange("displayName")}
-                value={values.displayName}
-                onBlur={handleBlur("displayName")}
-              />
-              {errors.displayName && touched.displayName ? (
-                <Text style={gsStyles.gsErrorText}>{errors.displayName}</Text>
-              ) : null}
-              <TextInput
-                placeholder="Email Address:"
-                placeholderTextColor="#555"
-                style={gsStyles.textInput}
-                onChangeText={handleChange("email")}
-                value={values.email}
-                onBlur={handleBlur("email")}
-              />
-              {errors.email && touched.email ? <Text style={gsStyles.gsErrorText}>{errors.email}</Text> : null}
-              {serverErrors.email ? <Text style={gsStyles.gsErrorText}>{serverErrors.email}</Text> : null}
-              <TextInput
-                placeholder="Password:"
-                placeholderTextColor="#555"
-                secureTextEntry
-                style={gsStyles.textInput}
-                onChangeText={handleChange("password")}
-                value={values.password}
-                onBlur={handleBlur("password")}
-              />
-              {errors.password && touched.password ? <Text style={gsStyles.gsErrorText}>{errors.password}</Text> : null}
-              <TextInput
-                placeholder="Confirm Password:"
-                placeholderTextColor="#555"
-                secureTextEntry
-                style={gsStyles.textInput}
-                onChangeText={handleChange("confirmPassword")}
-                value={values.confirmPassword}
-                onBlur={handleBlur("confirmPassword")}
-              />
-              {errors.confirmPassword && touched.confirmPassword ? (
-                <Text style={gsStyles.gsErrorText}>{errors.confirmPassword}</Text>
-              ) : null}
-              <Text style={gsStyles.gsButton} onPress={handleSubmit}>
-                Get Started
-              </Text>
-            </View>
-          )}
-        </Formik>
+        <View style={gsStyles.header}>
+          <Image source={icon} style={gsStyles.logo} />
+        </View>
+          <Text style={gsStyles.gsText}>Create a free account to get started.</Text>
+          {serverErrors.system ? <Text style={gsStyles.gsErrorText}>{serverErrors.system}</Text> : null}
+          <FetchingIndicator fetching={fetching} />
+          <ScrollView>
+          <Formik
+            initialValues={{ fullName: "", displayName: "", email: "", password: "", confirmPassword: "" }}
+            validationSchema={SignupSchema}
+            onSubmit={values => {
+              props.createUser(values, () => {
+                props.navigation.navigate("AppNavigation");
+              });
+            }}>
+            {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => (
+              <View style={gsStyles.gsForm}>
+                <TextInput
+                  placeholder="Full Name:"
+                  placeholderTextColor="#555"
+                  style={gsStyles.textInput}
+                  onChangeText={handleChange("fullName")}
+                  value={values.fullName}
+                  onBlur={handleBlur("fullName")}
+                />
+                {errors.fullName && touched.fullName ? <Text style={gsStyles.gsErrorText}>{errors.fullName}</Text> : null}
+                <TextInput
+                  placeholder="Display Name:"
+                  placeholderTextColor="#555"
+                  style={gsStyles.textInput}
+                  onChangeText={handleChange("displayName")}
+                  value={values.displayName}
+                  onBlur={handleBlur("displayName")}
+                />
+                {errors.displayName && touched.displayName ? (
+                  <Text style={gsStyles.gsErrorText}>{errors.displayName}</Text>
+                ) : null}
+                <TextInput
+                  placeholder="Email Address:"
+                  placeholderTextColor="#555"
+                  style={gsStyles.textInput}
+                  onChangeText={handleChange("email")}
+                  value={values.email}
+                  onBlur={handleBlur("email")}
+                />
+                {errors.email && touched.email ? <Text style={gsStyles.gsErrorText}>{errors.email}</Text> : null}
+                {serverErrors.email ? <Text style={gsStyles.gsErrorText}>{serverErrors.email}</Text> : null}
+                <TextInput
+                  placeholder="Password:"
+                  placeholderTextColor="#555"
+                  secureTextEntry
+                  style={gsStyles.textInput}
+                  onChangeText={handleChange("password")}
+                  value={values.password}
+                  onBlur={handleBlur("password")}
+                />
+                {errors.password && touched.password ? <Text style={gsStyles.gsErrorText}>{errors.password}</Text> : null}
+                <TextInput
+                  placeholder="Confirm Password:"
+                  placeholderTextColor="#555"
+                  secureTextEntry
+                  style={gsStyles.textInput}
+                  onChangeText={handleChange("confirmPassword")}
+                  value={values.confirmPassword}
+                  onBlur={handleBlur("confirmPassword")}
+                />
+                {errors.confirmPassword && touched.confirmPassword ? (
+                  <Text style={gsStyles.gsErrorText}>{errors.confirmPassword}</Text>
+                ) : null}
+                <Text style={gsStyles.gsButton} onPress={handleSubmit}>
+                  Get Started
+                </Text>
+              </View>
+            )}
+          </Formik>
+          </ScrollView>
+          <Text style={gsStyles.gsText}>Already have an account?</Text>
+          <Text style={gsStyles.gsLoginLink} onPress={() => props.navigation.navigate("Login")}>
+            Login
+          </Text>
         </ScrollView>
-        <Text style={gsStyles.gsText}>Already have an account?</Text>
-        <Text style={gsStyles.gsLoginLink} onPress={() => props.navigation.navigate("Login")}>
-          Login
-        </Text>
-      </ScrollView>
+      </ImageBackground>
     </View>
   );
 }
