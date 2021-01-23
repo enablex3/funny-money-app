@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Platform, TextInput } from "r
 import { Modal as MobileModal } from "react-native";
 import Modal from "modal-enhanced-react-native-web";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Comments from "./Comments";
 import ProfilePicture from "react-native-profile-picture";
 
 const styles = StyleSheet.create({
@@ -133,11 +134,14 @@ const styles = StyleSheet.create({
 
   function PostContent(props) {
     let platform;
+    let commentSectionMargin;
 
     if (Platform.OS === "ios" || Platform.OS === "android") {
         platform = "mobile";
+        commentSectionMargin = 20;
     } else {
         platform = "web";
+        commentSectionMargin = 300;
     }
 
     const { 
@@ -153,7 +157,8 @@ const styles = StyleSheet.create({
         predictionTargetDate,
         dateMade,
         price,
-        comment, 
+        comment,
+        comments,
         type } = props;
 
     const [modalVisible, setModalVisible] = useState(false);
@@ -212,7 +217,8 @@ const styles = StyleSheet.create({
     );
 
     return (
-        <View style={[styles.container, {backgroundColor: backgroundColor, height: commentClicked ? 400 : 220}]}>
+        <View style={[styles.container, {backgroundColor: backgroundColor, 
+                            height: commentClicked ? 440 : 220}]}>
             <View style={[styles.topSection, {backgroundColor: backgroundColor}]}>
                 <View style={{ flex: 1, flexDirection: "column", marginTop: 8 }}>
                     {profilePicEl}
@@ -246,15 +252,23 @@ const styles = StyleSheet.create({
                 </TouchableOpacity>
                 <TouchableOpacity style={{flexDirection: "row"}} onPress={() => setCommentClicked(!commentClicked)}>
                     <View style={styles.bottomIconContainer}>
-                            <MaterialCommunityIcons name="comment-processing" size={20} color={commentClicked ? purpleTheme : primaryTextColor} />
-                            <Text style={[styles.bottomIconLabel, {color: commentClicked ? purpleTheme : primaryTextColor}]}>Comment</Text>
+                            <MaterialCommunityIcons name="comment-processing" size={20} color={commentClicked ? (backgroundColor === "black" ? "#CB6CE6" : "#9C2C98" ) : primaryTextColor} />
+                            <Text style={[styles.bottomIconLabel, {color: commentClicked ? (backgroundColor === "black" ? "#CB6CE6" : "#9C2C98" ) : primaryTextColor}]}>Comment</Text>
                     </View>
                 </TouchableOpacity>
             </View>
-            { commentClicked ? <TextInput placeholder="What are your thoughts?" placeholderTextColor="#555" style={[styles.textInput, {color: primaryTextColor}]} multiline={true} /> : null }
+            { commentClicked && (comments !== undefined) ? <Comments comments={comments} /> : null }
+            { commentClicked ? <TextInput placeholder="What are your thoughts?" placeholderTextColor="#555" style={[styles.textInput, {
+                marginLeft: commentSectionMargin,
+                marginRight: commentSectionMargin,
+                color: primaryTextColor}]} multiline={true} /> : null }
             { commentClicked ? 
                 <TouchableOpacity>
-                    <Text style={[styles.commentSubmitButton, {backgroundColor: purpleTheme}]}>Post</Text>
+                    <Text style={[styles.commentSubmitButton, {
+                            marginLeft: commentSectionMargin,
+                            marginRight: commentSectionMargin,
+                            backgroundColor: purpleTheme}
+                        ]}>Post</Text>
                 </TouchableOpacity>
                  : null }
             {appropriateModal}
@@ -263,10 +277,10 @@ const styles = StyleSheet.create({
 
   };
 
-  const mapStateToProps = state => {
+const mapStateToProps = state => {
     const { primaryTextColor, backgroundColor, purpleTheme, agreeTheme } = state.theme;
     return { primaryTextColor, backgroundColor, purpleTheme, agreeTheme };
-  };
+};
   
 
   export default connect(mapStateToProps)(PostContent);
