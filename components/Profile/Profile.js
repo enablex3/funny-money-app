@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import ResetPasswordForm from "../ResetPasswordForm";
 import Header from "../Header/Header";
+import Details from "./Details";
 import AppThemeModal from "./Options/AppThemeModal";
 import PhotoUploadModal from "./Options/PhotoUploadModal";
 import CurrencyPreferenceModal from "./Options/CurrencyPreferenceModal";
@@ -93,6 +94,7 @@ function Profile(props) {
     <View style={[profileStyles.container, {backgroundColor: backgroundColor}]}>
       <Header navigation={navigation} />
       <ScrollView>
+        <Details />
         <TouchableOpacity style={profileStyles.tOp} onPress={() => setPicClicked(!picClicked)} activeOpacity={1}>
           <Text style={[profileStyles.pText, {color: primaryTextColor}]}>Change Profile Picture</Text>
           <MaterialCommunityIcons

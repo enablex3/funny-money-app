@@ -1,12 +1,13 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, TouchableOpacityBase } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, TextInput } from "react-native";
 import { connect } from "react-redux";
 
 const styles = StyleSheet.create({
   container: {
     display: "flex",
     height: 100,
-    flex: 1
+    flex: 1,
+    marginBottom: 50
   },
   currentContainer: {
     flexDirection: "row"
