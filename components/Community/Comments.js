@@ -53,38 +53,40 @@ function Comments(props) {
     const commentsObj = jsonToArray(comments);
 
     return (
-        <ScrollView>
-            {commentsObj.map((comment, idx) => {
-                return (
-                    <View key={idx.toString()} style={styles.commentsContainer}>
-                        <Text style={[styles.commentUser, {
-                                marginLeft: commentSectionMargin, 
-                                marginRight: commentSectionMargin,
-                                color: primaryTextColor}
-                            ]}>
-                            {comment.value.displayName}
-                        </Text>
-                        <Text style={[styles.commentDate, {
-                                marginLeft: commentSectionMargin, 
-                                marginRight: commentSectionMargin}
+        <View style={{ flex: 1}}>
+            <ScrollView>
+                {commentsObj.map((comment, idx) => {
+                    return (
+                        <View key={idx.toString()} style={styles.commentsContainer}>
+                            <Text style={[styles.commentUser, {
+                                    marginLeft: commentSectionMargin, 
+                                    marginRight: commentSectionMargin,
+                                    color: primaryTextColor}
                                 ]}>
-                            Commented on {comment.value.dateMade}
-                        </Text>
-                        <View style={[styles.commentTextContainer, 
-                            { 
-                                marginLeft: commentSectionMargin, 
-                                marginRight: commentSectionMargin,
-                                borderColor: primaryTextColor,
-                                backgroundColor: (backgroundColor === "black") ? "#383838" : "#D0D0D0"}
-                            ]}>
-                            <Text style={[styles.commentText, {color: primaryTextColor}]}>
-                                {comment.value.text}
+                                {comment.value.displayName}
                             </Text>
+                            <Text style={[styles.commentDate, {
+                                    marginLeft: commentSectionMargin, 
+                                    marginRight: commentSectionMargin}
+                                    ]}>
+                                Commented on {comment.value.dateMade}
+                            </Text>
+                            <View style={[styles.commentTextContainer, 
+                                { 
+                                    marginLeft: commentSectionMargin, 
+                                    marginRight: commentSectionMargin,
+                                    borderColor: primaryTextColor,
+                                    backgroundColor: (backgroundColor === "black") ? "#383838" : "#D0D0D0"}
+                                ]}>
+                                <Text style={[styles.commentText, {color: primaryTextColor}]}>
+                                    {comment.value.text}
+                                </Text>
+                            </View>
                         </View>
-                    </View>
-                );
-            })}
-        </ScrollView>
+                    );
+                })}
+            </ScrollView>
+        </View>
     );
 };
 

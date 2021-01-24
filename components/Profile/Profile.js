@@ -6,6 +6,7 @@ import ResetPasswordForm from "../ResetPasswordForm";
 import Header from "../Header/Header";
 import AppThemeModal from "./Options/AppThemeModal";
 import PhotoUploadModal from "./Options/PhotoUploadModal";
+import CurrencyPreferenceModal from "./Options/CurrencyPreferenceModal";
 
 const profileStyles = StyleSheet.create({
   container: {
@@ -135,6 +136,7 @@ function Profile(props) {
             style={profileStyles.mIcon}
           />
         </TouchableOpacity>
+        {currencyClicked && <CurrencyPreferenceModal />}
       </ScrollView>
     </View>
   );

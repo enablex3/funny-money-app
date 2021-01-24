@@ -116,7 +116,7 @@ function Login(props) {
               <View style={lStyles.lForm}>
                 <TextInput
                   placeholder="Email Address:"
-                  placeholderTextColor="#555"
+                  placeholderTextColor="gray"
                   style={lStyles.textInput}
                   onChangeText={handleChange("email")}
                   value={values.email}
@@ -125,7 +125,7 @@ function Login(props) {
                 {errors.email && touched.email ? <Text style={lStyles.lErrorText}>{errors.email}</Text> : null}
                 <TextInput
                   placeholder="Password:"
-                  placeholderTextColor="#555"
+                  placeholderTextColor="gray"
                   secureTextEntry
                   style={lStyles.textInput}
                   onChangeText={handleChange("password")}

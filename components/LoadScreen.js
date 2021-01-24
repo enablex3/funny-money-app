@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Image, View, Text, ImageBackground } from 'react-native';
+import { StyleSheet, Image, Text, ImageBackground } from 'react-native';
 
 const logo = require('../assets/fmFullTransparent.png');
 const appBackgroundImage = require("../assets/appBackground.jpg");
@@ -7,7 +7,6 @@ const appBackgroundImage = require("../assets/appBackground.jpg");
 export default function LoadScreen( props ) {
 
   return (
-    <View style={ loadStyles.container }>
       <ImageBackground source={appBackgroundImage} style={loadStyles.imgBack}>
         <Image 
           source={ logo }
@@ -23,7 +22,6 @@ export default function LoadScreen( props ) {
           Login
         </Text>
       </ImageBackground>
-    </View> 
   );
 }
 

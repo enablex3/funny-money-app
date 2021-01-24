@@ -111,7 +111,7 @@ function GetStarted(props) {
               <View style={gsStyles.gsForm}>
                 <TextInput
                   placeholder="Full Name:"
-                  placeholderTextColor="#555"
+                  placeholderTextColor="gray"
                   style={gsStyles.textInput}
                   onChangeText={handleChange("fullName")}
                   value={values.fullName}
@@ -120,7 +120,7 @@ function GetStarted(props) {
                 {errors.fullName && touched.fullName ? <Text style={gsStyles.gsErrorText}>{errors.fullName}</Text> : null}
                 <TextInput
                   placeholder="Display Name:"
-                  placeholderTextColor="#555"
+                  placeholderTextColor="gray"
                   style={gsStyles.textInput}
                   onChangeText={handleChange("displayName")}
                   value={values.displayName}
@@ -131,7 +131,7 @@ function GetStarted(props) {
                 ) : null}
                 <TextInput
                   placeholder="Email Address:"
-                  placeholderTextColor="#555"
+                  placeholderTextColor="gray"
                   style={gsStyles.textInput}
                   onChangeText={handleChange("email")}
                   value={values.email}
@@ -141,7 +141,7 @@ function GetStarted(props) {
                 {serverErrors.email ? <Text style={gsStyles.gsErrorText}>{serverErrors.email}</Text> : null}
                 <TextInput
                   placeholder="Password:"
-                  placeholderTextColor="#555"
+                  placeholderTextColor="gray"
                   secureTextEntry
                   style={gsStyles.textInput}
                   onChangeText={handleChange("password")}
@@ -151,7 +151,7 @@ function GetStarted(props) {
                 {errors.password && touched.password ? <Text style={gsStyles.gsErrorText}>{errors.password}</Text> : null}
                 <TextInput
                   placeholder="Confirm Password:"
-                  placeholderTextColor="#555"
+                  placeholderTextColor="gray"
                   secureTextEntry
                   style={gsStyles.textInput}
                   onChangeText={handleChange("confirmPassword")}
