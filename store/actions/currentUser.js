@@ -1,8 +1,9 @@
 import axios from "axios";
 import { currentUserActionTypes as actionTypes } from "../actionTypes";
-import { fetchCommunityPredictions } from "../actions/communityPredictions";
+import { fetchCommunityPredictions } from "./communityPredictions";
 import { ENDPOINT_URL } from "../../constants";
 
+export const setUser = user => ({ type: actionTypes.SET_USER, payload: user });
 export const setRank = rank => ({
   type: actionTypes.SET_RANK,
   payload: rank

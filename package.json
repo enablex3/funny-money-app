@@ -10,7 +10,9 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.7",
     "@expo-google-fonts/staatliches": "^0.1.0",
+    "@react-native-async-storage/async-storage": "^1.13.3",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.2",
     "@react-navigation/native": "^5.8.10",
@@ -28,6 +30,7 @@
     "expo-linear-gradient": "~8.4.0",
     "expo-status-bar": "~1.0.3",
     "formik": "^2.2.6",
+    "graphql": "^15.4.0",
     "ip": "^1.1.5",
     "modal-enhanced-react-native-web": "^0.2.0",
     "modal-react-native-web": "^0.2.0",
