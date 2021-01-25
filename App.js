@@ -18,7 +18,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
   const httpLink = createHttpLink({
-    uri: "http://localhost:3000/graphql"
+    uri: "http://3.18.49.30:3000/graphql"
   });
   const authLink = setContext(async (_, { headers }) => {
     const token = await AsyncStorage.getItem("token");
