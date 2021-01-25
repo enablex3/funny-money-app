@@ -125,7 +125,7 @@ const setCurrentUserAndToken = async ({ currentUser, setCurrentUser, navigation 
 };
 
 function GetStarted({ navigation, setCurrentUser }) {
-  const [createUser, { data, error: serverErrors, fetching }] = useMutation(CREATE_USER);
+  const [createUser, { data, error: serverErrors, loading }] = useMutation(CREATE_USER);
 
   if (data) setCurrentUserAndToken({ currentUser: data.createUser, setCurrentUser, navigation });
 
@@ -138,7 +138,7 @@ function GetStarted({ navigation, setCurrentUser }) {
           </View>
           <Text style={gsStyles.gsText}>Create a free account to get started.</Text>
           {serverErrors ? <Text style={gsStyles.gsErrorText}>{serverErrors[0].message}</Text> : null}
-          <FetchingIndicator fetching={fetching} />
+          <FetchingIndicator fetching={loading} />
           <ScrollView>
             <Formik
               initialValues={{ fullName: "", displayName: "", email: "", password: "", confirmPassword: "" }}

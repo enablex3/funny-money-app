@@ -1,29 +1,13 @@
-import React from 'react';
-import { StyleSheet, Image, Text, ImageBackground } from 'react-native';
+import React from "react";
+import { useMutation, gql } from "@apollo/client";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { connect } from "react-redux";
+import { StyleSheet, Image, Text, ImageBackground, View } from "react-native";
+import FetchingIndicator from "./FetchingIndicator";
+import { setUser } from "../store/actions/currentUser";
 
-const logo = require('../assets/fmFullTransparent.png');
+const logo = require("../assets/fmFullTransparent.png");
 const appBackgroundImage = require("../assets/appBackground.jpg");
-
-export default function LoadScreen( props ) {
-
-  return (
-      <ImageBackground source={appBackgroundImage} style={loadStyles.imgBack}>
-        <Image 
-          source={ logo }
-          style={ loadStyles.logo }
-        />
-        <Text style={ loadStyles.gs } onPress={() => props.navigation.navigate('Get Started')}>
-          GET STARTED
-        </Text>
-        <Text style={ { color: 'azure', fontFamily: 'Staatliches_400Regular', marginTop: 10 } }>
-          Or
-        </Text>
-        <Text style={ loadStyles.login } onPress={() => props.navigation.navigate('Login')}>
-          Login
-        </Text>
-      </ImageBackground>
-  );
-}
 
 const loadStyles = StyleSheet.create({
   container: {
@@ -40,17 +24,94 @@ const loadStyles = StyleSheet.create({
     width: 300,
     height: 300
   },
+  fetchingText: {
+    fontFamily: "Staatliches_400Regular",
+    fontSize: 30,
+    color: "azure"
+  },
   gs: {
-    fontFamily: 'Staatliches_400Regular',
+    fontFamily: "Staatliches_400Regular",
     fontSize: 20,
-    color: 'azure'
+    color: "azure",
+    textAlign: "center"
   },
   login: {
-    color: '#9c2c98', 
-    textAlign: 'center',
+    color: "#9c2c98",
+    textAlign: "center",
     marginTop: 10,
     fontSize: 20,
-    fontWeight: 'bold',
-    fontFamily: 'Staatliches_400Regular'
-},
+    fontWeight: "bold",
+    fontFamily: "Staatliches_400Regular"
+  }
 });
+
+const REFRESH_TOKEN = gql`
+  mutation RefreshToken {
+    refreshToken {
+      id
+      email
+      displayName
+      fullName
+      rank
+      accuracy
+      currency
+      profilePicture
+      rate
+      token
+    }
+  }
+`;
+
+const refresh = async (data, token, mutation) => {
+  if (!data && token) {
+    try {
+      return await mutation();
+    } catch (err) {
+      return err;
+    }
+  }
+
+  return false;
+};
+
+const setCurrentUserAndToken = async (userData, setCurrentUser, navigation) => {
+  await AsyncStorage.setItem("token", userData.token);
+  setCurrentUser(userData);
+  navigation.navigate("AppNavigation");
+};
+
+function LoadScreen({ setCurrentUser, navigation }) {
+  const [refreshToken, { data, loading }] = useMutation(REFRESH_TOKEN);
+  const token = async () => AsyncStorage.getItem("token");
+
+  refresh(data, token, refreshToken);
+  if (data) setCurrentUserAndToken(data.refreshToken, setCurrentUser, navigation);
+
+  return (
+    <ImageBackground source={appBackgroundImage} style={loadStyles.imgBack}>
+      {loading ? (
+        <View>
+          <Text style={loadStyles.fetchingText}>Signing In...</Text>
+          <FetchingIndicator fetching />
+        </View>
+      ) : (
+        <View>
+          <Image source={logo} style={loadStyles.logo} />
+          <Text style={loadStyles.gs} onPress={() => navigation.navigate("Get Started")}>
+            GET STARTED
+          </Text>
+          <Text style={{ color: "azure", fontFamily: "Staatliches_400Regular", marginTop: 10, textAlign: "center" }}>
+            Or
+          </Text>
+          <Text style={loadStyles.login} onPress={() => navigation.navigate("Login")}>
+            Login
+          </Text>
+        </View>
+      )}
+    </ImageBackground>
+  );
+}
+
+const mapDispatchToProps = dispatch => ({ setCurrentUser: user => dispatch(setUser(user)) });
+
+export default connect(null, mapDispatchToProps)(LoadScreen);
