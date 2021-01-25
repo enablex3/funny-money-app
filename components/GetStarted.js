@@ -143,7 +143,13 @@ function GetStarted({ navigation, setCurrentUser }) {
             <Formik
               initialValues={{ fullName: "", displayName: "", email: "", password: "", confirmPassword: "" }}
               validationSchema={SignupSchema}
-              onSubmit={async values => createUser({ variables: values })}>
+              onSubmit={async values => {
+                try {
+                  createUser({ variables: { ...values, currency: "USD", profilePicture: "some_url.jpg" } });
+                } catch (error) {
+                  console.log(error);
+                }
+              }}>
               {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => (
                 <View style={gsStyles.gsForm}>
                   <TextInput
@@ -177,7 +183,6 @@ function GetStarted({ navigation, setCurrentUser }) {
                     onBlur={handleBlur("email")}
                   />
                   {errors.email && touched.email ? <Text style={gsStyles.gsErrorText}>{errors.email}</Text> : null}
-                  {serverErrors.email ? <Text style={gsStyles.gsErrorText}>{serverErrors.email}</Text> : null}
                   <TextInput
                     placeholder="Password:"
                     placeholderTextColor="gray"
