@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, Image, View, TextInput, Platform } from "react-native";
+import { StyleSheet, Text, Image, View, TextInput, Platform, ImageBackground } from "react-native";
 import { connect } from "react-redux";
 import { Formik } from "formik";
 import FetchingIndicator from "./FetchingIndicator";
@@ -9,17 +9,22 @@ import { showResetPasswordForm } from "../store/actions";
 import { LoginSchema } from "../utils/validation";
 import { ScrollView } from "react-native-gesture-handler";
 
-const icon = require("../assets/fmIcon.jpg");
+const icon = require("../assets/fmIconTransparent.png");
+const appBackgroundImage = require("../assets/appBackground.jpg");
 
 const lStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black"
+    flexDirection: "column"
   },
   header: {
     alignItems: "center",
     justifyContent: "center",
     marginTop: 50
+  },
+  imgBack: {
+    flex: 1,
+    resizeMode: "cover"
   },
   lText: {
     color: "azure",
@@ -78,7 +83,8 @@ const lStyles = StyleSheet.create({
   },
   logo: {
     height: 100,
-    width: 100
+    width: 100,
+    marginTop: 10
   }
 });
 
@@ -87,63 +93,65 @@ function Login(props) {
 
   return (
     <View style={lStyles.container}>
-      <ScrollView>
-        <View style={lStyles.header}>
-          <Image source={icon} style={lStyles.logo} />
-        </View>
-        <Text style={lStyles.lText}>Login to your account.</Text>
-        {serverErrors.system ? <Text style={lStyles.lErrorText}>{serverErrors.system}</Text> : null}
-        {serverErrors.incorrectEmailOrPassword ? (
-          <Text style={lStyles.lErrorText}>{serverErrors.incorrectEmailOrPassword}</Text>
-        ) : null}
-        <FetchingIndicator fetching={fetching} />
-        <Formik
-          initialValues={{ email: "", password: "" }}
-          validationSchema={LoginSchema}
-          onSubmit={values => {
-            props.getUser(values.email, () => {
-              props.navigation.navigate("AppNavigation");
-            });
-          }}>
-          {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => (
-            <View style={lStyles.lForm}>
-              <TextInput
-                placeholder="Email Address:"
-                placeholderTextColor="#555"
-                style={lStyles.textInput}
-                onChangeText={handleChange("email")}
-                value={values.email}
-                onBlur={handleBlur("email")}
-              />
-              {errors.email && touched.email ? <Text style={lStyles.lErrorText}>{errors.email}</Text> : null}
-              <TextInput
-                placeholder="Password:"
-                placeholderTextColor="#555"
-                secureTextEntry
-                style={lStyles.textInput}
-                onChangeText={handleChange("password")}
-                value={values.password}
-                onBlur={handleBlur("password")}
-              />
-              {errors.password && touched.password ? <Text style={lStyles.lErrorText}>{errors.password}</Text> : null}
-              <Text style={lStyles.lButton} onPress={handleSubmit}>
-                Login
-              </Text>
-            </View>
+      <ImageBackground source={appBackgroundImage} style={lStyles.imgBack}>
+        <ScrollView>
+          <View style={lStyles.header}>
+            <Image source={icon} style={lStyles.logo} />
+          </View>
+          <Text style={lStyles.lText}>Login to your account.</Text>
+          {serverErrors.system ? <Text style={lStyles.lErrorText}>{serverErrors.system}</Text> : null}
+          {serverErrors.incorrectEmailOrPassword ? (
+            <Text style={lStyles.lErrorText}>{serverErrors.incorrectEmailOrPassword}</Text>
+          ) : null}
+          <FetchingIndicator fetching={fetching} />
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            validationSchema={LoginSchema}
+            onSubmit={values => {
+              props.getUser(values.email, () => {
+                props.navigation.navigate("AppNavigation");
+              });
+            }}>
+            {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => (
+              <View style={lStyles.lForm}>
+                <TextInput
+                  placeholder="Email Address:"
+                  placeholderTextColor="gray"
+                  style={lStyles.textInput}
+                  onChangeText={handleChange("email")}
+                  value={values.email}
+                  onBlur={handleBlur("email")}
+                />
+                {errors.email && touched.email ? <Text style={lStyles.lErrorText}>{errors.email}</Text> : null}
+                <TextInput
+                  placeholder="Password:"
+                  placeholderTextColor="gray"
+                  secureTextEntry
+                  style={lStyles.textInput}
+                  onChangeText={handleChange("password")}
+                  value={values.password}
+                  onBlur={handleBlur("password")}
+                />
+                {errors.password && touched.password ? <Text style={lStyles.lErrorText}>{errors.password}</Text> : null}
+                <Text style={lStyles.lButton} onPress={handleSubmit}>
+                  Login
+                </Text>
+              </View>
+            )}
+          </Formik>
+          {shouldShowResetPasswordForm ? (
+            <ResetPasswordForm />
+          ) : (
+            <Text style={lStyles.lText} onPress={showResetForm}>
+              Forgot Password?
+            </Text>
           )}
-        </Formik>
-        {shouldShowResetPasswordForm ? (
-          <ResetPasswordForm />
-        ) : (
-          <Text style={lStyles.lText} onPress={showResetForm}>
-            Forgot Password?
+          <Text style={lStyles.lText}>Don't have an account?</Text>
+          <Text style={lStyles.lGSLink} onPress={() => props.navigation.navigate("Get Started")}>
+            Get Started
           </Text>
-        )}
-        <Text style={lStyles.lText}>Don't have an account?</Text>
-        <Text style={lStyles.lGSLink} onPress={() => props.navigation.navigate("Get Started")}>
-          Get Started
-        </Text>
-      </ScrollView>
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 }

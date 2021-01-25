@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, Platform, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from "react-native";
 import { connect } from "react-redux";
 import { jsonToArray } from "../../utils/jsonToArray";
 import PostContent from "./PostContent";
@@ -70,26 +70,29 @@ function Community(props) {
   ];
 
   return (
-    <View style={[communityStyles.container, { backgroundColor }]}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={[communityStyles.container, { backgroundColor }]}>
       <Header navigation={navigation} />
-      <ScrollView contentContainerStyle={{ marginBottom: 20 }}>
-        {sortedPredictions.map((prediction, index) => (
-          <PostContent
-            key={index.toString()}
-            displayName={prediction.displayName}
-            profilePic={prediction.profilePic}
-            rank={prediction.rank}
-            accuracy={prediction.accuracy}
-            predictionName={prediction.name}
-            predictionTargetDate={prediction.date}
-            dateMade={prediction.dateMade}
-            price={prediction.price}
-            comment={prediction.comment}
-            type={prediction.type}
-          />
-        ))}
-      </ScrollView>
-    </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView contentContainerStyle={{ marginBottom: 20 }}>
+          {sortedPredictions.map((prediction, index) => (
+            <PostContent
+              key={index.toString()}
+              displayName={prediction.displayName}
+              profilePic={prediction.profilePic}
+              rank={prediction.rank}
+              accuracy={prediction.accuracy}
+              predictionName={prediction.name}
+              predictionTargetDate={prediction.date}
+              dateMade={prediction.dateMade}
+              price={prediction.price}
+              comment={prediction.comment}
+              comments={prediction.comments}
+              type={prediction.type}
+            />
+          ))}
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 

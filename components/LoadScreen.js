@@ -1,35 +1,40 @@
 import React from 'react';
-import { StyleSheet, Image, View, Text } from 'react-native';
+import { StyleSheet, Image, Text, ImageBackground } from 'react-native';
 
-const logo = require('../assets/fmFull.png');
+const logo = require('../assets/fmFullTransparent.png');
+const appBackgroundImage = require("../assets/appBackground.jpg");
 
 export default function LoadScreen( props ) {
 
   return (
-    <View style={ loadStyles.container }>
-      <Image 
-        source={ logo }
-        style={ loadStyles.logo }
-      />
-      <Text style={ loadStyles.gs } onPress={() => props.navigation.navigate('Get Started')}>
-        GET STARTED
-      </Text>
-      <Text style={ { color: 'azure', fontFamily: 'Staatliches_400Regular', marginTop: 10 } }>
-        Or
-      </Text>
-      <Text style={ loadStyles.login } onPress={() => props.navigation.navigate('Login')}>
-        Login
-      </Text>
-    </View> 
+      <ImageBackground source={appBackgroundImage} style={loadStyles.imgBack}>
+        <Image 
+          source={ logo }
+          style={ loadStyles.logo }
+        />
+        <Text style={ loadStyles.gs } onPress={() => props.navigation.navigate('Get Started')}>
+          GET STARTED
+        </Text>
+        <Text style={ { color: 'azure', fontFamily: 'Staatliches_400Regular', marginTop: 10 } }>
+          Or
+        </Text>
+        <Text style={ loadStyles.login } onPress={() => props.navigation.navigate('Login')}>
+          Login
+        </Text>
+      </ImageBackground>
   );
 }
 
 const loadStyles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
     flex: 1,
-    backgroundColor: 'black'
+    flexDirection: "column"
+  },
+  imgBack: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+    alignItems: "center"
   },
   logo: {
     width: 300,
