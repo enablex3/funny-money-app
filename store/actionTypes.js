@@ -43,6 +43,10 @@ export const themeActionTypes = {
   SET_LIGHT_MODE: "SET_LIGHT_MODE"
 };
 
+export const userStatActionTypes = {
+  SET_USER_STATS: "SET_USER_STATS"
+};
+
 export const appActionTypes = {
   RESET_PASSWORD_START: "RESET_PASSWORD_START",
   RESET_PASSWORD_SUCCESS: "RESET_PASSWORD_SUCCESS",

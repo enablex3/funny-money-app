@@ -1,6 +1,7 @@
 import axios from "axios";
 import { currentUserActionTypes as actionTypes } from "../actionTypes";
 import { fetchCommunityPredictions } from "../actions/communityPredictions";
+import { fetchUserStats } from "../actions/currentUserStats";
 import { ENDPOINT_URL } from "../../constants";
 
 export const setRank = rank => ({
@@ -60,6 +61,7 @@ export const getUser = (_email, successCallback) => async dispatch => {
     if (response.status === 200) {
       dispatch(fetchUserSuccess(response.data));
       dispatch(fetchCommunityPredictions(response.data.id));
+      dispatch(fetchUserStats(response.data.id));
       successCallback();
     } else dispatch(fetchUserFail(response.data));
   } catch (error) {

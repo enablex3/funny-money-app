@@ -1,8 +1,8 @@
 import React from 'react'
 import { StyleSheet, Dimensions, Platform} from 'react-native';
 import { connect } from "react-redux";
-import { PieChart } from 'react-native-chart-kit';
-import { portfolioConstruct } from "../../utils/statArray";
+import { BarChart } from 'react-native-chart-kit';
+import { averagesConstruct } from "../../utils/statArray";
 import { jsonToArray } from "../../utils/jsonToArray";
 
 const chartConfig = {
@@ -16,19 +16,17 @@ let data;
 const screenWidth = Dimensions.get('window').width;
  
 function UserPie(props) {
-    const { portfolio, primaryTextColor } = props;
+    const { averages, primaryTextColor } = props;
 
-    data = portfolioConstruct(jsonToArray(portfolio), primaryTextColor);
-
+    data = averagesConstruct(jsonToArray(averages));
+    
     return (
-        <PieChart
+        <BarChart
+            style={{ marginTop: 10, marginBottom: 10, borderRadius: 10, borderWidth: 1, borderColor: "rgb(26, 255, 146)"}}
             data={data}
             width={ Platform.OS === "web" ? screenWidth / 4 : screenWidth}
-            height={220}
+            height={200}
             chartConfig={chartConfig}
-            accessor="accuracy"
-            backgroundColor="transparent"
-            paddingLeft="5"
         />
     );
   
@@ -51,9 +49,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-    const { portfolio } = state.currentUserStats;
+    const { averages } = state.currentUserStats;
     const { primaryTextColor, backgroundColor } = state.theme;
-    return { portfolio, primaryTextColor, backgroundColor };
+    return { averages, primaryTextColor, backgroundColor };
 };
 
 export default connect(mapStateToProps)(UserPie);
