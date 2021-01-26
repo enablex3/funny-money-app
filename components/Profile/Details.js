@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import UserPie from "./UserPie";
+import UserBar from "./UserBar";
 
 const noviceEmblem = require("../../assets/emblems/noviceTransparent.png");
 const beginnerEmblem = require("../../assets/emblems/beginnerTransparent.png");
@@ -75,7 +76,10 @@ function Details(props) {
             </View>
             <View style={styles.rightContainer}>
                 <Text style={[styles.text, {color: primaryTextColor}]}>Accuracy: {accuracy * 100}%</Text>
-                <UserPie />
+                <ScrollView horizontal={true}>
+                    <UserPie />
+                    <UserBar />
+                </ScrollView>
             </View>
         </View>
     );
