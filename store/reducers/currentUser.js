@@ -12,7 +12,8 @@ const initialState = {
   accuracy: null,
   errors: {},
   loggedIn: false,
-  fetching: false
+  fetching: false,
+  token: ""
 };
 
 const currentUserReducer = (state = initialState, action) => {
@@ -85,6 +86,8 @@ const currentUserReducer = (state = initialState, action) => {
       const errors = action.payload;
       return { ...state, fetching: false, errors };
     }
+    case actionTypes.SET_USER:
+      return { ...state, ...action.payload };
     case actionTypes.SET_RANK:
       return { ...state, rank: action.payload };
     case actionTypes.SET_NEW_PREDICTIONS:

@@ -2,12 +2,12 @@ import React from "react";
 import { StyleSheet, Text, Image, View, TextInput, Platform, ImageBackground } from "react-native";
 import { connect } from "react-redux";
 import { Formik } from "formik";
+import { ScrollView } from "react-native-gesture-handler";
 import FetchingIndicator from "./FetchingIndicator";
 import ResetPasswordForm from "./ResetPasswordForm";
 import { getUser } from "../store/actions/currentUser";
 import { showResetPasswordForm } from "../store/actions";
 import { LoginSchema } from "../utils/validation";
-import { ScrollView } from "react-native-gesture-handler";
 
 const icon = require("../assets/fmIconTransparent.png");
 const appBackgroundImage = require("../assets/appBackground.jpg");
