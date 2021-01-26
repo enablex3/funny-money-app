@@ -240,19 +240,19 @@ const styles = StyleSheet.create({
             <View style={[styles.bottomSection, {borderBottomColor: (backgroundColor === "black") ? "#383838" : "#D0D0D0"}]}>
                 <TouchableOpacity style={{flexDirection: "row"}} onPress={() => setHeadOutlineClicked(!headOutlineClicked)} disabled={cancelClicked}>
                     <View style={styles.bottomIconContainer}>
-                            <MaterialCommunityIcons name="head-check-outline" size={20} color={headOutlineClicked ? agreeTheme : primaryTextColor} />
+                            <MaterialCommunityIcons name="thumb-up-outline" size={20} color={headOutlineClicked ? agreeTheme : primaryTextColor} />
                             <Text style={[styles.bottomIconLabel, {color: headOutlineClicked ? agreeTheme : primaryTextColor}]}>Agree</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={{flexDirection: "row"}} onPress={() => setCancelClicked(!cancelClicked)} disabled={headOutlineClicked}>
                     <View style={styles.bottomIconContainer}>
-                            <MaterialCommunityIcons name="cancel" size={20} color={cancelClicked ? "red" : primaryTextColor} />
+                            <MaterialCommunityIcons name="thumb-down-outline" size={20} color={cancelClicked ? "red" : primaryTextColor} />
                             <Text style={[styles.bottomIconLabel, { color: cancelClicked ? "red" : primaryTextColor}]}>Disagree</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={{flexDirection: "row"}} onPress={() => setCommentClicked(!commentClicked)}>
                     <View style={styles.bottomIconContainer}>
-                            <MaterialCommunityIcons name="comment-processing" size={20} color={commentClicked ? (backgroundColor === "black" ? "#CB6CE6" : "#9C2C98" ) : primaryTextColor} />
+                            <MaterialCommunityIcons name="thought-bubble-outline" size={20} color={commentClicked ? (backgroundColor === "black" ? "#CB6CE6" : "#9C2C98" ) : primaryTextColor} />
                             <Text style={[styles.bottomIconLabel, {color: commentClicked ? (backgroundColor === "black" ? "#CB6CE6" : "#9C2C98" ) : primaryTextColor}]}>Comment</Text>
                     </View>
                 </TouchableOpacity>

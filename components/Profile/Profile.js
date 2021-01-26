@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { connect } from "react-redux";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import ResetPasswordForm from "../ResetPasswordForm";
@@ -49,6 +50,11 @@ const profileStyles = StyleSheet.create({
     marginTop: 15
   }
 });
+
+/*const logout = async ({ navigation }) => {
+  await AsyncStorage.setItem("token", null);
+  //navigation.navigate("LoadScreen");
+};*/
 
 function Profile(props) {
   const { rank, navigation, primaryTextColor, backgroundColor } = props;
@@ -139,6 +145,17 @@ function Profile(props) {
           />
         </TouchableOpacity>
         {currencyClicked && <CurrencyPreferenceModal />}
+        <TouchableOpacity
+          style={profileStyles.tOp}
+          activeOpacity={0.5}>
+          <Text style={[profileStyles.pText, {color: "red"}]}>Logout</Text>
+          <MaterialCommunityIcons
+            name="logout"
+            color="red"
+            size={30}
+            style={profileStyles.mIcon}
+          />
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
