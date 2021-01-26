@@ -62,7 +62,9 @@ const REFRESH_TOKEN = gql`
   }
 `;
 
-const refresh = async (data, token, mutation) => {
+const refresh = async (data, mutation) => {
+  const token = await AsyncStorage.getItem("token");
+
   if (!data && token) {
     try {
       return await mutation();
@@ -82,9 +84,8 @@ const setCurrentUserAndToken = async (userData, setCurrentUser, navigation) => {
 
 function LoadScreen({ setCurrentUser, navigation }) {
   const [refreshToken, { data, loading }] = useMutation(REFRESH_TOKEN);
-  const token = async () => AsyncStorage.getItem("token");
 
-  refresh(data, token, refreshToken);
+  refresh(data, refreshToken);
   if (data) setCurrentUserAndToken(data.refreshToken, setCurrentUser, navigation);
 
   return (
