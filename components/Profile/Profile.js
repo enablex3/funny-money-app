@@ -52,7 +52,7 @@ const profileStyles = StyleSheet.create({
 });
 
 const logout = async parentNavigation => {
-  await AsyncStorage.setItem("token", null);
+  await AsyncStorage.removeItem("token");
   parentNavigation.navigate("LoadScreen");
 };
 
