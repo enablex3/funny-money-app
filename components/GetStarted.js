@@ -4,10 +4,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StyleSheet, Text, Image, View, TextInput, Platform, ImageBackground, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Formik } from "formik";
+import Downshift from "downshift";
 import FetchingIndicator from "./FetchingIndicator";
 import { setUser } from "../store/actions/currentUser";
 import { SignupSchema } from "../utils/validation";
-import { HOST } from "../constants";
+import { CURRENCIES, HOST } from "../constants";
 
 const icon = require("../assets/fmIcon.jpg");
 const appBackgroundImage = require("../assets/appBackground.jpg");
@@ -142,12 +143,23 @@ function GetStarted({ navigation, setCurrentUser }) {
           <FetchingIndicator fetching={loading} />
           <ScrollView>
             <Formik
-              initialValues={{ fullName: "", displayName: "", email: "", password: "", confirmPassword: "" }}
+              initialValues={{
+                fullName: "",
+                displayName: "",
+                email: "",
+                password: "",
+                confirmPassword: "",
+                currency: ""
+              }}
               validationSchema={SignupSchema}
               onSubmit={async values => {
                 try {
                   createUser({
-                    variables: { ...values, currency: "USD", profilePicture: `${HOST}/images/blankAvatar.png` }
+                    variables: {
+                      ...values,
+                      currency: values.currency.toUpperCase(),
+                      profilePicture: `${HOST}/images/blankAvatar.png`
+                    }
                   });
                 } catch (err) {
                   console.log(err);
@@ -210,6 +222,52 @@ function GetStarted({ navigation, setCurrentUser }) {
                   {errors.confirmPassword && touched.confirmPassword ? (
                     <Text style={gsStyles.gsErrorText}>{errors.confirmPassword}</Text>
                   ) : null}
+                  <Downshift itemToString={item => (item ? item.value : "")}>
+                    {({
+                      getInputProps,
+                      getItemProps,
+                      getMenuProps,
+                      isOpen,
+                      inputValue,
+                      highlightedIndex,
+                      selectedItem,
+                      getRootProps
+                    }) => (
+                      <View {...getRootProps({}, { suppressRefError: true })}>
+                        <TextInput
+                          placeholder="Currency Preference, E.g. USD Or EUR:"
+                          placeholderTextColor="gray"
+                          style={gsStyles.textInput}
+                          onChangeText={handleChange("currency")}
+                          value={inputValue.toUpperCase()}
+                          onBlur={handleBlur("currency")}
+                          {...getInputProps()}
+                        />
+                        <View {...getMenuProps()}>
+                          {isOpen &&
+                            CURRENCIES.filter(
+                              item => !inputValue || item.value.toUpperCase().includes(inputValue.toUpperCase())
+                            )
+                              .slice(0, 5)
+                              .map((item, index) => (
+                                <Text
+                                  {...getItemProps({
+                                    key: item.value,
+                                    index,
+                                    item,
+                                    style: {
+                                      backgroundColor: highlightedIndex === index ? "lightgray" : "white",
+                                      fontWeight: selectedItem === item ? "bold" : "normal"
+                                    }
+                                  })}>
+                                  {item.value}
+                                </Text>
+                              ))}
+                        </View>
+                      </View>
+                    )}
+                  </Downshift>
+                  {errors.currency && touched.currency && <Text style={gsStyles.gsErrorText}>{errors.currency}</Text>}
                   <Text style={gsStyles.gsButton} onPress={handleSubmit}>
                     Get Started
                   </Text>

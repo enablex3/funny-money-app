@@ -86,9 +86,9 @@ const setCurrentUserAndToken = async (userData, setCurrentUser, navigation) => {
 function LoadScreen({ setCurrentUser, navigation, setParentNav }) {
   setParentNav(navigation);
 
-  const [refreshToken, { data, loading }] = useMutation(REFRESH_TOKEN);
+  const [refreshToken, { data, loading, error }] = useMutation(REFRESH_TOKEN);
 
-  refresh(data, refreshToken);
+  if (!error) refresh(data, refreshToken);
   if (data) setCurrentUserAndToken(data.refreshToken, setCurrentUser, navigation);
 
   return (

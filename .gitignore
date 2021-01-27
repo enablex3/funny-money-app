@@ -12,3 +12,6 @@ debug.log
 
 # macOS
 .DS_Store
+
+# old files
+setHostConstant.js

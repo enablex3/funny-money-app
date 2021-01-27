@@ -11,6 +11,7 @@ import FetchingIndicator from "../FetchingIndicator";
 import { createPrediction, setVisibility } from "../../store/actions/prediction";
 import Header from "../Header/Header";
 import { predictionSchema } from "../../utils/validation";
+import { SYMBOLS } from "../../constants";
 
 const predictStyles = StyleSheet.create({
   container: {
@@ -64,17 +65,6 @@ const predictStyles = StyleSheet.create({
   }
 });
 
-const items = [
-  { value: "XRP" },
-  { value: "BTC" },
-  { value: "APPLE" },
-  { value: "GOLD" },
-  { value: "EWT" },
-  { value: "GSX" },
-  { value: "AIRBNB" },
-  { value: "SILVER" }
-];
-
 function Predict({
   predictionDate,
   createNewPrediction,
@@ -113,31 +103,31 @@ function Predict({
                 }) => (
                   <View {...getRootProps({}, { suppressRefError: true })}>
                     <TextInput
-                      {...getInputProps()}
                       placeholder="Name or Symbol"
                       placeholderTextColor="#555"
                       style={[predictStyles.input, { color: primaryTextColor }]}
                       onChangeText={handleChange("nameOrSymbol")}
                       value={inputValue}
                       onBlur={handleBlur("nameOrSymbol")}
+                      {...getInputProps()}
                     />
                     {isOpen
-                      ? items
-                          .filter(item => !inputValue || item.value.toUpperCase().includes(inputValue.toUpperCase()))
-                          .map((item, index) => (
-                            <Text
-                              {...getItemProps({
-                                key: item.value,
-                                item,
-                                style: {
-                                  backgroundColor: highlightedIndex === index ? "lightgray" : "white",
-                                  fontWeight: selectedItem === item ? "bold" : "normal"
-                                },
-                                index
-                              })}>
-                              {item.value}
-                            </Text>
-                          ))
+                      ? SYMBOLS.filter(
+                          item => !inputValue || item.value.toUpperCase().includes(inputValue.toUpperCase())
+                        ).map((item, index) => (
+                          <Text
+                            {...getItemProps({
+                              key: item.value,
+                              item,
+                              style: {
+                                backgroundColor: highlightedIndex === index ? "lightgray" : "white",
+                                fontWeight: selectedItem === item ? "bold" : "normal"
+                              },
+                              index
+                            })}>
+                            {item.value}
+                          </Text>
+                        ))
                       : null}
                   </View>
                 )}

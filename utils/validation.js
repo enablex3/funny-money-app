@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { CURRENCIES, SYMBOLS } from "../constants";
 
 export const SignupSchema = Yup.object().shape({
   fullName: Yup.string()
@@ -19,7 +20,13 @@ export const SignupSchema = Yup.object().shape({
     .required("Password Is Required"),
   confirmPassword: Yup.string()
     .required("Passwords Must Match")
-    .oneOf([Yup.ref("password"), null], "Passwords Must Match")
+    .oneOf([Yup.ref("password"), null], "Passwords Must Match"),
+  currency: Yup.string()
+    .required("Currency Preference Is Required")
+    .oneOf(
+      CURRENCIES.map(currency => currency.value),
+      "Please Select A Valid Currency"
+    )
 });
 
 export const LoginSchema = Yup.object().shape({
@@ -28,7 +35,12 @@ export const LoginSchema = Yup.object().shape({
 });
 
 export const predictionSchema = Yup.object().shape({
-  nameOrSymbol: Yup.string().required("Name Or Symbol Is Required"),
+  nameOrSymbol: Yup.string()
+    .required("Name Or Symbol Is Required")
+    .oneOf(
+      SYMBOLS.map(symbol => symbol.value),
+      "Please Select A Valid Name Or Symbol"
+    ),
   price: Yup.string()
     .matches(/^[0-9]+(\.[0-9][0-9]?)?$/, "Price Must Be A Number With No More Than 2 Digits After Decimal Point")
     .required("Price Is Required")
