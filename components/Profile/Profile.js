@@ -142,8 +142,8 @@ function Profile(props) {
           />
         </TouchableOpacity>
         {currencyClicked && <CurrencyPreferenceModal />}
-        <TouchableOpacity style={profileStyles.tOp} activeOpacity={0.5}>
-          <Text style={[profileStyles.pText, { color: "red" }]} onPress={() => logout(parentNavigation)}>
+        <TouchableOpacity style={profileStyles.tOp} activeOpacity={0.5} onPress={() => logout(parentNavigation)}>
+          <Text style={[profileStyles.pText, { color: "red" }]}>
             Logout
           </Text>
           <MaterialCommunityIcons
