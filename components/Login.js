@@ -1,12 +1,15 @@
 import React from "react";
+import { useMutation, gql } from "@apollo/client";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StyleSheet, Text, Image, View, TextInput, Platform, ImageBackground } from "react-native";
 import { connect } from "react-redux";
 import { Formik } from "formik";
 import { ScrollView } from "react-native-gesture-handler";
 import FetchingIndicator from "./FetchingIndicator";
 import ResetPasswordForm from "./ResetPasswordForm";
-import { getUser } from "../store/actions/currentUser";
+import { getUser, setUser } from "../store/actions/currentUser";
 import { showResetPasswordForm } from "../store/actions";
+
 import { LoginSchema } from "../utils/validation";
 
 const icon = require("../assets/fmIconTransparent.png");
@@ -88,8 +91,33 @@ const lStyles = StyleSheet.create({
   }
 });
 
-function Login(props) {
-  const { serverErrors, fetching, shouldShowResetPasswordForm, showResetForm } = props;
+const USER_SIGN_IN = gql`
+  mutation UserSignIn($email: String!, $password: String!) {
+    userSignIn(email: $email, password: $password) {
+      id
+      email
+      displayName
+      fullName
+      rank
+      accuracy
+      currency
+      profilePicture
+      rate
+      token
+    }
+  }
+`;
+
+const setCurrentUserAndToken = async ({ currentUser, setCurrentUser, navigation }) => {
+  await AsyncStorage.setItem("token", currentUser.token);
+  setCurrentUser(currentUser);
+  navigation.navigate("AppNavigation");
+};
+
+function Login({ shouldShowResetPasswordForm, showResetForm, getCurrentUser, setCurrentUser, navigation }) {
+  const [userSignIn, { data, loading, error }] = useMutation(USER_SIGN_IN);
+
+  if (data) setCurrentUserAndToken({ currentUser: data.userSignIn, setCurrentUser, navigation });
 
   return (
     <View style={lStyles.container}>
@@ -99,18 +127,20 @@ function Login(props) {
             <Image source={icon} style={lStyles.logo} />
           </View>
           <Text style={lStyles.lText}>Login to your account.</Text>
-          {serverErrors.system ? <Text style={lStyles.lErrorText}>{serverErrors.system}</Text> : null}
-          {serverErrors.incorrectEmailOrPassword ? (
-            <Text style={lStyles.lErrorText}>{serverErrors.incorrectEmailOrPassword}</Text>
-          ) : null}
-          <FetchingIndicator fetching={fetching} />
+          {error && <Text style={lStyles.lErrorText}>{JSON.stringify(error)}</Text>}
+          <FetchingIndicator fetching={loading} />
           <Formik
             initialValues={{ email: "", password: "" }}
             validationSchema={LoginSchema}
-            onSubmit={values => {
-              props.getUser(values.email, () => {
-                props.navigation.navigate("AppNavigation");
+            onSubmit={async values => {
+              getCurrentUser(values.email, () => {
+                navigation.navigate("AppNavigation");
               });
+              try {
+                userSignIn({ variables: values });
+              } catch (err) {
+                console.log(err);
+              }
             }}>
             {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => (
               <View style={lStyles.lForm}>
@@ -147,7 +177,7 @@ function Login(props) {
             </Text>
           )}
           <Text style={lStyles.lText}>Don't have an account?</Text>
-          <Text style={lStyles.lGSLink} onPress={() => props.navigation.navigate("Get Started")}>
+          <Text style={lStyles.lGSLink} onPress={() => navigation.navigate("Get Started")}>
             Get Started
           </Text>
         </ScrollView>
@@ -156,14 +186,11 @@ function Login(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  serverErrors: state.currentUser.errors,
-  fetching: state.currentUser.fetching,
-  shouldShowResetPasswordForm: state.app.shouldShowResetPasswordForm
-});
+const mapStateToProps = state => ({ shouldShowResetPasswordForm: state.app.shouldShowResetPasswordForm });
 
 const mapDispatchToProps = dispatch => ({
-  getUser: (email, successCallback) => dispatch(getUser(email, successCallback)),
+  getCurrentUser: (email, successCallback) => dispatch(getUser(email, successCallback)),
+  setUser: user => dispatch(setUser(user)),
   showResetForm: () => dispatch(showResetPasswordForm())
 });
 

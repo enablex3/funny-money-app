@@ -128,7 +128,6 @@ function GetStarted({ navigation, setCurrentUser }) {
   const [createUser, { data, error, loading }] = useMutation(CREATE_USER);
 
   if (data) setCurrentUserAndToken({ currentUser: data.createUser, setCurrentUser, navigation });
-  console.log(error);
 
   return (
     <View style={gsStyles.container}>
@@ -138,7 +137,7 @@ function GetStarted({ navigation, setCurrentUser }) {
             <Image source={icon} style={gsStyles.logo} />
           </View>
           <Text style={gsStyles.gsText}>Create a free account to get started.</Text>
-          {error ? <Text style={gsStyles.gsErrorText}>{JSON.stringify(error)}</Text> : null}
+          {error && <Text style={gsStyles.gsErrorText}>{JSON.stringify(error)}</Text>}
           <FetchingIndicator fetching={loading} />
           <ScrollView>
             <Formik
