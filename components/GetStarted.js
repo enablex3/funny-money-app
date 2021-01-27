@@ -7,6 +7,7 @@ import { Formik } from "formik";
 import FetchingIndicator from "./FetchingIndicator";
 import { setUser } from "../store/actions/currentUser";
 import { SignupSchema } from "../utils/validation";
+import { HOST } from "../constants";
 
 const icon = require("../assets/fmIcon.jpg");
 const appBackgroundImage = require("../assets/appBackground.jpg");
@@ -145,7 +146,9 @@ function GetStarted({ navigation, setCurrentUser }) {
               validationSchema={SignupSchema}
               onSubmit={async values => {
                 try {
-                  createUser({ variables: { ...values, currency: "USD", profilePicture: "some_url.jpg" } });
+                  createUser({
+                    variables: { ...values, currency: "USD", profilePicture: `${HOST}/images/blankAvatar.png` }
+                  });
                 } catch (err) {
                   console.log(err);
                 }
