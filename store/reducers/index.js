@@ -4,7 +4,8 @@ const initialState = {
   fetching: true,
   errors: null,
   tokenSentToEmail: false,
-  shouldShowResetPasswordForm: false
+  shouldShowResetPasswordForm: false,
+  parentNavigation: null
 };
 
 const appReducer = (state = initialState, action) => {
@@ -19,6 +20,8 @@ const appReducer = (state = initialState, action) => {
       return { ...state, errors: null, tokenSentToEmail: false };
     case actionTypes.SHOW_RESET_PASSWORD_FORM:
       return { ...state, shouldShowResetPasswordForm: true };
+    case actionTypes.SET_PARENT_NAVIGATION:
+      return { ...state, parentNavigation: action.payload };
     default:
       return state;
   }

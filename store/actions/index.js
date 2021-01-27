@@ -13,6 +13,7 @@ export const showResetPasswordForm = () => ({ type: actionTypes.SHOW_RESET_PASSW
 export const changePasswordStart = () => ({ type: actionTypes.CHANGE_PASSWORD_START });
 export const changePasswordSuccess = () => ({ type: actionTypes.CHANGE_PASSWORD_SUCCESS });
 export const changePasswordFail = errors => ({ type: actionTypes.CHANGE_PASSWORD_FAIL, payload: errors });
+export const setParentNavigation = navigation => ({ type: actionTypes.SET_PARENT_NAVIGATION, payload: navigation });
 
 export const resetPasswordToken = email => async dispatch => {
   try {

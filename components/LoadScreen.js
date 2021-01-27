@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { StyleSheet, Image, Text, ImageBackground, View } from "react-native";
 import FetchingIndicator from "./FetchingIndicator";
 import { setUser } from "../store/actions/currentUser";
+import { setParentNavigation } from "../store/actions/index";
 
 const logo = require("../assets/fmFullTransparent.png");
 const appBackgroundImage = require("../assets/appBackground.jpg");
@@ -82,7 +83,9 @@ const setCurrentUserAndToken = async (userData, setCurrentUser, navigation) => {
   navigation.navigate("AppNavigation");
 };
 
-function LoadScreen({ setCurrentUser, navigation }) {
+function LoadScreen({ setCurrentUser, navigation, setParentNav }) {
+  setParentNav(navigation);
+
   const [refreshToken, { data, loading }] = useMutation(REFRESH_TOKEN);
 
   refresh(data, refreshToken);
@@ -113,6 +116,9 @@ function LoadScreen({ setCurrentUser, navigation }) {
   );
 }
 
-const mapDispatchToProps = dispatch => ({ setCurrentUser: user => dispatch(setUser(user)) });
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setUser(user)),
+  setParentNav: nav => dispatch(setParentNavigation(nav))
+});
 
 export default connect(null, mapDispatchToProps)(LoadScreen);

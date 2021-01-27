@@ -51,13 +51,13 @@ const profileStyles = StyleSheet.create({
   }
 });
 
-/*const logout = async ({ navigation }) => {
+const logout = async parentNavigation => {
   await AsyncStorage.setItem("token", null);
-  //navigation.navigate("LoadScreen");
-};*/
+  parentNavigation.navigate("LoadScreen");
+};
 
 function Profile(props) {
-  const { rank, navigation, primaryTextColor, backgroundColor } = props;
+  const { rank, navigation, parentNavigation, primaryTextColor, backgroundColor } = props;
 
   const influenceRank = 30;
 
@@ -75,7 +75,7 @@ function Profile(props) {
           style={profileStyles.tOp}
           onPress={() => setInfluenceClicked(!influenceClicked)}
           activeOpacity={1}>
-          <Text style={[profileStyles.pText, {color: primaryTextColor}]}>Influencer</Text>
+          <Text style={[profileStyles.pText, { color: primaryTextColor }]}>Influencer</Text>
           <MaterialCommunityIcons
             name={influenceClicked ? "minus" : "plus-thick"}
             color={primaryTextColor}
@@ -87,22 +87,19 @@ function Profile(props) {
     }
     return (
       <TouchableOpacity style={profileStyles.tOp} disabled>
-        <Text style={profileStyles.pTextDisabled}>
-          Influencer (must be at least rank
-          {influenceRank})
-        </Text>
+        <Text style={profileStyles.pTextDisabled}>{`Influencer (must be at least rank ${influenceRank})`}</Text>
         <MaterialCommunityIcons name="plus-thick" color="gray" size={30} style={profileStyles.mIcon} />
       </TouchableOpacity>
     );
   };
 
   return (
-    <View style={[profileStyles.container, {backgroundColor: backgroundColor}]}>
+    <View style={[profileStyles.container, { backgroundColor }]}>
       <Header navigation={navigation} />
       <ScrollView>
         <Details />
         <TouchableOpacity style={profileStyles.tOp} onPress={() => setPicClicked(!picClicked)} activeOpacity={1}>
-          <Text style={[profileStyles.pText, {color: primaryTextColor}]}>Change Profile Picture</Text>
+          <Text style={[profileStyles.pText, { color: primaryTextColor }]}>Change Profile Picture</Text>
           <MaterialCommunityIcons
             name={picClicked ? "minus" : "plus-thick"}
             color={primaryTextColor}
@@ -112,7 +109,7 @@ function Profile(props) {
         </TouchableOpacity>
         {picClicked ? <PhotoUploadModal /> : null}
         <TouchableOpacity style={profileStyles.tOp} onPress={() => setThemeClicked(!themeClicked)} activeOpacity={1}>
-          <Text style={[profileStyles.pText, {color: primaryTextColor}]}>Set App Theme</Text>
+          <Text style={[profileStyles.pText, { color: primaryTextColor }]}>Set App Theme</Text>
           <MaterialCommunityIcons
             name={themeClicked ? "minus" : "plus-thick"}
             color={primaryTextColor}
@@ -122,7 +119,7 @@ function Profile(props) {
         </TouchableOpacity>
         {themeClicked ? <AppThemeModal /> : null}
         <TouchableOpacity style={profileStyles.tOp} onPress={() => setPassClicked(!passClicked)} activeOpacity={1}>
-          <Text style={[profileStyles.pText, {color: primaryTextColor}]}>Reset Your Password</Text>
+          <Text style={[profileStyles.pText, { color: primaryTextColor }]}>Reset Your Password</Text>
           <MaterialCommunityIcons
             name={passClicked ? "minus" : "plus-thick"}
             color={primaryTextColor}
@@ -136,7 +133,7 @@ function Profile(props) {
           style={profileStyles.tOp}
           onPress={() => setCurrencyClicked(!currencyClicked)}
           activeOpacity={1}>
-          <Text style={[profileStyles.pText, {color: primaryTextColor}]}>Change Currency Preference</Text>
+          <Text style={[profileStyles.pText, { color: primaryTextColor }]}>Change Currency Preference</Text>
           <MaterialCommunityIcons
             name={currencyClicked ? "minus" : "plus-thick"}
             color={primaryTextColor}
@@ -145,15 +142,16 @@ function Profile(props) {
           />
         </TouchableOpacity>
         {currencyClicked && <CurrencyPreferenceModal />}
-        <TouchableOpacity
-          style={profileStyles.tOp}
-          activeOpacity={0.5}>
-          <Text style={[profileStyles.pText, {color: "red"}]}>Logout</Text>
+        <TouchableOpacity style={profileStyles.tOp} activeOpacity={0.5}>
+          <Text style={[profileStyles.pText, { color: "red" }]} onPress={() => logout(parentNavigation)}>
+            Logout
+          </Text>
           <MaterialCommunityIcons
             name="logout"
             color="red"
             size={30}
             style={profileStyles.mIcon}
+            onPress={() => logout(parentNavigation)}
           />
         </TouchableOpacity>
       </ScrollView>
@@ -164,7 +162,19 @@ function Profile(props) {
 const mapStateToProps = state => {
   const { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy } = state.currentUser;
   const { primaryTextColor, backgroundColor } = state.theme;
-  return { displayName, email, rank, newPredictions, pastPredictions, currency, accuracy, primaryTextColor, backgroundColor };
+  const { parentNavigation } = state.app;
+  return {
+    displayName,
+    email,
+    rank,
+    newPredictions,
+    pastPredictions,
+    currency,
+    accuracy,
+    primaryTextColor,
+    backgroundColor,
+    parentNavigation
+  };
 };
 
 export default connect(mapStateToProps)(Profile);
