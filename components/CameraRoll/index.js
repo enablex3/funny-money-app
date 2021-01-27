@@ -1,8 +1,20 @@
 import React, { useEffect } from "react";
+import { gql, useMutation } from "@apollo/client";
+import { ReactNativeFile } from "apollo-upload-client";
 import { Button, View, Platform } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
+const MUTATION = gql`
+  mutation ProfilePictureUpload($file: Upload!) {
+    profilePictureUpload(file: $file) {
+      text
+    }
+  }
+`;
+
 const CameraRoll = ({ buttonColor, setProfilePicture, onSelect }) => {
+  const [mutate] = useMutation(MUTATION);
+
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -23,7 +35,15 @@ const CameraRoll = ({ buttonColor, setProfilePicture, onSelect }) => {
     });
 
     if (!result.cancelled) {
-      setProfilePicture(result.uri);
+      const { uri } = result;
+      const file = new ReactNativeFile({
+        uri,
+        name: "a.jpg",
+        type: "image/jpeg"
+      });
+
+      await mutate({ variables: { file } });
+      setProfilePicture(uri);
       onSelect();
     }
   };

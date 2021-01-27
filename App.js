@@ -1,6 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
+import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import { createUploadLink } from "apollo-upload-client";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setContext } from "@apollo/client/link/context";
 import { StatusBar } from "react-native";
@@ -13,13 +14,11 @@ import GetStarted from "./components/GetStarted";
 import Login from "./components/Login";
 import AppNavigation from "./components/AppNavigation";
 import store from "./store";
+import { APOLLO_URI } from "./constants";
 
 const Stack = createStackNavigator();
 
 export default function App() {
-  const httpLink = createHttpLink({
-    uri: "http://3.18.49.30:3000/graphql"
-  });
   const authLink = setContext(async (_, { headers }) => {
     const token = await AsyncStorage.getItem("token");
 
@@ -30,8 +29,11 @@ export default function App() {
       }
     };
   });
+  const uploadLink = createUploadLink({
+    uri: APOLLO_URI
+  });
   const client = new ApolloClient({
-    link: authLink.concat(httpLink),
+    link: authLink.concat(uploadLink),
     cache: new InMemoryCache()
   });
 
