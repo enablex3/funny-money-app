@@ -190,7 +190,7 @@ const mapStateToProps = state => ({ shouldShowResetPasswordForm: state.app.shoul
 
 const mapDispatchToProps = dispatch => ({
   getCurrentUser: (email, successCallback) => dispatch(getUser(email, successCallback)),
-  setUser: user => dispatch(setUser(user)),
+  setCurrentUser: user => dispatch(setUser(user)),
   showResetForm: () => dispatch(showResetPasswordForm())
 });
 
