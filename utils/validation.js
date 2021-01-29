@@ -1,6 +1,8 @@
 import * as Yup from "yup";
 import { CURRENCIES, SYMBOLS } from "../constants";
 
+export const currencyCheck = value =>
+  value && CURRENCIES.map(currency => currency.value).find(currency => value.toUpperCase() === currency);
 export const SignupSchema = Yup.object().shape({
   fullName: Yup.string()
     .min(2, "Full Name Should Be At Least 2 Characters")
@@ -23,10 +25,7 @@ export const SignupSchema = Yup.object().shape({
     .oneOf([Yup.ref("password"), null], "Passwords Must Match"),
   currency: Yup.string()
     .required("Currency Preference Is Required")
-    .oneOf(
-      CURRENCIES.map(currency => currency.value),
-      "Please Select A Valid Currency"
-    )
+    .test("validCurrency", "Please Select A Valid Currency", currencyCheck)
 });
 
 export const LoginSchema = Yup.object().shape({
@@ -34,13 +33,12 @@ export const LoginSchema = Yup.object().shape({
   password: Yup.string().required("Password Is Required")
 });
 
+export const nameOrSymbolCheck = value =>
+  value && SYMBOLS.map(symbol => symbol.value).find(symbolValue => value.toUpperCase() === symbolValue);
 export const predictionSchema = Yup.object().shape({
   nameOrSymbol: Yup.string()
     .required("Name Or Symbol Is Required")
-    .oneOf(
-      SYMBOLS.map(symbol => symbol.value),
-      "Please Select A Valid Name Or Symbol"
-    ),
+    .test("validNameOrSymbol", "Please Select A Valid Name Or Symbol", nameOrSymbolCheck),
   price: Yup.string()
     .matches(/^[0-9]+(\.[0-9][0-9]?)?$/, "Price Must Be A Number With No More Than 2 Digits After Decimal Point")
     .required("Price Is Required")

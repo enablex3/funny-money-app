@@ -89,9 +89,11 @@ function Predict({
               navigation.navigate("Home");
             });
           }}>
-          {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => (
+          {({ handleChange, handleBlur, handleSubmit, setFieldValue, errors, touched, values }) => (
             <View style={predictStyles.form}>
-              <Downshift itemToString={item => (item ? item.value : "")}>
+              <Downshift
+                itemToString={item => (item ? item.value : values.nameOrSymbol)}
+                onSelect={selectedItem => setFieldValue("nameOrSymbol", selectedItem.value)}>
                 {({
                   getRootProps,
                   getInputProps,
@@ -103,13 +105,13 @@ function Predict({
                 }) => (
                   <View {...getRootProps({}, { suppressRefError: true })}>
                     <TextInput
+                      {...getInputProps()}
                       placeholder="Name or Symbol"
                       placeholderTextColor="#555"
                       style={[predictStyles.input, { color: primaryTextColor }]}
                       onChangeText={handleChange("nameOrSymbol")}
-                      value={inputValue}
+                      value={values.nameOrSymbol}
                       onBlur={handleBlur("nameOrSymbol")}
-                      {...getInputProps()}
                     />
                     {isOpen
                       ? SYMBOLS.filter(

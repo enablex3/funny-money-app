@@ -165,7 +165,7 @@ function GetStarted({ navigation, setCurrentUser }) {
                   console.log(err);
                 }
               }}>
-              {({ handleChange, handleBlur, handleSubmit, errors, touched, values }) => (
+              {({ handleChange, handleBlur, handleSubmit, setFieldValue, errors, touched, values }) => (
                 <View style={gsStyles.gsForm}>
                   <TextInput
                     placeholder="Full Name:"
@@ -222,7 +222,9 @@ function GetStarted({ navigation, setCurrentUser }) {
                   {errors.confirmPassword && touched.confirmPassword ? (
                     <Text style={gsStyles.gsErrorText}>{errors.confirmPassword}</Text>
                   ) : null}
-                  <Downshift itemToString={item => (item ? item.value : "")}>
+                  <Downshift
+                    itemToString={item => (item ? item.value : values.currency)}
+                    onSelect={selectedItem => setFieldValue("currency", selectedItem.value)}>
                     {({
                       getInputProps,
                       getItemProps,
@@ -235,13 +237,13 @@ function GetStarted({ navigation, setCurrentUser }) {
                     }) => (
                       <View {...getRootProps({}, { suppressRefError: true })}>
                         <TextInput
+                          {...getInputProps()}
                           placeholder="Currency Preference, E.g. USD Or EUR:"
                           placeholderTextColor="gray"
                           style={gsStyles.textInput}
                           onChangeText={handleChange("currency")}
                           value={inputValue.toUpperCase()}
                           onBlur={handleBlur("currency")}
-                          {...getInputProps()}
                         />
                         <View {...getMenuProps()}>
                           {isOpen &&
