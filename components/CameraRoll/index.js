@@ -26,7 +26,12 @@ const CameraRoll = ({ buttonColor, setProfilePicture, onSelect }) => {
         if (status !== "granted") alert("Sorry, we need camera roll permissions to make this work!");
       }
     })();
-  }, []);
+
+    if (data) {
+      setProfilePicture(data.profilePictureUpload.path);
+      onSelect();
+    } else if (error) alert(JSON.stringify(error));
+  }, [data, setProfilePicture]);
 
   const onChange = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -43,12 +48,6 @@ const CameraRoll = ({ buttonColor, setProfilePicture, onSelect }) => {
 
       try {
         await mutate({ variables: { file } });
-        await mutate({ variables: { file } });
-
-        if (data) {
-          setProfilePicture(data.profilePictureUpload.path);
-          onSelect();
-        } else if (error) alert(JSON.stringify(error));
       } catch (err) {
         console.log(err);
       }
@@ -64,11 +63,6 @@ const CameraRoll = ({ buttonColor, setProfilePicture, onSelect }) => {
     if (validity.valid) {
       try {
         await mutate({ variables: { file } });
-
-        if (data) {
-          setProfilePicture(data.profilePictureUpload.path);
-          onSelect();
-        } else if (error) alert(JSON.stringify(error));
       } catch (err) {
         console.log(err);
       }
