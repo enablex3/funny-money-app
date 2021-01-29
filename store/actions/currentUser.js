@@ -2,7 +2,7 @@ import axios from "axios";
 import { currentUserActionTypes as actionTypes } from "../actionTypes";
 import { fetchCommunityPredictions } from "./communityPredictions";
 import { fetchUserStats } from "./currentUserStats";
-import { ENDPOINT_URL } from "../../constants";
+import { ENDPOINT_URL, PROFILE_PICTURES_URL } from "../../constants";
 
 export const setUser = user => ({ type: actionTypes.SET_USER, payload: user });
 export const setRank = rank => ({
@@ -31,7 +31,7 @@ export const setPastPredictions = pastPredictions => ({
 });
 export const setProfilePic = profilePic => ({
   type: actionTypes.SET_PROFILE_PIC,
-  payload: profilePic
+  payload: `${PROFILE_PICTURES_URL}${profilePic}`
 });
 export const fetchUserStart = () => ({ type: actionTypes.FETCH_USER_START });
 export const fetchUserSuccess = user => ({ type: actionTypes.FETCH_USER_SUCCESS, payload: user });
