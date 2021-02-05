@@ -28,6 +28,9 @@
     "web": {
       "favicon": "./assets/fmFullSquare.png"
     },
-    "description": "The social media platform for investors."
+    "description": "The social media platform for investors.",
+    "facebookScheme": "fb3740384169408901",
+    "facebookAppId": "3740384169408901",
+    "facebookDisplayName": "Funny Money"
   }
 }

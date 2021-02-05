@@ -26,6 +26,7 @@
     "expo": "~40.0.0",
     "expo-app-loading": "^1.0.1",
     "expo-constants": "^9.3.5",
+    "expo-facebook": "~9.1.0",
     "expo-font": "~8.4.0",
     "expo-image-picker": "^9.2.1",
     "expo-linear-gradient": "~8.4.0",
@@ -37,6 +38,7 @@
     "modal-react-native-web": "^0.2.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-facebook-login": "^4.1.1",
     "react-hook-form": "^6.12.2",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
     "react-native-appearance": "~0.3.3",
@@ -59,7 +61,10 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "yup": "^0.32.8"
+    "yup": "^0.32.8",
+    "expo-web-browser": "~8.6.0",
+    "expo-auth-session": "~3.0.0",
+    "expo-random": "~10.0.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useMutation, gql } from "@apollo/client";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StyleSheet, Text, Image, View, TextInput, Platform, ImageBackground, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Formik } from "formik";
 import Downshift from "downshift";
+import * as WebBrowser from "expo-web-browser";
+import * as Facebook from "expo-auth-session/providers/facebook";
+import { ResponseType } from "expo-auth-session";
+import facebookLogin from "../utils/facebook";
 import FetchingIndicator from "./FetchingIndicator";
 import { setUser } from "../store/actions/currentUser";
 import { SignupSchema } from "../utils/validation";
-import { CURRENCIES, HOST } from "../constants";
+import { CURRENCIES, FACEBOOK_APP_ID, HOST } from "../constants";
 
 const icon = require("../assets/fmIcon.jpg");
 const appBackgroundImage = require("../assets/appBackground.jpg");
@@ -120,6 +124,8 @@ const CREATE_USER = gql`
   }
 `;
 
+WebBrowser.maybeCompleteAuthSession();
+
 const setCurrentUserAndToken = async ({ currentUser, setCurrentUser, navigation }) => {
   await AsyncStorage.setItem("token", currentUser.token);
   setCurrentUser(currentUser);
@@ -127,6 +133,20 @@ const setCurrentUserAndToken = async ({ currentUser, setCurrentUser, navigation 
 };
 
 function GetStarted({ navigation, setCurrentUser }) {
+  const [request, response, promptAsync] = Facebook.useAuthRequest({
+    clientId: FACEBOOK_APP_ID,
+    responseType: ResponseType.Code
+  });
+
+  useEffect(() => {
+    if (response && response.type) {
+      if (response.type === "success") {
+        const { code } = response.params;
+        console.log(code);
+      }
+    }
+  }, [response]);
+
   const [createUser, { data, error, loading }] = useMutation(CREATE_USER);
 
   if (data) setCurrentUserAndToken({ currentUser: data.createUser, setCurrentUser, navigation });
@@ -280,6 +300,9 @@ function GetStarted({ navigation, setCurrentUser }) {
           <Text style={gsStyles.gsText}>Already have an account?</Text>
           <Text style={gsStyles.gsLoginLink} onPress={() => navigation.navigate("Login")}>
             Login
+          </Text>
+          <Text style={gsStyles.gsLoginLink} onPress={facebookLogin}>
+            Login With Facebook
           </Text>
         </ScrollView>
       </ImageBackground>
