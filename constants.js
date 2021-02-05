@@ -1,4 +1,4 @@
-export const HOST = "http://10.0.0.88";
+export const HOST = "http://3.18.49.30";
 export const ENDPOINT_URL = `${HOST}:8000/api`;
 export const APOLLO_URI = `${HOST}:3000/graphql`;
 export const PROFILE_PICTURES_URL = `${HOST}:3000/images/users/`;

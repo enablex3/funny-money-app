@@ -301,7 +301,12 @@ function GetStarted({ navigation, setCurrentUser }) {
           <Text style={gsStyles.gsLoginLink} onPress={() => navigation.navigate("Login")}>
             Login
           </Text>
-          <Text style={gsStyles.gsLoginLink} onPress={facebookLogin}>
+          <Text
+            style={gsStyles.gsLoginLink}
+            onPress={() => {
+              if (Platform.OS === "web") promptAsync();
+              else facebookLogin();
+            }}>
             Login With Facebook
           </Text>
         </ScrollView>
