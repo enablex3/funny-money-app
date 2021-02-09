@@ -1,10 +1,10 @@
 import axios from "axios";
 import { communityPostActionTypes as actionTypes } from "../actionTypes";
-import { ENDPOINT_URL } from "../../constants";
+import { WIREMOCK_URL } from "../../constants";
 
 export const fetchCommunityPredictions = (id) => async dispatch => {
     try {
-        const response = await axios.get(`${ENDPOINT_URL}/user/community/${id}`);
+        const response = await axios.get(`${WIREMOCK_URL}/user/community/${id}`);
         if ( response.status === 200) {
             dispatch(setCommunityPosts(response.data));
         } else {

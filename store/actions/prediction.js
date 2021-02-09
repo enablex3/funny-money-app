@@ -1,7 +1,7 @@
 import axios from "axios";
 import { addNewPrediction } from "./currentUser";
 import { predictionActionTypes as actionTypes } from "../actionTypes";
-import { ENDPOINT_URL } from "../../constants";
+import { WIREMOCK_URL } from "../../constants";
 
 export const setNameOrSymbol = nameOrSymbol => ({
   type: actionTypes.SET_NAME_OR_SYMBOL,
@@ -36,7 +36,7 @@ export const createPrediction = (prediction, successCallback) => async dispatch 
     dispatch(createPredictionStart());
 
     const stringDate = typeof prediction.date === "string" ? prediction.date : prediction.date.toString();
-    const response = await axios.post(`${ENDPOINT_URL}/user/prediction`, { ...prediction, date: stringDate });
+    const response = await axios.post(`${WIREMOCK_URL}/user/prediction`, { ...prediction, date: stringDate });
 
     if (response.status === 201) {
       const { price, type, nameOrSymbol, date } = response.data;

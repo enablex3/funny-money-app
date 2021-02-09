@@ -2,7 +2,7 @@ import axios from "axios";
 import { currentUserActionTypes as actionTypes } from "../actionTypes";
 import { fetchCommunityPredictions } from "./communityPredictions";
 import { fetchUserStats } from "./currentUserStats";
-import { ENDPOINT_URL, PROFILE_PICTURES_URL } from "../../constants";
+import { WIREMOCK_URL, PROFILE_PICTURES_URL } from "../../constants";
 
 export const setUser = user => ({ type: actionTypes.SET_USER, payload: user });
 export const setRank = rank => ({
@@ -43,7 +43,7 @@ export const createUser = (user, successCallback) => async dispatch => {
   try {
     dispatch(createUserStart());
 
-    const response = await axios.post(`${ENDPOINT_URL}/user/dummy_user@fm.com`, user);
+    const response = await axios.post(`${WIREMOCK_URL}/user/dummy_user@fm.com`, user);
 
     if (response.status === 201) {
       dispatch(createUserSuccess(response.data));
@@ -57,7 +57,7 @@ export const getUser = (_email, successCallback) => async dispatch => {
   try {
     dispatch(fetchUserStart());
 
-    const response = await axios.get(`${ENDPOINT_URL}/user/${_email.toLowerCase()}`);
+    const response = await axios.get(`${WIREMOCK_URL}/user/${_email.toLowerCase()}`);
 
     if (response.status === 200) {
       dispatch(fetchUserSuccess(response.data));

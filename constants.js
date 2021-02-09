@@ -1,5 +1,6 @@
 export const HOST = "http://3.18.49.30";
-export const ENDPOINT_URL = `${HOST}:8000/api`;
+export const ENDPOINT_URL = `${HOST}:3000/api`;
+export const WIREMOCK_URL = `${HOST}:8080/api`;
 export const APOLLO_URI = `${HOST}:3000/graphql`;
 export const PROFILE_PICTURES_URL = `${HOST}:3000/images/users/`;
 export const APP_NAME = "Funny Money";

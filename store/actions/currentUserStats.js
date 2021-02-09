@@ -1,10 +1,10 @@
 import axios from "axios";
 import { userStatActionTypes as actionTypes } from "../actionTypes";
-import { ENDPOINT_URL } from "../../constants";
+import { WIREMOCK_URL } from "../../constants";
 
 export const fetchUserStats = (id) => async dispatch => {
     try {
-        const response = await axios.get(`${ENDPOINT_URL}/user/stats/${id}`);
+        const response = await axios.get(`${WIREMOCK_URL}/user/stats/${id}`);
         if ( response.status === 200) {
             dispatch(setUserStats(response.data));
         } else {
